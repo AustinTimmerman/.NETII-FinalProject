@@ -11,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LogicLayer;
+using DataAccessFakes;
+using DataAccessInterfaces;
+using DataObjects;
 
 namespace WPFPresentation
 {
@@ -19,9 +23,76 @@ namespace WPFPresentation
     /// </summary>
     public partial class LoginOrSignup : Window
     {
-        public LoginOrSignup()
+        UserManager _userManager = null;
+        User _user = null;
+
+        public LoginOrSignup(UserManager userManager)
         {
+            _userManager = userManager;
             InitializeComponent();
+        }
+
+        private void btnLoginNotSignup_Click(object sender, RoutedEventArgs e)
+        {
+            var email = this.txtLoginEmail.Text;
+            var pwd = this.pwdLoginPassword.Password;
+
+            try
+            {
+                setUser(_userManager.LoginUser(email, pwd));
+                this.DialogResult = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void setUser(User user)
+        {
+            _user = user;
+        }
+
+        public User getUser()
+        {
+            return _user;
+        }
+
+        private void btnSignupNotLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if(pwdSignupPassword.Password != pwdSignupRetypePassword.Password)
+            {
+                MessageBox.Show("New password and retyped password must match.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                pwdSignupPassword.Password = "";
+                pwdSignupRetypePassword.Password = "";
+                pwdSignupPassword.Focus();
+                return;
+            }
+            if(txtSignupEmail.Text == "" || txtSignupUsername.Text == "")
+            {
+                MessageBox.Show("Sign up failed. Missing information.", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            try
+            {
+                var username = this.txtSignupUsername.Text;
+                var email = this.txtSignupEmail.Text;
+                var pwd = this.pwdSignupPassword.Password;
+                var retypePwd = this.pwdSignupRetypePassword.Password;
+                List<String> roles = new List<String>();
+                roles.Add("Logged in");
+
+                int result = _userManager.InsertNewUser(username, email, pwd, roles);
+                if (result == 1)
+                {
+                    setUser(_userManager.LoginUser(email, pwd));
+                    this.DialogResult = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

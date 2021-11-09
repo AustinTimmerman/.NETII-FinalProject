@@ -7,3 +7,12 @@ C:\Users\austi\OneDrive\Desktop\.NET II Final Project\MagicTheGatheringProject\D
 C:\Users\austi\OneDrive\Desktop\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.csproj.CopyComplete
 C:\Users\austi\OneDrive\Desktop\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.dll
 C:\Users\austi\OneDrive\Desktop\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.pdb
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\bin\Debug\DataAccessInterfaces.dll
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\bin\Debug\DataAccessInterfaces.pdb
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\bin\Debug\DataObjects.dll
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\bin\Debug\DataObjects.pdb
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.csprojAssemblyReference.cache
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.csproj.CoreCompileInputs.cache
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.csproj.CopyComplete
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.dll
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\DataAccessInterfaces\obj\Debug\DataAccessInterfaces.pdb

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
         x:Name="frmMainWindow"
-        Title="MTG Helper" Height="900" Width="1200">
+        Title="MTG Helper" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="frmMainWindow_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -51,5 +51,14 @@
             <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="Wishlist" x:Name="btnWishlist" />
            
         </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel>
+                <DataGrid />
+            </StackPanel>
+        </Grid>
+
+        <StatusBar Grid.Row="5">
+            <StatusBarItem x:Name="staMessage" Content="Welcome. Please log in to continue." Padding="20px, 0px"/>
+        </StatusBar>
     </Grid>
 </Window>
