@@ -26,13 +26,16 @@ namespace WPFPresentation
     {
         User _user = null;
         UserManager _userManager = null;
-        MainWindow newWindow = null;
+        CardManager _cardManager = null;
+        //MainWindow newWindow = null;
 
         public MainWindow()
         {
-            _userManager = new UserManager();
-            //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
-            newWindow = frmMainWindow;
+            //_userManager = new UserManager();
+            _userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
+            //newWindow = frmMainWindow;
+            //_cardManager = new CardManager();
+            _cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
             InitializeComponent();
         }
 
@@ -81,6 +84,7 @@ namespace WPFPresentation
             _user = null;
             btnLogin.Content = "Login";
             hideAllButtons();
+            btnHome.Focus();
         }
 
         private void updateUIForLogin()
@@ -90,9 +94,44 @@ namespace WPFPresentation
             showAllButtons();
         }
 
+        private void hideAllStackPanels()
+        {
+            panHome.Visibility = Visibility.Collapsed;
+            panCards.Visibility = Visibility.Collapsed;
+        }
+        
         private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             hideAllButtons();
+        }
+
+        private void btnHome_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                hideAllStackPanels();
+                panHome.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void btnMyCards_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                hideAllStackPanels();
+                panCards.Visibility = Visibility.Visible;
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(2);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
         }
     }
 }

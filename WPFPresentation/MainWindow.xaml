@@ -44,16 +44,23 @@
             <Button Margin="0px 0px 0px 0px" Width="100px" Height="25px" Grid.Column="5" Grid.Row="0" Content="Login" x:Name="btnLogin"  IsDefault="True" 
                     VerticalAlignment="Center" Click="btnLogin_Click" />
             
-            <Button Margin="30px 20px 30px 20px" Grid.Column="0" Grid.Row="1" Content="Home" x:Name="btnHome"/>
-            <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnMyCards"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="0" Grid.Row="1" Content="Home" x:Name="btnHome" GotFocus="btnHome_GotFocus"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnMyCards" GotFocus="btnMyCards_GotFocus"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="2" Grid.Row="1" Content="Decks" x:Name="btnMyDecks"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMyMatches"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="Wishlist" x:Name="btnWishlist" />
            
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel>
-                <DataGrid />
+            <StackPanel x:Name="panHome">
+                <Label Content="Recent News For Magic the Gathering" FontSize="24" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel x:Name="panCards" Visibility="Collapsed" >
+                <DataGrid x:Name="datCards" IsReadOnly="True"/>
+                <TextBlock>Cards</TextBlock>
+                <TextBlock>Cards</TextBlock>
+                <TextBlock>Cards</TextBlock>
+                <TextBlock>Cards</TextBlock>
             </StackPanel>
         </Grid>
 
