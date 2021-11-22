@@ -27,15 +27,16 @@ namespace WPFPresentation
         User _user = null;
         UserManager _userManager = null;
         CardManager _cardManager = null;
+        private int pageNumber;
         //MainWindow newWindow = null;
 
         public MainWindow()
         {
-            //_userManager = new UserManager();
-            _userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
+            _userManager = new UserManager();
+            //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
-            //_cardManager = new CardManager();
-            _cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
+            _cardManager = new CardManager();
+            //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
             InitializeComponent();
         }
 
@@ -85,6 +86,7 @@ namespace WPFPresentation
             btnLogin.Content = "Login";
             hideAllButtons();
             btnHome.Focus();
+            staMessage.Content = "Welcome. Please log in to continue.";
         }
 
         private void updateUIForLogin()
@@ -98,6 +100,7 @@ namespace WPFPresentation
         {
             panHome.Visibility = Visibility.Collapsed;
             panCards.Visibility = Visibility.Collapsed;
+            grdNextPrev.Visibility = Visibility.Collapsed;
         }
         
         private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -119,19 +122,26 @@ namespace WPFPresentation
             }
         }
 
-        private void btnMyCards_GotFocus(object sender, RoutedEventArgs e)
+        private void btnCards_GotFocus(object sender, RoutedEventArgs e)
         {
             try
             {
+                pageNumber = 1;
                 hideAllStackPanels();
                 panCards.Visibility = Visibility.Visible;
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(2);
+                grdNextPrev.Visibility = Visibility.Visible;
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show("" + ex);
             }
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

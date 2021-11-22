@@ -13,6 +13,7 @@ namespace LogicLayer
     public class CardManager : ICardManager
     {
         private ICardAccessor _cardAccessor = null;
+        private int pageNumber;
 
         public CardManager()
         {
@@ -27,10 +28,11 @@ namespace LogicLayer
         public List<Cards> RetrieveCardsByPage(int pageNum = 1)
         {
             List<Cards> cards = new List<Cards>();
+            pageNumber = pageNum;
 
             try
             {
-                cards = _cardAccessor.SelectCardsByPage(pageNum);
+                cards = _cardAccessor.SelectCardsByPage(pageNumber);
             }
             catch (Exception)
             {
