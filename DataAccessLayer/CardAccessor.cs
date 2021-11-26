@@ -21,7 +21,7 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(commandText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@PageNumber", SqlDbType.Int);
-            cmd.Parameters["@PageNumber"].Value = 1;
+            cmd.Parameters["@PageNumber"].Value = pageNum;
             try
             {
                 conn.Open();

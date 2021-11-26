@@ -11,3 +11,6 @@ on separate "pages" unless they change the code in the MainWindow. Will be the n
 
 **11/21/21**
 Finished the retrieve_cards_by_page. Able to retrieve cards from the database (currently not enough cards to select by page and the window does not currently support several pages yet). The next update will be to be able to change which cards are retrieved by which page is currently selected.
+
+**11/26/21**
+Cleaned up the retrieve_cards_by_page and am able to separate the search results by page. The application is now able to limit the cards shown by page number and will show up to 20 cards. The next update will show all the decks on the Decks tab.

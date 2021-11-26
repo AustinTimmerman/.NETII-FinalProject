@@ -124,23 +124,69 @@ namespace WPFPresentation
 
         private void btnCards_GotFocus(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                pageNumber = 1;
-                hideAllStackPanels();
-                panCards.Visibility = Visibility.Visible;
-                grdNextPrev.Visibility = Visibility.Visible;
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    pageNumber = 1;
+                    hideAllStackPanels();
+                    pageChecker();
+                    panCards.Visibility = Visibility.Visible;
+                    grdNextPrev.Visibility = Visibility.Visible;
+                    datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                }
+                catch (Exception ex)
+                {
 
-                MessageBox.Show("" + ex);
-            }
+                    MessageBox.Show("" + ex);
+                }
         }
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                pageNumber++;
+                pageChecker();
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                pageNumber--;
+                pageChecker();
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void pageChecker()
+        {
+            if(pageNumber == 1)
+            {
+                btnPrevPage.IsEnabled = false;
+            }
+            else
+            {
+                btnPrevPage.IsEnabled = true;
+            }
+                                                                // the amount of cards / rows being retrieved 
+            if(_cardManager.RetrieveCardsByPage(pageNumber).Count < 20)
+            {
+                btnNextPage.IsEnabled = false;
+            }
+            else
+            {
+                btnNextPage.IsEnabled = true;
+            }
 
         }
     }
