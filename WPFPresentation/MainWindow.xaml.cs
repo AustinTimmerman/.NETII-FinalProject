@@ -27,6 +27,7 @@ namespace WPFPresentation
         User _user = null;
         UserManager _userManager = null;
         CardManager _cardManager = null;
+        DeckManager _deckManager = null;
         private int pageNumber;
         //MainWindow newWindow = null;
 
@@ -35,8 +36,13 @@ namespace WPFPresentation
             _userManager = new UserManager();
             //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
+
             _cardManager = new CardManager();
             //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
+
+            _deckManager = new DeckManager();
+            //_deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
+
             InitializeComponent();
         }
 
@@ -66,17 +72,17 @@ namespace WPFPresentation
 
         private void hideAllButtons()
         {
-            btnMyCards.Visibility = Visibility.Collapsed;
-            btnMyDecks.Visibility = Visibility.Collapsed;
-            btnMyMatches.Visibility = Visibility.Collapsed;
+            btnCards.Visibility = Visibility.Collapsed;
+            btnDecks.Visibility = Visibility.Collapsed;
+            btnMatches.Visibility = Visibility.Collapsed;
             btnWishlist.Visibility = Visibility.Collapsed;
         }
 
         private void showAllButtons()
         {
-            btnMyCards.Visibility = Visibility.Visible;
-            btnMyDecks.Visibility = Visibility.Visible;
-            btnMyMatches.Visibility = Visibility.Visible;
+            btnCards.Visibility = Visibility.Visible;
+            btnDecks.Visibility = Visibility.Visible;
+            btnMatches.Visibility = Visibility.Visible;
             btnWishlist.Visibility = Visibility.Visible;
         }
 
@@ -101,6 +107,10 @@ namespace WPFPresentation
             panHome.Visibility = Visibility.Collapsed;
             panCards.Visibility = Visibility.Collapsed;
             grdNextPrev.Visibility = Visibility.Collapsed;
+            panDecks.Visibility = Visibility.Collapsed;
+            panDeckCards.Visibility = Visibility.Collapsed;
+            panMatches.Visibility = Visibility.Collapsed;
+            panWishlist.Visibility = Visibility.Collapsed;
         }
         
         private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -122,15 +132,50 @@ namespace WPFPresentation
             }
         }
 
+        private void pageChecker()
+        {
+            if (pageNumber == 1)
+            {
+                btnPrevPage.IsEnabled = false;
+            }
+            else
+            {
+                btnPrevPage.IsEnabled = true;
+            }
+            // the amount of cards / rows being retrieved 
+            if (panCards.Visibility == Visibility.Visible)
+            {
+                if (_cardManager.RetrieveCardsByPage(pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
+            else if (panDecks.Visibility == Visibility.Visible)
+            {
+                if (_deckManager.RetrieveDecksByPage(pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
+        }
+
         private void btnCards_GotFocus(object sender, RoutedEventArgs e)
         {
                 try
                 {
                     pageNumber = 1;
                     hideAllStackPanels();
-                    pageChecker();
                     panCards.Visibility = Visibility.Visible;
                     grdNextPrev.Visibility = Visibility.Visible;
+                    pageChecker();
                     datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
                 }
                 catch (Exception ex)
@@ -146,7 +191,14 @@ namespace WPFPresentation
             {
                 pageNumber++;
                 pageChecker();
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                if (panCards.Visibility == Visibility.Visible)
+                {
+                    datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                }
+                else if (panDecks.Visibility == Visibility.Visible)
+                {
+                    datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
+                }
             }
             catch (Exception ex)
             {
@@ -168,24 +220,40 @@ namespace WPFPresentation
             }
         }
 
-        private void pageChecker()
+        private void btnDecks_GotFocus(object sender, RoutedEventArgs e)
         {
-            if(pageNumber == 1)
+            try
             {
-                btnPrevPage.IsEnabled = false;
+                pageNumber = 1;
+                hideAllStackPanels();
+                panDecks.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
+
             }
-            else
+            catch (Exception ex)
             {
-                btnPrevPage.IsEnabled = true;
+
+                MessageBox.Show("" + ex);
             }
-                                                                // the amount of cards / rows being retrieved 
-            if(_cardManager.RetrieveCardsByPage(pageNumber).Count < 20)
+        }
+
+        private void datDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
             {
-                btnNextPage.IsEnabled = false;
+                var deck = (Deck)datDecks.SelectedItem;
+
+                hideAllStackPanels();
+                panDeckCards.Visibility = Visibility.Visible;
+
+                datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
             }
-            else
+            catch (Exception ex)
             {
-                btnNextPage.IsEnabled = true;
+
+                MessageBox.Show("" + ex);
             }
 
         }

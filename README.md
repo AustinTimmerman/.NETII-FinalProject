@@ -14,3 +14,6 @@ Finished the retrieve_cards_by_page. Able to retrieve cards from the database (c
 
 **11/26/21**
 Cleaned up the retrieve_cards_by_page and am able to separate the search results by page. The application is now able to limit the cards shown by page number and will show up to 20 cards. The next update will show all the decks on the Decks tab.
+
+**11/27/21**
+Completed the deck and deck cards retrieval. The user is now able to retrieve all decks (that are *public*) and the cards related to those decks. The next update will show all matches in the matches tab.

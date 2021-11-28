@@ -23,7 +23,7 @@ namespace LogicLayerTests
         }
 
         [TestMethod]
-        public void TestRetrieveCardByPageReturns()
+        public void TestRetrieveCardsByPageReturnsCards()
         {
             const int pageNum = 1;
             const int expectedCount = 2;

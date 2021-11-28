@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardAccessorFake.cs" />
+    <Compile Include="DeckAccessorFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAccessorFake.cs" />
   </ItemGroup>

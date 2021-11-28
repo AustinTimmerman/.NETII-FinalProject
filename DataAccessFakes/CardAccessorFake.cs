@@ -27,7 +27,6 @@ namespace DataAccessFakes
                 OwnedCard = true,
                 Wishlisted = false
             });
-
             fakeCards.Add(new Cards()
             {
                 CardID = 100001,
@@ -42,7 +41,6 @@ namespace DataAccessFakes
                 OwnedCard = true,
                 Wishlisted = false
             });
-
             fakeCards.Add(new Cards()
             {
                 CardID = 100003,
@@ -57,7 +55,6 @@ namespace DataAccessFakes
                 OwnedCard = false,
                 Wishlisted = true
             });
-
             fakeCards.Add(new Cards()
             {
                 CardID = 100004,
@@ -79,9 +76,11 @@ namespace DataAccessFakes
                 OwnedCard = true,
                 Wishlisted = false
             });
+
+
         }
 
-        public List<Cards> SelectCardsByPage(int pageNum = 1)
+        public List<Cards> SelectCardsByPage(int pageNum)
         {
             List<Cards> cards = new List<Cards>();
             int index = (pageNum - 1) * 2;
@@ -105,6 +104,18 @@ namespace DataAccessFakes
             }
 
             return cards;
+        }
+
+        public Cards SelectCardByCardID(int cardID)
+        {
+            for (int i = 0; i < fakeCards.Count; i++)
+            {
+                if (cardID == fakeCards[i].CardID)
+                {
+                    return fakeCards[i];
+                }
+            }
+            throw new ApplicationException();
         }
     }
 }

@@ -7,8 +7,9 @@ using DataObjects;
 
 namespace DataAccessInterfaces
 {
-    public interface ICardAccessor
+    public interface IDeckAccessor
     {
-        List<Cards> SelectCardsByPage(int pageNum);
+        List<Deck> SelectDecksByPage(int pageNum);
+        List<Cards> SelectDeckCards(int deckID);
     }
 }
