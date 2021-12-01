@@ -42,5 +42,22 @@ namespace LogicLayer
 
             return cards;
         }
+
+        public List<Cards> RetrieveWishlistedCardsByUserID(int userID)
+        {
+            List<Cards> cards = new List<Cards>();
+
+            try
+            {
+                cards = _cardAccessor.SelectWishlistedCardsByUserID(userID);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return cards;
+        }
     }
 }

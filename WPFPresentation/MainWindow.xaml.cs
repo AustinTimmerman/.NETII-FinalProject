@@ -28,6 +28,7 @@ namespace WPFPresentation
         UserManager _userManager = null;
         CardManager _cardManager = null;
         DeckManager _deckManager = null;
+        MatchManager _matchManager = null;
         private int pageNumber;
         //MainWindow newWindow = null;
 
@@ -42,6 +43,9 @@ namespace WPFPresentation
 
             _deckManager = new DeckManager();
             //_deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
+
+            _matchManager = new MatchManager();
+            //_matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
 
             InitializeComponent();
         }
@@ -110,6 +114,8 @@ namespace WPFPresentation
             panDecks.Visibility = Visibility.Collapsed;
             panDeckCards.Visibility = Visibility.Collapsed;
             panMatches.Visibility = Visibility.Collapsed;
+            panMatchDecks.Visibility = Visibility.Collapsed;
+            panMatchDeckCards.Visibility = Visibility.Collapsed;
             panWishlist.Visibility = Visibility.Collapsed;
         }
         
@@ -142,9 +148,8 @@ namespace WPFPresentation
             {
                 btnPrevPage.IsEnabled = true;
             }
-            // the amount of cards / rows being retrieved 
             if (panCards.Visibility == Visibility.Visible)
-            {
+            {                                                           // the amount of cards / rows being retrieved 
                 if (_cardManager.RetrieveCardsByPage(pageNumber).Count < 20)
                 {
                     btnNextPage.IsEnabled = false;
@@ -157,6 +162,17 @@ namespace WPFPresentation
             else if (panDecks.Visibility == Visibility.Visible)
             {
                 if (_deckManager.RetrieveDecksByPage(pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
+            else if(panMatches.Visibility == Visibility.Visible)
+            {
+                if (_matchManager.RetrieveMatchesByPage(pageNumber).Count < 20)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -190,19 +206,28 @@ namespace WPFPresentation
             try
             {
                 pageNumber++;
-                pageChecker();
-                if (panCards.Visibility == Visibility.Visible)
-                {
-                    datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
-                }
-                else if (panDecks.Visibility == Visibility.Visible)
-                {
-                    datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
-                }
+                PrevNextPageClick_Helper();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("" + ex);
+            }
+        }
+
+        private void PrevNextPageClick_Helper()
+        {
+            pageChecker();
+            if (panCards.Visibility == Visibility.Visible)
+            {
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+            }
+            else if (panDecks.Visibility == Visibility.Visible)
+            {
+                datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
+            }
+            else if (panMatches.Visibility == Visibility.Visible)
+            {
+                datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
             }
         }
 
@@ -211,8 +236,7 @@ namespace WPFPresentation
             try
             {
                 pageNumber--;
-                pageChecker();
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                PrevNextPageClick_Helper();
             }
             catch (Exception ex)
             {
@@ -256,6 +280,61 @@ namespace WPFPresentation
                 MessageBox.Show("" + ex);
             }
 
+        }
+
+        private void btnMatches_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                pageNumber = 1;
+                hideAllStackPanels();
+                panMatches.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void datMatches_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var match = (Match)datMatches.SelectedItem;
+
+                hideAllStackPanels();
+                panMatchDecks.Visibility = Visibility.Visible;
+
+                datMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void datMatchDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var deck = (MatchDeck)datMatchDecks.SelectedItem;
+
+                hideAllStackPanels();
+                panMatchDeckCards.Visibility = Visibility.Visible;
+
+                datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
         }
     }
 }

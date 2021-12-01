@@ -7,9 +7,9 @@ using DataObjects;
 
 namespace LogicLayer
 {
-    public interface ICardManager
-    {
-        List<Cards> RetrieveCardsByPage(int pageNum = 1);
-        List<Cards> RetrieveWishlistedCardsByUserID(int userID);
+    public interface IMatchManager
+    {   
+        List<MatchDeck> RetrieveMatchDecksByMatchID(int matchID);
+        List<Match> RetrieveMatchesByPage(int pageNum = 1);
     }
 }

@@ -47,7 +47,7 @@
             <Button Margin="30px 20px 30px 20px" Grid.Column="0" Grid.Row="1" Content="Home" x:Name="btnHome" GotFocus="btnHome_GotFocus"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnCards" GotFocus="btnCards_GotFocus"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="2" Grid.Row="1" Content="Decks" x:Name="btnDecks" GotFocus="btnDecks_GotFocus"/>
-            <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMatches"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMatches" GotFocus="btnMatches_GotFocus" />
             <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="Wishlist" x:Name="btnWishlist" />
            
         </Grid>
@@ -59,6 +59,8 @@
             
             <StackPanel x:Name="panHome" Visibility="Visible" Grid.Row="0">
                 <Label Content="Recent News For Magic the Gathering" FontSize="24" HorizontalAlignment="Center"/>
+                <TextBlock Text="Innistrad: Crimson Vow Released" FontSize="24" Padding="25 50 0 0"/>
+                <TextBlock Text="Innistrad: Midnight hunt Released" FontSize="24" Padding="25 50 0 0"/>
             </StackPanel>
             <StackPanel x:Name="panCards" Visibility="Collapsed" Grid.Row="0">
                 <DataGrid x:Name="datCards" IsReadOnly="True"/>
@@ -70,7 +72,13 @@
                 <DataGrid x:Name="datDeckCards" IsReadOnly="True"/>
             </StackPanel>
             <StackPanel x:Name="panMatches" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datMatches" IsReadOnly="True"/>
+                <DataGrid x:Name="datMatches" IsReadOnly="True" MouseDoubleClick="datMatches_MouseDoubleClick"/>
+            </StackPanel>
+            <StackPanel x:Name="panMatchDecks" Visibility="Collapsed" Grid.Row="0">
+                <DataGrid x:Name="datMatchDecks" IsReadOnly="True" MouseDoubleClick="datMatchDecks_MouseDoubleClick"/>
+            </StackPanel>
+            <StackPanel x:Name="panMatchDeckCards" Visibility="Collapsed" Grid.Row="0">
+                <DataGrid x:Name="datMatchDeckCards" IsReadOnly="True"/>
             </StackPanel>
             <StackPanel x:Name="panWishlist" Visibility="Collapsed" Grid.Row="0">
                 <DataGrid x:Name="datWishlist" IsReadOnly="True"/>

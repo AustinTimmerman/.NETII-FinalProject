@@ -24,9 +24,9 @@ namespace LogicLayer
             _deckAccessor = deckAccessor;
         }
 
-        public List<Cards> RetrieveDeckCards(int deckID)
+        public List<DeckCard> RetrieveDeckCards(int deckID)
         {
-            List<Cards> deckCards = new List<Cards>();
+            List<DeckCard> deckCards = new List<DeckCard>();
 
             try
             {

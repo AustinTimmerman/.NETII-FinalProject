@@ -64,6 +64,11 @@ namespace DataAccessLayer
 
             return cards;
         }
+
+        public List<Cards> SelectWishlistedCardsByUserID(int userID)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

@@ -12,9 +12,9 @@ namespace DataAccessLayer
 {
     public class DeckAccessor : IDeckAccessor
     {
-        public List<Cards> SelectDeckCards(int deckID)
+        public List<DeckCard> SelectDeckCards(int deckID)
         {
-            List<Cards> deckCards = new List<Cards>();
+            List<DeckCard> deckCards = new List<DeckCard>();
             var conn = DBConnection.GetConnection();
             string commandText = @"sp_select_deck_cards_by_deckID";
             var cmd = new SqlCommand(commandText, conn);
@@ -29,8 +29,9 @@ namespace DataAccessLayer
                 {
                     while (reader.Read())
                     {
-                        deckCards.Add(new Cards()
+                        deckCards.Add(new DeckCard()
                         {
+                            DeckID = deckID,
                             CardID = reader.GetInt32(0),
                             CardName = reader.GetString(1),
                             ImageID = reader.GetInt32(2),
@@ -52,7 +53,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    throw new ApplicationException("There are no cards!");
+                    throw new ApplicationException("There are no cards in this deck!");
                 }
             }
             catch (Exception)

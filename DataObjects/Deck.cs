@@ -13,4 +13,12 @@ namespace DataObjects
         public int UserID { get; set; }
         public bool IsPublic { get; set; }
     }
+
+    public class MatchDeck
+    {
+        public int MatchID { get; set; }
+        public int DeckID { get; set; }
+        public string DeckName { get; set; }
+        public bool Winner { get; set; }
+    }
 }

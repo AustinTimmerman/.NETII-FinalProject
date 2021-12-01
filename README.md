@@ -17,3 +17,6 @@ Cleaned up the retrieve_cards_by_page and am able to separate the search results
 
 **11/27/21**
 Completed the deck and deck cards retrieval. The user is now able to retrieve all decks (that are *public*) and the cards related to those decks. The next update will show all matches in the matches tab.
+
+**12/1/21**
+Completed the match, match decks, and match deck cards retrieval. The user is now able to retrieve all matches (that are *public*) and the decks and cards related. The next step is to begin the user specific retrievals so the user is able to view their specific cards, decks, and matches.

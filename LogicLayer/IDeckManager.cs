@@ -10,6 +10,6 @@ namespace LogicLayer
     public interface IDeckManager
     {
         List<Deck> RetrieveDecksByPage(int pageNum = 1);
-        List<Cards> RetrieveDeckCards(int deckID);
+        List<DeckCard> RetrieveDeckCards(int deckID);
     }
 }

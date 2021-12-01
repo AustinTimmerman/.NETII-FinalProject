@@ -11,6 +11,7 @@ namespace DataAccessFakes
     public class CardAccessorFake : ICardAccessor
     {
         private List<Cards> fakeCards = new List<Cards>();
+
         public CardAccessorFake()
         {
             fakeCards.Add(new Cards()
@@ -76,8 +77,6 @@ namespace DataAccessFakes
                 OwnedCard = true,
                 Wishlisted = false
             });
-
-
         }
 
         public List<Cards> SelectCardsByPage(int pageNum)
@@ -116,6 +115,29 @@ namespace DataAccessFakes
                 }
             }
             throw new ApplicationException();
+        }
+
+        public List<Cards> SelectWishlistedCardsByUserID(int userID)
+        {
+            List<Cards> cards = new List<Cards>();
+
+            try
+            {
+                for (int i = 0; i < fakeCards.Count; i++)
+                {
+                    if (fakeCards[i].Wishlisted)
+                    {
+                        cards.Add(fakeCards[i]);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return cards;
         }
     }
 }

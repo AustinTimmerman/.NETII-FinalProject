@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CardManagerTests.cs" />
     <Compile Include="DeckManagerTests.cs" />
+    <Compile Include="MatchManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManagerTests.cs" />
   </ItemGroup>

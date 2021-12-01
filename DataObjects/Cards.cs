@@ -27,4 +27,14 @@ namespace DataObjects
         public bool OwnedCard { get; set; }
         public bool Wishlisted { get; set; }
     }
+
+    public class DeckCard : Cards
+    {
+        public int DeckID { get; set; }
+    }
+
+    public class UserCard : Cards
+    {
+        public int UserID { get; set; }
+    }
 }

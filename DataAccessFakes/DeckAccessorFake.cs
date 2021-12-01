@@ -12,6 +12,7 @@ namespace DataAccessFakes
     {
         private List<Deck> fakeDecks = new List<Deck>();
         private List<DeckCard> fakeDeckCards = new List<DeckCard>();
+        CardAccessorFake cardAccessor = new CardAccessorFake();
 
         public DeckAccessorFake()
         {
@@ -43,53 +44,133 @@ namespace DataAccessFakes
                 UserID = 999999,
                 IsPublic = false
             });
+
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100000
+                CardID = 100000,
+                CardName = cardAccessor.SelectCardByCardID(100000).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100000).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100000).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100000).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100000).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100000).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100000).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100000).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100000).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100000).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100001
+                CardID = 100001,
+                CardName = cardAccessor.SelectCardByCardID(100001).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100001).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100001).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100001).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100001).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100001).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100001).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100001).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100001).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100001).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100000
+                CardID = 100000,
+                CardName = cardAccessor.SelectCardByCardID(100000).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100000).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100000).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100000).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100000).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100000).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100000).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100000).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100000).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100000).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100001
+                CardID = 100001,
+                CardName = cardAccessor.SelectCardByCardID(100001).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100001).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100001).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100001).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100001).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100001).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100001).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100001).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100001).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100001).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100000
+                CardID = 100000,
+                CardName = cardAccessor.SelectCardByCardID(100000).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100000).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100000).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100000).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100000).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100000).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100000).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100000).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100000).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100000).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999999,
-                CardID = 100001
+                CardID = 100001,
+                CardName = cardAccessor.SelectCardByCardID(100001).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100001).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100001).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100001).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100001).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100001).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100001).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100001).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100001).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100001).Wishlisted
             });
 
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999998,
-                CardID = 100000
+                CardID = 100000,
+                CardName = cardAccessor.SelectCardByCardID(100000).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100000).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100000).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100000).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100000).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100000).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100000).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100000).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100000).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100000).Wishlisted
             });
             fakeDeckCards.Add(new DeckCard()
             {
                 DeckID = 999998,
-                CardID = 100000
+                CardID = 100000,
+                CardName = cardAccessor.SelectCardByCardID(100000).CardName,
+                ImageID = cardAccessor.SelectCardByCardID(100000).ImageID,
+                CardDescription = cardAccessor.SelectCardByCardID(100000).CardDescription,
+                CardColorID = cardAccessor.SelectCardByCardID(100000).CardColorID,
+                CardConvertedManaCost = cardAccessor.SelectCardByCardID(100000).CardConvertedManaCost,
+                CardRarityID = cardAccessor.SelectCardByCardID(100000).CardRarityID,
+                CardTypeID = cardAccessor.SelectCardByCardID(100000).CardTypeID,
+                HasSecondaryCard = cardAccessor.SelectCardByCardID(100000).HasSecondaryCard,
+                OwnedCard = cardAccessor.SelectCardByCardID(100000).OwnedCard,
+                Wishlisted = cardAccessor.SelectCardByCardID(100000).Wishlisted
             });
         }
 
-        public List<Cards> SelectDeckCards(int deckID)
+        public List<DeckCard> SelectDeckCards(int deckID)
         {
-            List<Cards> deckCards = new List<Cards>();
-            CardAccessorFake cardAccessor = new CardAccessorFake();
+            List<DeckCard> deckCards = new List<DeckCard>();
 
             try
             {
@@ -98,7 +179,7 @@ namespace DataAccessFakes
                     if(fakeDeckCards[i].DeckID == deckID)
                     {
                         //deckCards.Add(fakeDeckCards[i]);
-                        deckCards.Add(cardAccessor.SelectCardByCardID(fakeDeckCards[i].CardID));
+                        deckCards.Add(fakeDeckCards[i]);
                     }
                 }
             }
@@ -138,6 +219,18 @@ namespace DataAccessFakes
             }
 
             return cards;
+        }
+
+        public Deck SelectDeckByDeckID(int deckID)
+        {
+            for (int i = 0; i < fakeDecks.Count; i++)
+            {
+                if (deckID == fakeDecks[i].DeckID)
+                {
+                    return fakeDecks[i];
+                }
+            }
+            throw new ApplicationException();
         }
     }
 }

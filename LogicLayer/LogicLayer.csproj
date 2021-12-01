@@ -45,7 +45,9 @@
     <Compile Include="DeckManager.cs" />
     <Compile Include="ICardManager.cs" />
     <Compile Include="IDeckManager.cs" />
+    <Compile Include="IMatchManager.cs" />
     <Compile Include="IUserManager.cs" />
+    <Compile Include="MatchManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManager.cs" />
   </ItemGroup>

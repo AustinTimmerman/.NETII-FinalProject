@@ -10,6 +10,6 @@ namespace DataAccessInterfaces
     public interface IDeckAccessor
     {
         List<Deck> SelectDecksByPage(int pageNum);
-        List<Cards> SelectDeckCards(int deckID);
+        List<DeckCard> SelectDeckCards(int deckID);
     }
 }

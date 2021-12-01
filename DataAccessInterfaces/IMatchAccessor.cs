@@ -7,9 +7,9 @@ using DataObjects;
 
 namespace DataAccessInterfaces
 {
-    public interface ICardAccessor
+    public interface IMatchAccessor
     {
-        List<Cards> SelectCardsByPage(int pageNum);
-        List<Cards> SelectWishlistedCardsByUserID(int userID);
+        List<Match> SelectMatchesByPage(int pageNum);
+        List<MatchDeck> SelectMatchDecksByMatchID(int matchID);
     }
 }
