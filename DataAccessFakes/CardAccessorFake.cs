@@ -11,6 +11,7 @@ namespace DataAccessFakes
     public class CardAccessorFake : ICardAccessor
     {
         private List<Cards> fakeCards = new List<Cards>();
+        private List<UserCard> fakeUserCards = new List<UserCard>();
 
         public CardAccessorFake()
         {
@@ -24,9 +25,7 @@ namespace DataAccessFakes
                 CardConvertedManaCost = 7,
                 CardRarityID = "Mythic Rare",
                 CardTypeID = "Legendary Creature",
-                HasSecondaryCard = false,
-                OwnedCard = true,
-                Wishlisted = false
+                HasSecondaryCard = false
             });
             fakeCards.Add(new Cards()
             {
@@ -38,9 +37,7 @@ namespace DataAccessFakes
                 CardConvertedManaCost = 3,
                 CardRarityID = "Mythic Rare",
                 CardTypeID = "Legendary Creature",
-                HasSecondaryCard = false,
-                OwnedCard = true,
-                Wishlisted = false
+                HasSecondaryCard = false
             });
             fakeCards.Add(new Cards()
             {
@@ -52,9 +49,7 @@ namespace DataAccessFakes
                 CardConvertedManaCost = 0,
                 CardRarityID = "Rare",
                 CardTypeID = "Land",
-                HasSecondaryCard = false,
-                OwnedCard = false,
-                Wishlisted = true
+                HasSecondaryCard = false
             });
             fakeCards.Add(new Cards()
             {
@@ -73,7 +68,58 @@ namespace DataAccessFakes
                 CardSecondaryColorID = "Black",
                 CardSecondaryConvertedManaCost = 0,
                 CardSecondaryRarityID = "Rare",
+                CardSecondaryTypeID = "Creature"
+            });
+
+            fakeUserCards.Add(new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100004,
+                CardName = "Curse of Leeches",
+                ImageID = 100004,
+                CardDescription = "As this permanent transforms into Curse of leeches, attach it to a player.",
+                CardColorID = "Black",
+                CardConvertedManaCost = 3,
+                CardRarityID = "Rare",
+                CardTypeID = "Enchantment",
+                HasSecondaryCard = true,
+                CardSecondaryName = "Leeching Lurker",
+                SecondaryImageID = 100005,
+                CardSecondaryDescription = "Nightbound",
+                CardSecondaryColorID = "Black",
+                CardSecondaryConvertedManaCost = 0,
+                CardSecondaryRarityID = "Rare",
                 CardSecondaryTypeID = "Creature",
+                OwnedCard = true,
+                Wishlisted = false
+            });
+            fakeUserCards.Add(new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100003,
+                CardName = "Shipwreck Marsh",
+                ImageID = 100003,
+                CardDescription = "Shipwreck Marsh enters the battlefield tapped unless you control two or more other lands.",
+                CardColorID = "Colorless",
+                CardConvertedManaCost = 0,
+                CardRarityID = "Rare",
+                CardTypeID = "Land",
+                HasSecondaryCard = false,
+                OwnedCard = false,
+                Wishlisted = true
+            });
+            fakeUserCards.Add(new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Runo Stormkirk",
+                ImageID = 100001,
+                CardDescription = "When Runo Stormkirk enters the battlefield, put up to one target creature card from your graveyard on top of your library",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 3,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
                 OwnedCard = true,
                 Wishlisted = false
             });
@@ -117,18 +163,24 @@ namespace DataAccessFakes
             throw new ApplicationException();
         }
 
-        public List<Cards> SelectWishlistedCardsByUserID(int userID)
+        public List<UserCard> SelectUserCardsByUserID(int userID, int pageNum)
         {
-            List<Cards> cards = new List<Cards>();
-
+            List<UserCard> userCards = new List<UserCard>();
+            int index = (pageNum - 1) * 2;
             try
             {
-                for (int i = 0; i < fakeCards.Count; i++)
+
+                for (int i = 0; i < 2; i++)
                 {
-                    if (fakeCards[i].Wishlisted)
+                    if (index > fakeUserCards.Count() - 1)
                     {
-                        cards.Add(fakeCards[i]);
+                        return fakeUserCards;
                     }
+                    if (fakeUserCards[index].UserID == userID)
+                    {
+                        userCards.Add(fakeUserCards[index]);
+                    }
+                    index++;
                 }
             }
             catch (Exception)
@@ -137,7 +189,7 @@ namespace DataAccessFakes
                 throw;
             }
 
-            return cards;
+            return userCards;
         }
     }
 }

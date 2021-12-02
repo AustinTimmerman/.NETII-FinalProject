@@ -65,9 +65,61 @@ namespace DataAccessLayer
             return cards;
         }
 
-        public List<Cards> SelectWishlistedCardsByUserID(int userID)
+        public List<UserCard> SelectUserCardsByUserID(int userID, int pageNum)
         {
-            throw new NotImplementedException();
+            List<UserCard> cards = new List<UserCard>();
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_select_user_cards_by_userID";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@PageNumber", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@PageNumber"].Value = pageNum;
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cards.Add(new UserCard()
+                        {
+                            UserID = userID,
+                            CardID = reader.GetInt32(0),
+                            CardName = reader.GetString(1),
+                            ImageID = reader.GetInt32(2),
+                            CardDescription = reader.GetString(3),
+                            CardColorID = reader.GetString(4),
+                            CardConvertedManaCost = reader.GetInt32(5),
+                            CardTypeID = reader.GetString(6),
+                            CardRarityID = reader.GetString(7),
+                            HasSecondaryCard = reader.GetBoolean(8),
+                            CardSecondaryName = reader.IsDBNull(9) ? null : reader.GetString(9),
+                            SecondaryImageID = reader.IsDBNull(10) ? -1 : reader.GetInt32(10),
+                            CardSecondaryDescription = reader.IsDBNull(11) ? null : reader.GetString(11),
+                            CardSecondaryColorID = reader.IsDBNull(12) ? null : reader.GetString(12),
+                            CardSecondaryConvertedManaCost = reader.IsDBNull(13) ? -1 : reader.GetInt32(13),
+                            CardSecondaryTypeID = reader.IsDBNull(14) ? null : reader.GetString(14),
+                            CardSecondaryRarityID = reader.IsDBNull(15) ? null : reader.GetString(15),
+                            OwnedCard = reader.GetBoolean(16),
+                            Wishlisted = reader.GetBoolean(17)
+
+                        });
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("There are no user cards!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return cards;
         }
     }
     

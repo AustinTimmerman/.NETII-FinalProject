@@ -41,5 +41,18 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestRetrieveUserDecksByUserIDReturnsDecks()
+        {
+            const int userID = 999999;
+            const int expectedCount = 3;
+            const int pageNum = 1;
+            int actualCount;
+
+            actualCount = deckManager.RetrieveUserDecksByUserID(userID, pageNum).Count;
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
     }
 }

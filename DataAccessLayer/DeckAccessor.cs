@@ -102,5 +102,46 @@ namespace DataAccessLayer
 
             return decks;
         }
+
+        public List<Deck> SelectUserDecksByUserID(int userID, int pageNum)
+        {
+            List<Deck> decks = new List<Deck>();
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_select_user_decks_by_userID";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@PageNumber", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@PageNumber"].Value = pageNum;
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        decks.Add(new Deck()
+                        {
+                            DeckID = reader.GetInt32(0),
+                            DeckName = reader.GetString(1),
+                            UserID = userID,
+                            IsPublic = reader.GetBoolean(2)
+                        });
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("There are no user decks!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return decks;
+        }
     }
 }

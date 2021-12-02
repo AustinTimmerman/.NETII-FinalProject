@@ -43,13 +43,13 @@ namespace LogicLayer
             return cards;
         }
 
-        public List<Cards> RetrieveWishlistedCardsByUserID(int userID)
+        public List<UserCard> RetrieveUserCardsByUserID(int userID, int pageNum = 1)
         {
-            List<Cards> cards = new List<Cards>();
-
+            List<UserCard> userCards = new List<UserCard>();
+            pageNumber = pageNum;
             try
             {
-                cards = _cardAccessor.SelectWishlistedCardsByUserID(userID);
+                userCards = _cardAccessor.SelectUserCardsByUserID(userID, pageNumber);
             }
             catch (Exception)
             {
@@ -57,7 +57,7 @@ namespace LogicLayer
                 throw;
             }
 
-            return cards;
+            return userCards;
         }
     }
 }

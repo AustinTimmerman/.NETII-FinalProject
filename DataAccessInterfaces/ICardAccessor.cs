@@ -10,6 +10,6 @@ namespace DataAccessInterfaces
     public interface ICardAccessor
     {
         List<Cards> SelectCardsByPage(int pageNum);
-        List<Cards> SelectWishlistedCardsByUserID(int userID);
+        List<UserCard> SelectUserCardsByUserID(int userID, int pageNum);
     }
 }

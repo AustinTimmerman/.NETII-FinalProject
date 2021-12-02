@@ -55,5 +55,21 @@ namespace LogicLayer
 
             return decks;
         }
+
+        public List<Deck> RetrieveUserDecksByUserID(int userID, int pageNum = 1)
+        {
+            List<Deck> decks = new List<Deck>();
+
+            try
+            {
+                decks = _deckAccessor.SelectUserDecksByUserID(userID, pageNum);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return decks;
+        }
     }
 }

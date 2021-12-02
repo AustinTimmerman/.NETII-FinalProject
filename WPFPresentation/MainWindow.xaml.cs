@@ -37,7 +37,7 @@ namespace WPFPresentation
             _userManager = new UserManager();
             //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
-
+            
             _cardManager = new CardManager();
             //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
 
@@ -79,7 +79,7 @@ namespace WPFPresentation
             btnCards.Visibility = Visibility.Collapsed;
             btnDecks.Visibility = Visibility.Collapsed;
             btnMatches.Visibility = Visibility.Collapsed;
-            btnWishlist.Visibility = Visibility.Collapsed;
+            btnMyStuff.Visibility = Visibility.Collapsed;
         }
 
         private void showAllButtons()
@@ -87,7 +87,7 @@ namespace WPFPresentation
             btnCards.Visibility = Visibility.Visible;
             btnDecks.Visibility = Visibility.Visible;
             btnMatches.Visibility = Visibility.Visible;
-            btnWishlist.Visibility = Visibility.Visible;
+            btnMyStuff.Visibility = Visibility.Visible;
         }
 
         private void updateUIForLogOut()
@@ -96,6 +96,7 @@ namespace WPFPresentation
             btnLogin.Content = "Login";
             hideAllButtons();
             btnHome.Focus();
+            datMyCards.ItemsSource = null;
             staMessage.Content = "Welcome. Please log in to continue.";
         }
 
@@ -116,26 +117,10 @@ namespace WPFPresentation
             panMatches.Visibility = Visibility.Collapsed;
             panMatchDecks.Visibility = Visibility.Collapsed;
             panMatchDeckCards.Visibility = Visibility.Collapsed;
-            panWishlist.Visibility = Visibility.Collapsed;
-        }
-        
-        private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            hideAllButtons();
-        }
-
-        private void btnHome_GotFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                hideAllStackPanels();
-                panHome.Visibility = Visibility.Visible;
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("" + ex);
-            }
+            grdMyStuff.Visibility = Visibility.Collapsed;
+            datMyCards.Visibility = Visibility.Collapsed;
+            datMyDecks.Visibility = Visibility.Collapsed;
+            datMyMatches.Visibility = Visibility.Collapsed;
         }
 
         private void pageChecker()
@@ -170,7 +155,7 @@ namespace WPFPresentation
                     btnNextPage.IsEnabled = true;
                 }
             }
-            else if(panMatches.Visibility == Visibility.Visible)
+            else if (panMatches.Visibility == Visibility.Visible)
             {
                 if (_matchManager.RetrieveMatchesByPage(pageNumber).Count < 20)
                 {
@@ -180,6 +165,80 @@ namespace WPFPresentation
                 {
                     btnNextPage.IsEnabled = true;
                 }
+            }
+            else if (datMyCards.Visibility == Visibility.Visible)
+            {
+                if (_cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
+            else if(datMyDecks.Visibility == Visibility.Visible)
+            {
+                if (_deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
+        }
+
+        private void PrevNextPageClick_Helper()
+        {
+            pageChecker();
+            if (panCards.Visibility == Visibility.Visible)
+            {
+                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+            }
+            else if (panDecks.Visibility == Visibility.Visible)
+            {
+                datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
+            }
+            else if (panMatches.Visibility == Visibility.Visible)
+            {
+                datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
+            }
+            else if (datMyCards.Visibility == Visibility.Visible)
+            {
+                datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
+            }
+            else if (datMyDecks.Visibility == Visibility.Visible)
+            {
+                datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
+            }
+        }
+
+        private void clearDataGrids()
+        {
+            datMyCards.ItemsSource = null;
+            datMyDecks.ItemsSource = null;
+            datMyMatches.ItemsSource = null;
+        }
+
+        private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            hideAllButtons();
+        }
+
+        private void btnHome_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                hideAllStackPanels();
+                panHome.Visibility = Visibility.Visible;
+                clearDataGrids();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
             }
         }
 
@@ -193,6 +252,7 @@ namespace WPFPresentation
                     grdNextPrev.Visibility = Visibility.Visible;
                     pageChecker();
                     datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                    clearDataGrids();
                 }
                 catch (Exception ex)
                 {
@@ -211,23 +271,6 @@ namespace WPFPresentation
             catch (Exception ex)
             {
                 MessageBox.Show("" + ex);
-            }
-        }
-
-        private void PrevNextPageClick_Helper()
-        {
-            pageChecker();
-            if (panCards.Visibility == Visibility.Visible)
-            {
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
-            }
-            else if (panDecks.Visibility == Visibility.Visible)
-            {
-                datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
-            }
-            else if (panMatches.Visibility == Visibility.Visible)
-            {
-                datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
             }
         }
 
@@ -254,7 +297,7 @@ namespace WPFPresentation
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
-
+                clearDataGrids();
             }
             catch (Exception ex)
             {
@@ -292,7 +335,7 @@ namespace WPFPresentation
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
-
+                clearDataGrids();
             }
             catch (Exception ex)
             {
@@ -334,6 +377,70 @@ namespace WPFPresentation
             {
 
                 MessageBox.Show("" + ex);
+            }
+        }
+
+        private void btnMyStuff_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                tabMyCards.Focus();
+                // Probably should not be how this is done, but I would like to tab to start opened with info
+                clearDataGrids();
+                tabMyCards_GotFocus(sender, e);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void tabMyCards_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // CHANGE INTO BUTTON INSTEAD OF TABS
+            pageNumber = 1;
+            hideAllStackPanels();
+            grdMyStuff.Visibility = Visibility.Visible;
+            datMyCards.Visibility = Visibility.Visible;
+            grdNextPrev.Visibility = Visibility.Visible;
+            pageChecker();
+            if (datMyCards.Items.Count == 0)
+            {
+                try
+                {
+                    datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("" + ex);
+                }
+            }
+        }
+
+        private void tabMyDecks_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // CHANGE INTO BUTTON INSTEAD OF TABS
+            pageNumber = 1;
+            hideAllStackPanels();
+            grdMyStuff.Visibility = Visibility.Visible;
+            datMyDecks.Visibility = Visibility.Visible;
+            grdNextPrev.Visibility = Visibility.Visible;
+            pageChecker();
+            if (datMyDecks.Items.Count == 0)
+            {
+                try
+                {
+                    datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("" + ex);
+                }
             }
         }
     }

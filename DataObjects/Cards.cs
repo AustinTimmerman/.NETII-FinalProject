@@ -24,8 +24,6 @@ namespace DataObjects
         public int CardSecondaryConvertedManaCost { get; set; }
         public string CardSecondaryTypeID { get; set; }
         public string CardSecondaryRarityID { get; set; }
-        public bool OwnedCard { get; set; }
-        public bool Wishlisted { get; set; }
     }
 
     public class DeckCard : Cards
@@ -36,5 +34,7 @@ namespace DataObjects
     public class UserCard : Cards
     {
         public int UserID { get; set; }
+        public bool OwnedCard { get; set; }
+        public bool Wishlisted { get; set; }
     }
 }

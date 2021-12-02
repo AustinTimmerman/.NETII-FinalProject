@@ -35,13 +35,13 @@ namespace LogicLayerTests
         }
 
         [TestMethod]
-        public void TestRetrieveWishlistedCardsByUserID()
+        public void TestRetrieveUserCardsByUserID()
         {
             const int userID = 999999;
-            const int expectedCount = 1;
+            const int expectedCount = 2;
             int actualCount;
 
-            actualCount = cardManager.RetrieveWishlistedCardsByUserID(userID).Count;
+            actualCount = cardManager.RetrieveUserCardsByUserID(userID).Count;
 
             Assert.AreEqual(expectedCount, actualCount);
         }

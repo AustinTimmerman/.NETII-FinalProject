@@ -10,6 +10,6 @@ namespace LogicLayer
     public interface ICardManager
     {
         List<Cards> RetrieveCardsByPage(int pageNum = 1);
-        List<Cards> RetrieveWishlistedCardsByUserID(int userID);
+        List<UserCard> RetrieveUserCardsByUserID(int userID, int pageNum = 1);
     }
 }

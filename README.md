@@ -20,3 +20,6 @@ Completed the deck and deck cards retrieval. The user is now able to retrieve al
 
 **12/1/21**
 Completed the match, match decks, and match deck cards retrieval. The user is now able to retrieve all matches (that are *public*) and the decks and cards related. The next step is to begin the user specific retrievals so the user is able to view their specific cards, decks, and matches.
+
+**12/2/21**
+Began working on the user retrieval (cards, decks, matches), but ran into problems with the UI schema. Will need to change from tabs into buttons and reorganize the retrieval process. The next update will be changing over to buttons instead of tabs and having the user be able to retrieve all their cards, decks, and matches. 

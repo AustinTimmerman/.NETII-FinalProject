@@ -11,5 +11,6 @@ namespace DataAccessInterfaces
     {
         List<Deck> SelectDecksByPage(int pageNum);
         List<DeckCard> SelectDeckCards(int deckID);
+        List<Deck> SelectUserDecksByUserID(int userID, int pageNum);
     }
 }
