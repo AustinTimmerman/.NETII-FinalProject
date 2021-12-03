@@ -48,8 +48,17 @@
             <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnCards" GotFocus="btnCards_GotFocus"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="2" Grid.Row="1" Content="Decks" x:Name="btnDecks" GotFocus="btnDecks_GotFocus"/>
             <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMatches" GotFocus="btnMatches_GotFocus" />
-            <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="My Stuff" x:Name="btnMyStuff" GotFocus="btnMyStuff_GotFocus" />
-           
+
+            <Menu Margin="30px 20px 30px 20px" Grid.Column="4" x:Name="mnuStuff">
+                <MenuItem Grid.Column="4" Grid.Row="1" Header="My Stuff" x:Name="mnuMyStuff" Height="60" Width="140">
+                    <MenuItem Header="My Cards" x:Name="mnuMyCards" Click="mnuMyCards_Click"/>
+                    <MenuItem Header="My Decks" x:Name="mnuMyDecks" Click="mnuMyDecks_Click"/>
+                    <MenuItem Header="My Matches" x:Name="mnuMyMatches" Click="mnuMyMatches_Click"/>
+                </MenuItem>
+            </Menu>
+
+            <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="My Stuff" x:Name="btnMyStuff" Click="btnMyStuff_Click"/>
+
         </Grid>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -57,7 +66,7 @@
                 <RowDefinition Height="80px"/>
             </Grid.RowDefinitions>
             
-            <StackPanel x:Name="panHome" Visibility="Collapsed" Grid.Row="0">
+            <StackPanel x:Name="panHome" Visibility="Visible" Grid.Row="0">
                 <Label Content="Recent News For Magic the Gathering" FontSize="24" HorizontalAlignment="Center"/>
                 <TextBlock Text="Innistrad: Crimson Vow Released" FontSize="24" Padding="25 50 0 0"/>
                 <TextBlock Text="Innistrad: Midnight hunt Released" FontSize="24" Padding="25 50 0 0"/>
@@ -81,44 +90,35 @@
                 <DataGrid x:Name="datMatchDeckCards" IsReadOnly="True"/>
             </StackPanel>
             
-            <Grid x:Name="grdMyStuff" Visibility="Visible" Grid.Row="0">
+            <Grid x:Name="grdMyStuff" Visibility="Collapsed" Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <TabControl>
-                    
-                    <TabItem Header="My Cards" x:Name="tabMyCards" GotFocus="tabMyCards_GotFocus">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="75"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <DataGrid x:Name="datMyCards" Grid.Row="1" IsReadOnly="True"/>
-                        </Grid>
-                    </TabItem>
-                    
-                    <TabItem Header="My Decks" x:Name="tabMyDecks" GotFocus="tabMyDecks_GotFocus">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="75"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True"/>
-                        </Grid>
-                    </TabItem>
-                    
-                    <TabItem Header="My Matches" x:Name="tabMyMatches">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="75"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True"/>
-                        </Grid>
-                    </TabItem>
-                    
-                </TabControl>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="datMyCards" Grid.Row="1" IsReadOnly="True"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True"/>
+                </Grid>
+
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True"/>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="1" x:Name="grdNextPrev" Visibility="Collapsed">

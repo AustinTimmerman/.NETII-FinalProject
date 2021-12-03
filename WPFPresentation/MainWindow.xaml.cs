@@ -25,10 +25,12 @@ namespace WPFPresentation
     public partial class MainWindow : Window
     {
         User _user = null;
+
         UserManager _userManager = null;
         CardManager _cardManager = null;
         DeckManager _deckManager = null;
         MatchManager _matchManager = null;
+
         private int pageNumber;
         //MainWindow newWindow = null;
 
@@ -80,6 +82,7 @@ namespace WPFPresentation
             btnDecks.Visibility = Visibility.Collapsed;
             btnMatches.Visibility = Visibility.Collapsed;
             btnMyStuff.Visibility = Visibility.Collapsed;
+            mnuStuff.Visibility = Visibility.Collapsed;
         }
 
         private void showAllButtons()
@@ -88,6 +91,7 @@ namespace WPFPresentation
             btnDecks.Visibility = Visibility.Visible;
             btnMatches.Visibility = Visibility.Visible;
             btnMyStuff.Visibility = Visibility.Visible;
+            mnuStuff.Visibility = Visibility.Visible;
         }
 
         private void updateUIForLogOut()
@@ -380,16 +384,44 @@ namespace WPFPresentation
             }
         }
 
-        private void btnMyStuff_GotFocus(object sender, RoutedEventArgs e)
+        //private void btnMyStuff_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //hideAllStackPanels();
+        //        //grdMyStuff.Visibility = Visibility.Visible;
+        //        //tabMyCards.Focus();
+        //        //// Probably should not be how this is done, but I would like to tab to start opened with info
+        //        //clearDataGrids();
+        //        //tabMyCards_GotFocus(sender, e);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        MessageBox.Show("" + ex);
+        //    }
+        //}
+
+        
+
+        
+
+        private void btnMyStuff_Click(object sender, RoutedEventArgs e)
+        {
+            mnuMyStuff.IsSubmenuOpen = true;
+        }
+
+        private void mnuMyCards_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                pageNumber = 1;
                 hideAllStackPanels();
                 grdMyStuff.Visibility = Visibility.Visible;
-                tabMyCards.Focus();
-                // Probably should not be how this is done, but I would like to tab to start opened with info
-                clearDataGrids();
-                tabMyCards_GotFocus(sender, e);
+                datMyCards.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
             }
             catch (Exception ex)
             {
@@ -398,50 +430,29 @@ namespace WPFPresentation
             }
         }
 
-        private void tabMyCards_GotFocus(object sender, RoutedEventArgs e)
+        private void mnuMyDecks_Click(object sender, RoutedEventArgs e)
         {
-            // CHANGE INTO BUTTON INSTEAD OF TABS
-            pageNumber = 1;
-            hideAllStackPanels();
-            grdMyStuff.Visibility = Visibility.Visible;
-            datMyCards.Visibility = Visibility.Visible;
-            grdNextPrev.Visibility = Visibility.Visible;
-            pageChecker();
-            if (datMyCards.Items.Count == 0)
+            try
             {
-                try
-                {
-                    datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
-                }
-                catch (Exception ex)
-                {
+                pageNumber = 1;
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                datMyDecks.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
+                
+            }
+            catch (Exception ex)
+            {
 
-                    MessageBox.Show("" + ex);
-                }
+                MessageBox.Show("" + ex);
             }
         }
 
-        private void tabMyDecks_GotFocus(object sender, RoutedEventArgs e)
+        private void mnuMyMatches_Click(object sender, RoutedEventArgs e)
         {
-            // CHANGE INTO BUTTON INSTEAD OF TABS
-            pageNumber = 1;
-            hideAllStackPanels();
-            grdMyStuff.Visibility = Visibility.Visible;
-            datMyDecks.Visibility = Visibility.Visible;
-            grdNextPrev.Visibility = Visibility.Visible;
-            pageChecker();
-            if (datMyDecks.Items.Count == 0)
-            {
-                try
-                {
-                    datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
-                }
-                catch (Exception ex)
-                {
 
-                    MessageBox.Show("" + ex);
-                }
-            }
         }
     }
 }

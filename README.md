@@ -23,3 +23,6 @@ Completed the match, match decks, and match deck cards retrieval. The user is no
 
 **12/2/21**
 Began working on the user retrieval (cards, decks, matches), but ran into problems with the UI schema. Will need to change from tabs into buttons and reorganize the retrieval process. The next update will be changing over to buttons instead of tabs and having the user be able to retrieve all their cards, decks, and matches. 
+
+**12/2/21**
+Made changes to the way the *My Stuff* items are displayed and fixed the problem occuring with them. Next update will be having the user be able to retrieve all their cards, decks, and matches (along with the cards and decks associating each respected deck or match).
