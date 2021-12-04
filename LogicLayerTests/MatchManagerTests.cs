@@ -42,5 +42,18 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestRetrieveUserMatchesByUserIDReturnsMatches()
+        {
+            const int userID = 999999;
+            const int pageNum = 1;
+            const int expectedCount = 2;
+            int actualCount;
+
+            actualCount = matchManager.RetrieveUserMatchesByUserID(userID, pageNum).Count;
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
     }
 }

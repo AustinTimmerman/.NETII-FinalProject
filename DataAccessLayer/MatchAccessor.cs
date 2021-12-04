@@ -89,5 +89,46 @@ namespace DataAccessLayer
 
             return matches;
         }
+
+        public List<Match> SelectUserMatchesByUserID(int userID, int pageNum)
+        {
+            List<Match> userMatches = new List<Match>();
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_select_user_matches_by_userID";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@PageNumber", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@PageNumber"].Value = pageNum;
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        userMatches.Add(new Match()
+                        {
+                            MatchID = reader.GetInt32(0),
+                            MatchName = reader.GetString(1),
+                            UserID = userID,
+                            IsPublic = reader.GetBoolean(3)
+                        });
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("There are no user matches!");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return userMatches;
+        }
     }
 }

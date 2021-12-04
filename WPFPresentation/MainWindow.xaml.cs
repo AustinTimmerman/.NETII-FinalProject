@@ -52,30 +52,6 @@ namespace WPFPresentation
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            if(btnLogin.Content.ToString() == "Login")
-            {
-                var logInOrSignup = new LoginOrSignup(_userManager);
-                bool? result = logInOrSignup.ShowDialog();
-                _user = logInOrSignup.getUser();
-                if(result == true)
-                {
-                    MessageBox.Show("Welcome, " + _user.Username, "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information);
-                    updateUIForLogin();
-                }
-                else
-                {
-                    _user = null;
-                    updateUIForLogOut();
-                }
-            }
-            else
-            {
-                updateUIForLogOut();
-            }
-        }
-
         private void hideAllButtons()
         {
             btnCards.Visibility = Visibility.Collapsed;
@@ -124,7 +100,10 @@ namespace WPFPresentation
             grdMyStuff.Visibility = Visibility.Collapsed;
             datMyCards.Visibility = Visibility.Collapsed;
             datMyDecks.Visibility = Visibility.Collapsed;
+            datMyDeckCards.Visibility = Visibility.Collapsed;
             datMyMatches.Visibility = Visibility.Collapsed;
+            datMyMatchDecks.Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Visibility = Visibility.Collapsed;
         }
 
         private void pageChecker()
@@ -192,6 +171,17 @@ namespace WPFPresentation
                     btnNextPage.IsEnabled = true;
                 }
             }
+            else if (datMyMatches.Visibility == Visibility.Visible)
+            {
+                if (_matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber).Count < 20)
+                {
+                    btnNextPage.IsEnabled = false;
+                }
+                else
+                {
+                    btnNextPage.IsEnabled = true;
+                }
+            }
         }
 
         private void PrevNextPageClick_Helper()
@@ -217,6 +207,10 @@ namespace WPFPresentation
             {
                 datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
             }
+            else if (datMyMatches.Visibility == Visibility.Visible)
+            {
+                datMyMatches.ItemsSource = _matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber);
+            }
         }
 
         private void clearDataGrids()
@@ -224,6 +218,30 @@ namespace WPFPresentation
             datMyCards.ItemsSource = null;
             datMyDecks.ItemsSource = null;
             datMyMatches.ItemsSource = null;
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnLogin.Content.ToString() == "Login")
+            {
+                var logInOrSignup = new LoginOrSignup(_userManager);
+                bool? result = logInOrSignup.ShowDialog();
+                _user = logInOrSignup.getUser();
+                if (result == true)
+                {
+                    MessageBox.Show("Welcome, " + _user.Username, "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                    updateUIForLogin();
+                }
+                else
+                {
+                    _user = null;
+                    updateUIForLogOut();
+                }
+            }
+            else
+            {
+                updateUIForLogOut();
+            }
         }
 
         private void frmMainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -450,9 +468,81 @@ namespace WPFPresentation
             }
         }
 
+        private void datMyDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var deck = (Deck)datMyDecks.SelectedItem;
+
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                datMyDeckCards.Visibility = Visibility.Visible;
+
+                datMyDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
         private void mnuMyMatches_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                pageNumber = 1;
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                datMyMatches.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                datMyMatches.ItemsSource = _matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber);
 
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void datMyMatches_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var match = (Match)datMyMatches.SelectedItem;
+
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                datMyMatchDecks.Visibility = Visibility.Visible;
+
+                datMyMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void datMyMatchDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var deck = (MatchDeck)datMyMatchDecks.SelectedItem;
+
+                hideAllStackPanels();
+                grdMyStuff.Visibility = Visibility.Visible;
+                datMyMatchDeckCards.Visibility = Visibility.Visible;
+
+                datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
         }
     }
 }

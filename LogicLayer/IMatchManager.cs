@@ -11,5 +11,6 @@ namespace LogicLayer
     {   
         List<MatchDeck> RetrieveMatchDecksByMatchID(int matchID);
         List<Match> RetrieveMatchesByPage(int pageNum = 1);
+        List<Match> RetrieveUserMatchesByUserID(int userID, int pageNum = 1);
     }
 }

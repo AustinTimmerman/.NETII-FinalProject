@@ -58,5 +58,22 @@ namespace LogicLayer
             return matches;
 
         }
+
+        public List<Match> RetrieveUserMatchesByUserID(int userID, int pageNum = 1)
+        {
+            List<Match> userMatches = new List<Match>();
+
+            try
+            {
+                userMatches = _matchAccessor.SelectUserMatchesByUserID(userID, pageNum);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return userMatches;
+        }
     }
 }

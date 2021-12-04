@@ -11,5 +11,6 @@ namespace DataAccessInterfaces
     {
         List<Match> SelectMatchesByPage(int pageNum);
         List<MatchDeck> SelectMatchDecksByMatchID(int matchID);
+        List<Match> SelectUserMatchesByUserID(int userID, int pageNum);
     }
 }

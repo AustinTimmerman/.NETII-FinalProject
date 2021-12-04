@@ -113,5 +113,34 @@ namespace DataAccessFakes
 
             return matches;
         }
+
+        public List<Match> SelectUserMatchesByUserID(int userID, int pageNum)
+        {
+            List<Match> userMatches = new List<Match>();
+            int index = (pageNum - 1) * 2;
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    if (index > fakeMatches.Count() - 1)
+                    {
+                        return userMatches;
+                    }
+                    if (fakeMatches[index].IsPublic == true)
+                    {
+                        userMatches.Add(fakeMatches[index]);
+                    }
+                    index++;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return userMatches;
+        }
     }
 }

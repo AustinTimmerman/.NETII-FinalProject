@@ -108,7 +108,8 @@
                         <RowDefinition Height="75"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True"/>
+                    <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDecks_MouseDoubleClick"/>
+                    <DataGrid x:Name="datMyDeckCards" Grid.Row="1" IsReadOnly="True"/>
                 </Grid>
 
 
@@ -117,7 +118,9 @@
                         <RowDefinition Height="75"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True"/>
+                    <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatches_MouseDoubleClick"/>
+                    <DataGrid x:Name="datMyMatchDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDecks_MouseDoubleClick"/>
+                    <DataGrid x:Name="datMyMatchDeckCards" Grid.Row="1" IsReadOnly="True"/>
                 </Grid>
             </Grid>
 

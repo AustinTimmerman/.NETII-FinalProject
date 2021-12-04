@@ -26,3 +26,6 @@ Began working on the user retrieval (cards, decks, matches), but ran into proble
 
 **12/2/21**
 Made changes to the way the *My Stuff* items are displayed and fixed the problem occuring with them. Next update will be having the user be able to retrieve all their cards, decks, and matches (along with the cards and decks associating each respected deck or match).
+
+**12/4/21**
+Completed the user retrieval (cards, decks, matches and everything related to the matches and decks retrieved). The user is now able to view all of their owned cars / wishlisted cards, decks, and matches. The next update will cleanup or being able to view a card in a detail window that allows the user to add the card to owned or wishlisted.
