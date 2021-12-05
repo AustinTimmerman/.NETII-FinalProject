@@ -72,13 +72,13 @@
                 <TextBlock Text="Innistrad: Midnight hunt Released" FontSize="24" Padding="25 50 0 0"/>
             </StackPanel>
             <StackPanel x:Name="panCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datCards" IsReadOnly="True"/>
+                <DataGrid x:Name="datCards" IsReadOnly="True" MouseDoubleClick="datCards_MouseDoubleClick"/>
             </StackPanel>
             <StackPanel x:Name="panDecks" Visibility="Collapsed" Grid.Row="0">
                 <DataGrid x:Name="datDecks" IsReadOnly="True" MouseDoubleClick="datDecks_MouseDoubleClick"/>
             </StackPanel>
             <StackPanel x:Name="panDeckCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datDeckCards" IsReadOnly="True"/>
+                <DataGrid x:Name="datDeckCards" IsReadOnly="True" MouseDoubleClick="datDeckCards_MouseDoubleClick"/>
             </StackPanel>
             <StackPanel x:Name="panMatches" Visibility="Collapsed" Grid.Row="0">
                 <DataGrid x:Name="datMatches" IsReadOnly="True" MouseDoubleClick="datMatches_MouseDoubleClick"/>
@@ -87,7 +87,7 @@
                 <DataGrid x:Name="datMatchDecks" IsReadOnly="True" MouseDoubleClick="datMatchDecks_MouseDoubleClick"/>
             </StackPanel>
             <StackPanel x:Name="panMatchDeckCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datMatchDeckCards" IsReadOnly="True"/>
+                <DataGrid x:Name="datMatchDeckCards" IsReadOnly="True" MouseDoubleClick="datMatchDeckCards_MouseDoubleClick"/>
             </StackPanel>
             
             <Grid x:Name="grdMyStuff" Visibility="Collapsed" Grid.Row="0">
@@ -100,7 +100,7 @@
                         <RowDefinition Height="75"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyCards" Grid.Row="1" IsReadOnly="True"/>
+                    <DataGrid x:Name="datMyCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyCards_MouseDoubleClick"/>
                 </Grid>
 
                 <Grid>
@@ -109,7 +109,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDecks_MouseDoubleClick"/>
-                    <DataGrid x:Name="datMyDeckCards" Grid.Row="1" IsReadOnly="True"/>
+                    <DataGrid x:Name="datMyDeckCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDeckCards_MouseDoubleClick"/>
                 </Grid>
 
 
@@ -120,7 +120,7 @@
                     </Grid.RowDefinitions>
                     <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatches_MouseDoubleClick"/>
                     <DataGrid x:Name="datMyMatchDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDecks_MouseDoubleClick"/>
-                    <DataGrid x:Name="datMyMatchDeckCards" Grid.Row="1" IsReadOnly="True"/>
+                    <DataGrid x:Name="datMyMatchDeckCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDeckCards_MouseDoubleClick"/>
                 </Grid>
             </Grid>
 

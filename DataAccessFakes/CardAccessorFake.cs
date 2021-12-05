@@ -12,6 +12,7 @@ namespace DataAccessFakes
     {
         private List<Cards> fakeCards = new List<Cards>();
         private List<UserCard> fakeUserCards = new List<UserCard>();
+        private int rowCount = 20;
 
         public CardAccessorFake()
         {
@@ -128,11 +129,11 @@ namespace DataAccessFakes
         public List<Cards> SelectCardsByPage(int pageNum)
         {
             List<Cards> cards = new List<Cards>();
-            int index = (pageNum - 1) * 2;
+            int index = (pageNum - 1) * rowCount;
 
             try
             {
-                for(int i = 0; i < 2; i++)
+                for(int i = 0; i < rowCount; i++)
                 {
                     if(index > fakeCards.Count() - 1) 
                     {
@@ -166,27 +167,40 @@ namespace DataAccessFakes
         public List<UserCard> SelectUserCardsByUserID(int userID, int pageNum)
         {
             List<UserCard> userCards = new List<UserCard>();
-            int index = (pageNum - 1) * 2;
-            try
+            if (pageNum > 0)
             {
-
-                for (int i = 0; i < 2; i++)
+                int index = (pageNum - 1) * rowCount;
+                try
                 {
-                    if (index > fakeUserCards.Count() - 1)
+
+                    for (int i = 0; i < rowCount; i++)
                     {
-                        return fakeUserCards;
+                        if (index > fakeUserCards.Count() - 1)
+                        {
+                            return fakeUserCards;
+                        }
+                        if (fakeUserCards[index].UserID == userID)
+                        {
+                            userCards.Add(fakeUserCards[index]);
+                        }
+                        index++;
                     }
-                    if (fakeUserCards[index].UserID == userID)
-                    {
-                        userCards.Add(fakeUserCards[index]);
-                    }
-                    index++;
+                }
+                catch (Exception)
+                {
+
+                    throw;
                 }
             }
-            catch (Exception)
+            else
             {
-
-                throw;
+                foreach(UserCard card in fakeUserCards)
+                {
+                    if (card.UserID == userID)
+                    {
+                        userCards.Add(card);
+                    }
+                }
             }
 
             return userCards;

@@ -111,7 +111,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    throw new ApplicationException("There are no user cards!");
+                    //throw new ApplicationException("There are no user cards!");
                 }
             }
             catch (Exception)

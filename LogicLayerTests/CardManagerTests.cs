@@ -26,7 +26,7 @@ namespace LogicLayerTests
         public void TestRetrieveCardsByPageReturnsCards()
         {
             const int pageNum = 1;
-            const int expectedCount = 2;
+            const int expectedCount = 4;
             int actualCount;
 
             actualCount = cardManager.RetrieveCardsByPage(pageNum).Count;
@@ -38,7 +38,7 @@ namespace LogicLayerTests
         public void TestRetrieveUserCardsByUserID()
         {
             const int userID = 999999;
-            const int expectedCount = 2;
+            const int expectedCount = 3;
             int actualCount;
 
             actualCount = cardManager.RetrieveUserCardsByUserID(userID).Count;

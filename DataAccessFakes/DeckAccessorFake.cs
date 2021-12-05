@@ -13,6 +13,7 @@ namespace DataAccessFakes
         private List<Deck> fakeDecks = new List<Deck>();
         private List<DeckCard> fakeDeckCards = new List<DeckCard>();
         CardAccessorFake cardAccessor = new CardAccessorFake();
+        private int rowCount = 20;
 
         public DeckAccessorFake()
         {
@@ -179,11 +180,11 @@ namespace DataAccessFakes
         public List<Deck> SelectDecksByPage(int pageNum)
         {
             List<Deck> cards = new List<Deck>();
-            int index = (pageNum - 1) * 2;
+            int index = (pageNum - 1) * rowCount;
 
             try
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < rowCount; i++)
                 {
                     if (index > fakeDecks.Count() - 1)
                     {

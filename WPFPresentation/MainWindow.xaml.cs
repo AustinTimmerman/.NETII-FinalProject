@@ -30,6 +30,7 @@ namespace WPFPresentation
         CardManager _cardManager = null;
         DeckManager _deckManager = null;
         MatchManager _matchManager = null;
+        private int rowCounter = 20;
 
         private int pageNumber;
         //MainWindow newWindow = null;
@@ -39,7 +40,7 @@ namespace WPFPresentation
             _userManager = new UserManager();
             //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
-            
+
             _cardManager = new CardManager();
             //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
 
@@ -118,7 +119,7 @@ namespace WPFPresentation
             }
             if (panCards.Visibility == Visibility.Visible)
             {                                                           // the amount of cards / rows being retrieved 
-                if (_cardManager.RetrieveCardsByPage(pageNumber).Count < 20)
+                if (_cardManager.RetrieveCardsByPage(pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -129,7 +130,7 @@ namespace WPFPresentation
             }
             else if (panDecks.Visibility == Visibility.Visible)
             {
-                if (_deckManager.RetrieveDecksByPage(pageNumber).Count < 20)
+                if (_deckManager.RetrieveDecksByPage(pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -140,7 +141,7 @@ namespace WPFPresentation
             }
             else if (panMatches.Visibility == Visibility.Visible)
             {
-                if (_matchManager.RetrieveMatchesByPage(pageNumber).Count < 20)
+                if (_matchManager.RetrieveMatchesByPage(pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -151,7 +152,7 @@ namespace WPFPresentation
             }
             else if (datMyCards.Visibility == Visibility.Visible)
             {
-                if (_cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber).Count < 20)
+                if (_cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -160,9 +161,9 @@ namespace WPFPresentation
                     btnNextPage.IsEnabled = true;
                 }
             }
-            else if(datMyDecks.Visibility == Visibility.Visible)
+            else if (datMyDecks.Visibility == Visibility.Visible)
             {
-                if (_deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber).Count < 20)
+                if (_deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -173,7 +174,7 @@ namespace WPFPresentation
             }
             else if (datMyMatches.Visibility == Visibility.Visible)
             {
-                if (_matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber).Count < 20)
+                if (_matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber).Count < rowCounter)
                 {
                     btnNextPage.IsEnabled = false;
                 }
@@ -189,7 +190,8 @@ namespace WPFPresentation
             pageChecker();
             if (panCards.Visibility == Visibility.Visible)
             {
-                datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                datCards.ItemsSource = createCardList();
             }
             else if (panDecks.Visibility == Visibility.Visible)
             {
@@ -218,6 +220,160 @@ namespace WPFPresentation
             datMyCards.ItemsSource = null;
             datMyDecks.ItemsSource = null;
             datMyMatches.ItemsSource = null;
+        }
+
+        private void loadDetailWindow(UserCard userCard)
+        {
+            var cardDetailWindow = new CardDetail(userCard);
+            cardDetailWindow.ShowDialog();
+        }
+
+        private List<UserCard> createCardList()
+        {
+            List<UserCard> displayCards = new List<UserCard>();
+
+            List<UserCard> userCards = _cardManager.RetrieveUserCardsByUserID(_user.UserID, 0);
+            List<Cards> cards = _cardManager.RetrieveCardsByPage(pageNumber);
+
+            foreach (Cards card in cards)
+            {
+                for (int i = 0; i <= userCards.Count; i++)
+                {
+                    if (i == userCards.Count)
+                    {
+                        displayCards.Add(new UserCard()
+                        {
+                            UserID = _user.UserID,
+                            CardID = card.CardID,
+                            CardName = card.CardName,
+                            ImageID = card.ImageID,
+                            CardDescription = card.CardDescription,
+                            CardColorID = card.CardColorID,
+                            CardConvertedManaCost = card.CardConvertedManaCost,
+                            CardRarityID = card.CardRarityID,
+                            CardTypeID = card.CardTypeID,
+                            HasSecondaryCard = card.HasSecondaryCard,
+                            CardSecondaryName = card.CardSecondaryName,
+                            SecondaryImageID = card.SecondaryImageID,
+                            CardSecondaryDescription = card.CardSecondaryDescription,
+                            CardSecondaryColorID = card.CardSecondaryColorID,
+                            CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
+                            CardSecondaryRarityID = card.CardSecondaryRarityID,
+                            CardSecondaryTypeID = card.CardSecondaryTypeID,
+                            OwnedCard = false,
+                            Wishlisted = false
+                        });
+                        break;
+                    }
+                    if (userCards[i].CardID == card.CardID)
+                    {
+                        displayCards.Add(userCards[i]);
+                        break;
+                    }
+                }
+            }
+
+            return displayCards;
+        }
+
+        private List<UserCard> createCardList(Deck deck)
+        {
+            List<UserCard> displayCards = new List<UserCard>();
+
+            List<UserCard> userCards = _cardManager.RetrieveUserCardsByUserID(_user.UserID, 0);
+            List<DeckCard> cards = _deckManager.RetrieveDeckCards(deck.DeckID);
+
+
+            foreach (DeckCard card in cards)
+            {
+                for (int i = 0; i <= userCards.Count; i++)
+                {
+                    if (i == userCards.Count)
+                    {
+                        displayCards.Add(new UserCard()
+                        {
+                            UserID = _user.UserID,
+                            CardID = card.CardID,
+                            CardName = card.CardName,
+                            ImageID = card.ImageID,
+                            CardDescription = card.CardDescription,
+                            CardColorID = card.CardColorID,
+                            CardConvertedManaCost = card.CardConvertedManaCost,
+                            CardRarityID = card.CardRarityID,
+                            CardTypeID = card.CardTypeID,
+                            HasSecondaryCard = card.HasSecondaryCard,
+                            CardSecondaryName = card.CardSecondaryName,
+                            SecondaryImageID = card.SecondaryImageID,
+                            CardSecondaryDescription = card.CardSecondaryDescription,
+                            CardSecondaryColorID = card.CardSecondaryColorID,
+                            CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
+                            CardSecondaryRarityID = card.CardSecondaryRarityID,
+                            CardSecondaryTypeID = card.CardSecondaryTypeID,
+                            OwnedCard = false,
+                            Wishlisted = false
+                        });
+                        break;
+                    }
+                    if (userCards[i].CardID == card.CardID)
+                    {
+                        displayCards.Add(userCards[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            return displayCards;
+        }
+
+        private List<UserCard> createCardList(MatchDeck deck)
+        {
+            List<UserCard> displayCards = new List<UserCard>();
+
+            List<UserCard> userCards = _cardManager.RetrieveUserCardsByUserID(_user.UserID, 0);
+            List<DeckCard> cards = _deckManager.RetrieveDeckCards(deck.DeckID);
+
+
+            foreach (DeckCard card in cards)
+            {
+                for (int i = 0; i <= userCards.Count; i++)
+                {
+                    if (i == userCards.Count)
+                    {
+                        displayCards.Add(new UserCard()
+                        {
+                            UserID = _user.UserID,
+                            CardID = card.CardID,
+                            CardName = card.CardName,
+                            ImageID = card.ImageID,
+                            CardDescription = card.CardDescription,
+                            CardColorID = card.CardColorID,
+                            CardConvertedManaCost = card.CardConvertedManaCost,
+                            CardRarityID = card.CardRarityID,
+                            CardTypeID = card.CardTypeID,
+                            HasSecondaryCard = card.HasSecondaryCard,
+                            CardSecondaryName = card.CardSecondaryName,
+                            SecondaryImageID = card.SecondaryImageID,
+                            CardSecondaryDescription = card.CardSecondaryDescription,
+                            CardSecondaryColorID = card.CardSecondaryColorID,
+                            CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
+                            CardSecondaryRarityID = card.CardSecondaryRarityID,
+                            CardSecondaryTypeID = card.CardSecondaryTypeID,
+                            OwnedCard = false,
+                            Wishlisted = false
+                        });
+                        break;
+                    }
+                    if (userCards[i].CardID == card.CardID)
+                    {
+                        displayCards.Add(userCards[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            return displayCards;
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -266,21 +422,22 @@ namespace WPFPresentation
 
         private void btnCards_GotFocus(object sender, RoutedEventArgs e)
         {
-                try
-                {
-                    pageNumber = 1;
-                    hideAllStackPanels();
-                    panCards.Visibility = Visibility.Visible;
-                    grdNextPrev.Visibility = Visibility.Visible;
-                    pageChecker();
-                    datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
-                    clearDataGrids();
-                }
-                catch (Exception ex)
-                {
+            try
+            {
+                pageNumber = 1;
+                hideAllStackPanels();
+                panCards.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                datCards.ItemsSource = createCardList();
+                clearDataGrids();
+            }
+            catch (Exception ex)
+            {
 
-                    MessageBox.Show("" + ex);
-                }
+                MessageBox.Show("" + ex);
+            }
         }
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
@@ -337,7 +494,8 @@ namespace WPFPresentation
                 hideAllStackPanels();
                 panDeckCards.Visibility = Visibility.Visible;
 
-                datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                //datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                datDeckCards.ItemsSource = createCardList(deck);
             }
             catch (Exception ex)
             {
@@ -393,7 +551,8 @@ namespace WPFPresentation
                 hideAllStackPanels();
                 panMatchDeckCards.Visibility = Visibility.Visible;
 
-                datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                //datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                datMatchDeckCards.ItemsSource = createCardList(deck);
             }
             catch (Exception ex)
             {
@@ -401,28 +560,6 @@ namespace WPFPresentation
                 MessageBox.Show("" + ex);
             }
         }
-
-        //private void btnMyStuff_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        //hideAllStackPanels();
-        //        //grdMyStuff.Visibility = Visibility.Visible;
-        //        //tabMyCards.Focus();
-        //        //// Probably should not be how this is done, but I would like to tab to start opened with info
-        //        //clearDataGrids();
-        //        //tabMyCards_GotFocus(sender, e);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        MessageBox.Show("" + ex);
-        //    }
-        //}
-
-        
-
-        
 
         private void btnMyStuff_Click(object sender, RoutedEventArgs e)
         {
@@ -459,7 +596,7 @@ namespace WPFPresentation
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
-                
+
             }
             catch (Exception ex)
             {
@@ -478,7 +615,8 @@ namespace WPFPresentation
                 grdMyStuff.Visibility = Visibility.Visible;
                 datMyDeckCards.Visibility = Visibility.Visible;
 
-                datMyDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                //datMyDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                datMyDeckCards.ItemsSource = createCardList(deck);
             }
             catch (Exception ex)
             {
@@ -536,13 +674,95 @@ namespace WPFPresentation
                 grdMyStuff.Visibility = Visibility.Visible;
                 datMyMatchDeckCards.Visibility = Visibility.Visible;
 
-                datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                //datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                datMyMatchDeckCards.ItemsSource = createCardList(deck);
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show("" + ex);
             }
+        }
+
+        //private void datCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    var card = (Cards)datCards.SelectedItem;
+        //    UserCard userCard = new UserCard();
+
+        //    List<UserCard> userCards = _cardManager.RetrieveUserCardsByUserID(_user.UserID, 0);
+
+        //    foreach (UserCard item in userCards)
+        //    {
+        //        if (item.CardID == card.CardID)
+        //        {
+        //            userCard = item;
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            userCard = new UserCard()
+        //            {
+        //                UserID = _user.UserID,
+        //                CardID = card.CardID,
+        //                CardName = card.CardName,
+        //                ImageID = card.ImageID,
+        //                CardDescription = card.CardDescription,
+        //                CardColorID = card.CardColorID,
+        //                CardConvertedManaCost = card.CardConvertedManaCost,
+        //                CardRarityID = card.CardRarityID,
+        //                CardTypeID = card.CardTypeID,
+        //                HasSecondaryCard = card.HasSecondaryCard,
+        //                CardSecondaryName = card.CardSecondaryName,
+        //                SecondaryImageID = card.SecondaryImageID,
+        //                CardSecondaryDescription = card.CardSecondaryDescription,
+        //                CardSecondaryColorID = card.CardSecondaryColorID,
+        //                CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
+        //                CardSecondaryRarityID = card.CardSecondaryRarityID,
+        //                CardSecondaryTypeID = card.CardSecondaryTypeID,
+        //                OwnedCard = false,
+        //                Wishlisted = false
+        //            };
+        //        }
+        //    }
+
+        //    var cardDetailWindow = new CardDetail(userCard);
+        //    cardDetailWindow.ShowDialog();
+        //}
+
+        private void datCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datCards.SelectedItem;
+            loadDetailWindow(userCard);
+        }
+
+        private void datDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datDeckCards.SelectedItem;
+            loadDetailWindow(userCard);
+        }
+
+        private void datMatchDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datMatchDeckCards.SelectedItem;
+            loadDetailWindow(userCard);
+        }
+
+        private void datMyCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datMyCards.SelectedItem;
+            loadDetailWindow(userCard);
+        }
+
+        private void datMyDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datMyDeckCards.SelectedItem;
+            loadDetailWindow(userCard);
+        }
+
+        private void datMyMatchDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var userCard = (UserCard)datMyMatchDeckCards.SelectedItem;
+            loadDetailWindow(userCard);
         }
     }
 }

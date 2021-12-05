@@ -13,6 +13,7 @@ namespace DataAccessFakes
         private List<Match> fakeMatches = new List<Match>();
         private List<MatchDeck> fakeMatchDecks = new List<MatchDeck>();
         private DeckAccessorFake deckAccessor = new DeckAccessorFake();
+        private int rowCount = 20;
 
         public MatchAccessorFake()
         {
@@ -88,11 +89,11 @@ namespace DataAccessFakes
         public List<Match> SelectMatchesByPage(int pageNum)
         {
             List<Match> matches = new List<Match>();
-            int index = (pageNum - 1) * 2;
+            int index = (pageNum - 1) * rowCount;
 
             try
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < rowCount; i++)
                 {
                     if (index > fakeMatches.Count() - 1)
                     {
@@ -117,11 +118,11 @@ namespace DataAccessFakes
         public List<Match> SelectUserMatchesByUserID(int userID, int pageNum)
         {
             List<Match> userMatches = new List<Match>();
-            int index = (pageNum - 1) * 2;
+            int index = (pageNum - 1) * rowCount;
 
             try
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < rowCount; i++)
                 {
                     if (index > fakeMatches.Count() - 1)
                     {

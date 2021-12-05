@@ -28,4 +28,7 @@ Began working on the user retrieval (cards, decks, matches), but ran into proble
 Made changes to the way the *My Stuff* items are displayed and fixed the problem occuring with them. Next update will be having the user be able to retrieve all their cards, decks, and matches (along with the cards and decks associating each respected deck or match).
 
 **12/4/21**
-Completed the user retrieval (cards, decks, matches and everything related to the matches and decks retrieved). The user is now able to view all of their owned cars / wishlisted cards, decks, and matches. The next update will cleanup or being able to view a card in a detail window that allows the user to add the card to owned or wishlisted.
+Completed the user retrieval (cards, decks, matches and everything related to the matches and decks retrieved). The user is now able to view all of their owned cars / wishlisted cards, decks, and matches. The next update will be cleanup or being able to view a card in a detail window that allows the user to add the card to owned or wishlisted.
+
+**12/4/21**
+Completed the specific card retrieval information, and finally converted the card retrieval into a user enabled mode. The user is now able to view a specific card in a detailed window with the card information in a much more user friendly mode. Along with that, the user is now able to view which cards they have owned or wishlisted among all the cards in the database. Every card instance now follows this model. The next update will allow the user to add cards to their owned or wishlisted (update, insert, or delete a card).
