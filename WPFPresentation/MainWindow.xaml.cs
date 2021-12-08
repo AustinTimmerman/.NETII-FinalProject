@@ -37,18 +37,18 @@ namespace WPFPresentation
 
         public MainWindow()
         {
-            _userManager = new UserManager();
-            //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
+            //_userManager = new UserManager();
+            _userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
 
-            _cardManager = new CardManager();
-            //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
+            //_cardManager = new CardManager();
+            _cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
 
-            _deckManager = new DeckManager();
-            //_deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
+            //_deckManager = new DeckManager();
+            _deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
 
-            _matchManager = new MatchManager();
-            //_matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
+            //_matchManager = new MatchManager();
+            _matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
 
             InitializeComponent();
         }
@@ -224,7 +224,7 @@ namespace WPFPresentation
 
         private void loadDetailWindow(UserCard userCard)
         {
-            var cardDetailWindow = new CardDetail(userCard);
+            var cardDetailWindow = new CardDetail(userCard, _cardManager, _deckManager, _matchManager);
             cardDetailWindow.ShowDialog();
         }
 

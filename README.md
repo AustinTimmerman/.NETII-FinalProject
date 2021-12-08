@@ -32,3 +32,6 @@ Completed the user retrieval (cards, decks, matches and everything related to th
 
 **12/4/21**
 Completed the specific card retrieval information, and finally converted the card retrieval into a user enabled mode. The user is now able to view a specific card in a detailed window with the card information in a much more user friendly mode. Along with that, the user is now able to view which cards they have owned or wishlisted among all the cards in the database. Every card instance now follows this model. The next update will allow the user to add cards to their owned or wishlisted (update, insert, or delete a card).
+
+**12/8/21**
+Began work on update and insert user cards. Next update will have the fully complete user card update and insert.

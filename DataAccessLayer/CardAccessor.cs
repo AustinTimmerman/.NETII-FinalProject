@@ -13,6 +13,11 @@ namespace DataAccessLayer
 {
     public class CardAccessor : ICardAccessor
     {
+        public int InsertUserCard(UserCard card)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Cards> SelectCardsByPage(int pageNum)
         {
             List<Cards> cards = new List<Cards>();
@@ -120,6 +125,11 @@ namespace DataAccessLayer
             }
 
             return cards;
+        }
+
+        public int UpdateUserCard(UserCard oldCard, UserCard newCard)
+        {
+            throw new NotImplementedException();
         }
     }
     

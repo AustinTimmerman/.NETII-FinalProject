@@ -25,6 +25,40 @@ namespace LogicLayer
             _cardAccessor = cardAccessor;
         }
 
+        public bool CreateUserCard(UserCard card)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _cardAccessor.InsertUserCard(card));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool EditUserCard(UserCard oldCard, UserCard newCard)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _cardAccessor.UpdateUserCard(oldCard, newCard));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public List<Cards> RetrieveCardsByPage(int pageNum = 1)
         {
             List<Cards> cards = new List<Cards>();

@@ -24,14 +24,20 @@ namespace WPFPresentation
     public partial class CardDetail : Window
     {
         private UserCard _card;
+        private ICardManager _cardManager;
+        private IDeckManager _deckManager;
+        private IMatchManager _matchManager;
         public CardDetail()
         {
             InitializeComponent();
         }
 
-        public CardDetail(UserCard userCard)
+        public CardDetail(UserCard userCard, ICardManager cardManager, IDeckManager deckManager, IMatchManager matchManager)
         {
             _card = userCard;
+            _cardManager = cardManager;
+            _deckManager = deckManager;
+            _matchManager = matchManager;
             InitializeComponent();
             populateControls();
         }
@@ -100,6 +106,101 @@ namespace WPFPresentation
             {
 
                 MessageBox.Show(ex + " ");
+            }
+        }
+
+        private void buttonHelper()
+        {
+            if (grdOneCardDetail.Visibility == Visibility.Visible)
+            {
+                if (_card.OwnedCard == chkOneCardOwned.IsChecked && _card.Wishlisted == chkOneCardWishlisted.IsChecked)
+                {
+                    btnOneCardSave.IsEnabled = false;
+                    btnOneCardCloseCancel.Content = "Close";
+                }
+                else
+                {
+                    btnOneCardSave.IsEnabled = true;
+                    btnOneCardCloseCancel.Content = "Cancel";
+                }
+            }
+            else if(grdTwoCardDetail.Visibility == Visibility.Visible)
+            {
+                if (_card.OwnedCard == chkTwoCardOwned.IsChecked && _card.Wishlisted == chkTwoCardWishlisted.IsChecked)
+                {
+                    btnTwoCardSave.IsEnabled = false;
+                    btnTwoCardCloseCancel.Content = "Close";
+                }
+                else
+                {
+                    btnTwoCardSave.IsEnabled = true;
+                    btnTwoCardCloseCancel.Content = "Cancel";
+                }
+            }
+        }
+
+        private void chkOneCardOwned_Click(object sender, RoutedEventArgs e)
+        {
+            buttonHelper();
+        }
+
+        private void chkOneCardWishlisted_Click(object sender, RoutedEventArgs e)
+        {
+            buttonHelper();
+        }
+
+        private void chkTwoCardOwned_Click(object sender, RoutedEventArgs e)
+        {
+            buttonHelper();
+        }
+
+        private void chkTwoCardWishlisted_Click(object sender, RoutedEventArgs e)
+        {
+            buttonHelper();
+        }
+
+        private void btnOneCardSave_Click(object sender, RoutedEventArgs e)
+        {
+            UserCard userCard;
+            userCard = _card;
+            userCard.OwnedCard = (bool)chkOneCardOwned.IsChecked;
+            userCard.Wishlisted = (bool)chkOneCardWishlisted.IsChecked;
+
+            try
+            {
+                bool result = _cardManager.EditUserCard(_card, userCard);
+                if (!result)
+                {
+                    _cardManager.CreateUserCard(userCard);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            _card = userCard;
+            buttonHelper();
+           
+        }
+
+        private void btnOneCardCloseCancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (btnOneCardCloseCancel.Content.ToString() == "Close")
+                {
+                    this.Close();
+                }
+                else
+                {
+                    buttonHelper();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

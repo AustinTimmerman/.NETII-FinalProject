@@ -45,5 +45,56 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestCreateUserCardPasses()
+        {
+            UserCard userCard = new UserCard() {
+                UserID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = false
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = cardManager.CreateUserCard(userCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestCreateUserCardFails()
+        {
+            UserCard userCard = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = false
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = cardManager.CreateUserCard(userCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

@@ -205,5 +205,54 @@ namespace DataAccessFakes
 
             return userCards;
         }
+
+        public int InsertUserCard(UserCard card)
+        {
+            int result = 0;
+
+            try
+            {
+                foreach(UserCard userCard in fakeUserCards)
+                {
+                    if(card.CardID == userCard.CardID)
+                    {
+                        return result;
+                    }
+                }
+                fakeUserCards.Add(card);
+                result = 1;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public int UpdateUserCard(UserCard oldCard, UserCard newCard)
+        {
+            int result = 0;
+
+            try
+            {
+                for(int i = 0; i < fakeUserCards.Count; i++)
+                {
+                    if (oldCard.CardID == fakeUserCards[i].CardID)
+                    {
+                        fakeUserCards[i] = newCard;
+                        result = 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
     }
 }

@@ -45,11 +45,11 @@
                 <Label x:Name="lblCardColor" Grid.Row="1" Grid.Column="2" Content="Red" HorizontalAlignment="Center"/>
                 <Label x:Name="lblCardType" Grid.Row="1" Grid.Column="3" Content="Legendary Creature" HorizontalAlignment="Center"/>
             </Grid>
-            <CheckBox x:Name="chkOneCardOwned" Grid.Row="4" Content="Owned" IsChecked="True" VerticalAlignment="Bottom" Margin="5 0 0 0"/>
-            <CheckBox x:Name="chkOneCardWishlisted" Grid.Row="5" Content="Wishlisted" VerticalAlignment="Bottom" Margin="5 0 0 0"/>
+            <CheckBox x:Name="chkOneCardOwned" Grid.Row="4" Content="Owned" IsChecked="True" VerticalAlignment="Bottom" Margin="5 0 0 0" Click="chkOneCardOwned_Click"/>
+            <CheckBox x:Name="chkOneCardWishlisted" Grid.Row="5" Content="Wishlisted" VerticalAlignment="Bottom" Margin="5 0 0 0" Click="chkOneCardWishlisted_Click"/>
 
-            <Button x:Name="btnOneCardSave" Content="Save" Grid.Column="0" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="0 0 100 0" IsEnabled="False"/>
-            <Button x:Name="btnOneCardCloseCancel" Content="Close" Grid.Column="1" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="100 0 0 0"/>
+            <Button x:Name="btnOneCardSave" Content="Save" Grid.Column="0" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="0 0 100 0" IsEnabled="False" Click="btnOneCardSave_Click"/>
+            <Button x:Name="btnOneCardCloseCancel" Content="Close" Grid.Column="1" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="100 0 0 0" Click="btnOneCardCloseCancel_Click"/>
         </Grid>
         <Grid x:Name="grdTwoCardDetail" Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -120,8 +120,8 @@
                 <Label x:Name="lblSecondaryCardColor" Grid.Row="1" Grid.Column="2" Content="Red" HorizontalAlignment="Center"/>
                 <Label x:Name="lblSecondaryCardType" Grid.Row="1" Grid.Column="3" Content="Legendary Creature" HorizontalAlignment="Center"/>
             </Grid>
-            <CheckBox x:Name="chkTwoCardOwned" Grid.Row="4" Content="Owned" IsChecked="True" VerticalAlignment="Bottom"/>
-            <CheckBox x:Name="chkTwoCardWishlisted" Grid.Row="5" Content="Wishlisted" VerticalAlignment="Bottom"/>
+            <CheckBox x:Name="chkTwoCardOwned" Grid.Row="4" Content="Owned" IsChecked="True" VerticalAlignment="Bottom" Click="chkTwoCardOwned_Click"/>
+            <CheckBox x:Name="chkTwoCardWishlisted" Grid.Row="5" Content="Wishlisted" VerticalAlignment="Bottom" Click="chkTwoCardWishlisted_Click"/>
 
             <Button x:Name="btnTwoCardSave" Content="Save" Grid.Column="0" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Right" Margin="0 0 10 0" IsEnabled="False"/>
             <Button x:Name="btnTwoCardCloseCancel" Content="Close" Grid.Column="1" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Left" Margin="10 0 0 0"/>
