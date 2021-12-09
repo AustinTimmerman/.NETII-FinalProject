@@ -63,7 +63,23 @@ namespace WPFPresentation
             try
             {
                 lblCardName.Content = _card.CardName;
-                //imgCardImage.Source = 
+
+                try
+                {
+                    string imageName = _cardManager.RetrieveImageByImageID(_card.ImageID);
+                    Uri src = new Uri(AppData.DataPath + @"\" + imageName, UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgCardImage.Source = img;
+                }
+                catch (Exception)
+                {
+
+                    Uri src = new Uri(AppData.DataPath + @"\" + "nope-not-here.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgCardImage.Source = img;
+                }
+
+
                 txtCardDescription.Text = _card.CardDescription;
                 lblCardRarity.Content = _card.CardRarityID;
                 lblCardManaCost.Content = _card.CardConvertedManaCost;

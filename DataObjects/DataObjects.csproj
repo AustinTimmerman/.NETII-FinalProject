@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppData.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Match.cs" />

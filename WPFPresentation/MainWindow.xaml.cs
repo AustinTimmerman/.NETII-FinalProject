@@ -51,6 +51,7 @@ namespace WPFPresentation
             //_matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
 
             InitializeComponent();
+            AppData.DataPath = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + "Images";
         }
 
         private void hideAllButtons()

@@ -12,6 +12,7 @@ namespace DataAccessFakes
     {
         private List<Cards> fakeCards = new List<Cards>();
         private List<UserCard> fakeUserCards = new List<UserCard>();
+        private Dictionary<int, string> fakeImages = new Dictionary<int, string>();
         private int rowCount = 20;
 
         public CardAccessorFake()
@@ -124,6 +125,9 @@ namespace DataAccessFakes
                 OwnedCard = true,
                 Wishlisted = false
             });
+
+            fakeImages.Add(100000, "Nadier-Agent-of-the-Duskenel.jfif");
+            fakeImages.Add(100001, "Okaun-Eye-of-Chaos-foil-SLD-672.jpg");
         }
 
         public List<Cards> SelectCardsByPage(int pageNum)
@@ -277,6 +281,29 @@ namespace DataAccessFakes
             }
 
             return result;
+        }
+
+        public string SelectImageByImageID(int imageID)
+        {
+            string imageName = null;
+
+            try
+            {
+                //if (fakeImages.ContainsKey(imageID))
+                //{
+                //    imageName = fakeImages.; 
+                //}
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return imageName;
         }
     }
 }

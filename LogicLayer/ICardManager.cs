@@ -14,5 +14,6 @@ namespace LogicLayer
         bool CreateUserCard(UserCard card);
         bool EditUserCard(UserCard oldCard, UserCard newCard);
         bool RemoveUserCard(UserCard card);
+        string RetrieveImageByImageID(int imageID);
     }
 }

@@ -123,6 +123,31 @@ namespace DataAccessLayer
             return cards;
         }
 
+        public string SelectImageByImageID(int imageID)
+        {
+            String imageName = null;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_select_image_by_imageID";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ImageID", SqlDbType.Int);
+            cmd.Parameters["@ImageID"].Value = imageID;
+
+            try
+            {
+                conn.Open();
+                imageName = (String)cmd.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return imageName;
+        }
+
         public List<UserCard> SelectUserCardsByUserID(int userID, int pageNum)
         {
             List<UserCard> cards = new List<UserCard>();

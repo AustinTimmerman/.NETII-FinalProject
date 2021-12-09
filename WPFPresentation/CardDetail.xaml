@@ -22,7 +22,7 @@
                 
             </Grid.ColumnDefinitions>
             <Label x:Name="lblCardName" Grid.Row="0" Grid.Column="0" Content="Card Name Here" FontSize="26" HorizontalAlignment="Center"/>
-            <Image x:Name="imgCardImage" Grid.Row="1" Grid.Column="0" Source="Okaun-Eye-of-Chaos-foil-SLD-672.jpg"/>
+            <Image x:Name="imgCardImage" Grid.Row="1" Grid.Column="0"/>
             <TextBlock x:Name="txtCardDescription" Grid.Row="2" Margin="10" Grid.Column="0" TextWrapping="Wrap" Text="Partner with Zndrsplt, Eye of Wisdom. At the beginning of combat on your turn, flip a coin until you lose a flip. Whenever a player wins a coin flip, double Okaun's power and toughness until end of turn.Partner with Zndrsplt, Eye of Wisdom. At the beginning of combat on your turn, flip a coin until you lose a flip. Whenever a player wins a coin flip, double Okaun's power and toughness until end of turn."/>
                 <Grid Grid.Row="3" >
                 <Grid.ColumnDefinitions>
@@ -67,8 +67,8 @@
             </Grid.ColumnDefinitions>
             <Label x:Name="lblPrimaryCardName" Grid.Row="0" Grid.Column="0" Content="Card Name Here" FontSize="26" HorizontalAlignment="Center"/>
             <Label x:Name="lblSecondaryCardName" Grid.Row="0" Grid.Column="1" Content="Card Name Here" FontSize="26" HorizontalAlignment="Center"/>
-            <Image x:Name="imgPrimaryCardImage" Grid.Row="1" Grid.Column="0" Source="BigBrainer1.png" />
-            <Image x:Name="imgSecondaryCardImage" Grid.Row="1" Grid.Column="1" Source="Okaun-Eye-of-Chaos-foil-SLD-672.jpg" />
+            <Image x:Name="imgPrimaryCardImage" Grid.Row="1" Grid.Column="0"/>
+            <Image x:Name="imgSecondaryCardImage" Grid.Row="1" Grid.Column="1"/>
             <ScrollViewer Grid.Row="2">
                 <TextBlock x:Name="txtPrimaryCardDescription" Grid.Row="2" Margin="10" Grid.Column="0" TextWrapping="Wrap" Text="Partner with Zndrsplt, Eye of Wisdom. At the beginning of combat on your turn, flip a coin until you lose a flip. Whenever a player wins a coin flip, double Okaun's power and toughness until end of turn.Partner with Zndrsplt, Eye of Wisdom. At the beginning of combat on your turn, flip a coin until you lose a flip. Whenever a player wins a coin flip, double Okaun's power and toughness until end of turn."/>
             </ScrollViewer>

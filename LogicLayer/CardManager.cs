@@ -94,6 +94,23 @@ namespace LogicLayer
             return cards;
         }
 
+        public string RetrieveImageByImageID(int imageID)
+        {
+            string imageName = null;
+
+            try
+            {
+                imageName = _cardAccessor.SelectImageByImageID(imageID);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return imageName;
+        }
+
         public List<UserCard> RetrieveUserCardsByUserID(int userID, int pageNum = 1)
         {
             List<UserCard> userCards = new List<UserCard>();

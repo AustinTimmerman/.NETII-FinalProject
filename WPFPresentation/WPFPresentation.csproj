@@ -126,11 +126,5 @@
       <Name>LogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="BigBrainer1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Okaun-Eye-of-Chaos-foil-SLD-672.jpg" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

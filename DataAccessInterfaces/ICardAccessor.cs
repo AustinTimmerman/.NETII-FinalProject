@@ -14,5 +14,6 @@ namespace DataAccessInterfaces
         int InsertUserCard(UserCard card);
         int UpdateUserCard(UserCard oldCard, UserCard newCard);
         int DeleteUserCard(UserCard card);
+        string SelectImageByImageID(int imageID);
     }
 }
