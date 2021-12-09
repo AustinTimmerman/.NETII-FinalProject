@@ -161,17 +161,55 @@ namespace WPFPresentation
 
         private void btnOneCardSave_Click(object sender, RoutedEventArgs e)
         {
-            UserCard userCard;
-            userCard = _card;
+            UserCard userCard = new UserCard() {
+                UserID = _card.UserID,
+                CardID = _card.CardID,
+                CardName = _card.CardName,
+                ImageID = _card.ImageID,
+                CardDescription = _card.CardDescription,
+                CardColorID = _card.CardColorID,
+                CardConvertedManaCost = _card.CardConvertedManaCost,
+                CardRarityID = _card.CardRarityID,
+                CardTypeID = _card.CardTypeID,
+                HasSecondaryCard = _card.HasSecondaryCard,
+                CardSecondaryName = _card.CardSecondaryName,
+                SecondaryImageID = _card.SecondaryImageID,
+                CardSecondaryDescription = _card.CardSecondaryDescription,
+                CardSecondaryColorID = _card.CardSecondaryColorID,
+                CardSecondaryConvertedManaCost = _card.CardSecondaryConvertedManaCost,
+                CardSecondaryRarityID = _card.CardSecondaryRarityID,
+                CardSecondaryTypeID = _card.CardSecondaryTypeID,
+                OwnedCard = _card.OwnedCard,
+                Wishlisted = _card.Wishlisted
+            };
+
             userCard.OwnedCard = (bool)chkOneCardOwned.IsChecked;
             userCard.Wishlisted = (bool)chkOneCardWishlisted.IsChecked;
 
             try
             {
-                bool result = _cardManager.EditUserCard(_card, userCard);
-                if (!result)
+                if(chkOneCardOwned.IsChecked == false && chkOneCardWishlisted.IsChecked == false)
                 {
-                    _cardManager.CreateUserCard(userCard);
+                    var answer = MessageBox.Show("This will remove " + userCard.CardName + " from your user cards.", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    if(answer == MessageBoxResult.OK)
+                    {
+                        _cardManager.RemoveUserCard(userCard);
+                    }
+                    else
+                    { 
+                        populateOneCardGrid();
+                        buttonHelper();
+                        return;
+                    }
+                }
+                else
+                {
+                    bool result = _cardManager.EditUserCard(_card, userCard);
+                    if (!result)
+                    {
+                        _cardManager.CreateUserCard(userCard);
+                    }
+                    
                 }
             }
             catch (Exception)
@@ -194,6 +232,8 @@ namespace WPFPresentation
                 }
                 else
                 {
+                    
+                    populateOneCardGrid();
                     buttonHelper();
                 }
             }

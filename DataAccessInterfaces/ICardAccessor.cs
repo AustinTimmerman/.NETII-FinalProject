@@ -13,5 +13,6 @@ namespace DataAccessInterfaces
         List<UserCard> SelectUserCardsByUserID(int userID, int pageNum);
         int InsertUserCard(UserCard card);
         int UpdateUserCard(UserCard oldCard, UserCard newCard);
+        int DeleteUserCard(UserCard card);
     }
 }

@@ -13,9 +13,62 @@ namespace DataAccessLayer
 {
     public class CardAccessor : ICardAccessor
     {
+        public int DeleteUserCard(UserCard card)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_delete_user_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@CardID"].Value = card.CardID;
+            cmd.Parameters["@UserID"].Value = card.UserID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public int InsertUserCard(UserCard card)
         {
-            throw new NotImplementedException();
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_insert_user_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@IsOwned", SqlDbType.Bit);
+            cmd.Parameters.Add("@IsWishlisted", SqlDbType.Bit);
+            cmd.Parameters["@CardID"].Value = card.CardID;
+            cmd.Parameters["@UserID"].Value = card.UserID;
+            cmd.Parameters["@IsOwned"].Value = card.OwnedCard;
+            cmd.Parameters["@IsWishlisted"].Value = card.Wishlisted;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
         }
 
         public List<Cards> SelectCardsByPage(int pageNum)
@@ -129,7 +182,38 @@ namespace DataAccessLayer
 
         public int UpdateUserCard(UserCard oldCard, UserCard newCard)
         {
-            throw new NotImplementedException();
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_update_user_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@OldIsOwned", SqlDbType.Bit);
+            cmd.Parameters.Add("@OldIsWishlisted", SqlDbType.Bit);
+            cmd.Parameters.Add("@NewIsOwned", SqlDbType.Bit);
+            cmd.Parameters.Add("@NewIsWishlisted", SqlDbType.Bit);
+            cmd.Parameters["@CardID"].Value = oldCard.CardID;
+            cmd.Parameters["@UserID"].Value = oldCard.UserID;
+            cmd.Parameters["@OldIsOwned"].Value = oldCard.OwnedCard;
+            cmd.Parameters["@OldIsWishlisted"].Value = oldCard.Wishlisted;
+            cmd.Parameters["@NewIsOwned"].Value = newCard.OwnedCard;
+            cmd.Parameters["@NewIsWishlisted"].Value = newCard.Wishlisted;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+
+            return rowsAffected;
         }
     }
     

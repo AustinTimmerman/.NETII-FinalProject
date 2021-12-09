@@ -47,9 +47,10 @@ namespace LogicLayerTests
         }
 
         [TestMethod]
-        public void TestCreateUserCardPasses()
+        public void TestCreateUserCardReturnsTrue()
         {
-            UserCard userCard = new UserCard() {
+            UserCard userCard = new UserCard()
+            {
                 UserID = 999999,
                 CardID = 100000,
                 CardName = "Toxrill, the Corrosive",
@@ -72,7 +73,7 @@ namespace LogicLayerTests
         }
 
         [TestMethod]
-        public void TestCreateUserCardFails()
+        public void TestCreateUserCardReturnsFalse()
         {
             UserCard userCard = new UserCard()
             {
@@ -93,6 +94,116 @@ namespace LogicLayerTests
             bool actualResult;
 
             actualResult = cardManager.CreateUserCard(userCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestUpdateUserCardReturnsTrue()
+        {
+            UserCard oldCard = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = false
+            };
+            UserCard newCard = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = true
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = cardManager.EditUserCard(oldCard, newCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestUpdateUserCardReturnsFalse()
+        {
+
+            UserCard oldCard = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 9999999,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = false
+            };
+            UserCard newCard = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = true
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = cardManager.EditUserCard(oldCard, newCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestRemoveUserCardReturnsTrue()
+        {
+            UserCard card = new UserCard()
+            {
+                UserID = 999999,
+                CardID = 100001,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                OwnedCard = true,
+                Wishlisted = false
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = cardManager.RemoveUserCard(card);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

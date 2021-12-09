@@ -35,3 +35,6 @@ Completed the specific card retrieval information, and finally converted the car
 
 **12/8/21**
 Began work on update and insert user cards. Next update will have the fully complete user card update and insert.
+
+**12/8/21**
+Completed insert, update, and delete user card. The user is now able to fully insert a new card into their user cards (*owned or wishlisted*), update a card from their user cards (*changing a card from owned / wishlisted*), and remove a card from their use cards. The next update will involve work with the CRUD functions with the decks and having the interface refresh when changes are made to reflect them on the screen.

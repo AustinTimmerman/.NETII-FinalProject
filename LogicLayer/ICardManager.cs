@@ -13,5 +13,6 @@ namespace LogicLayer
         List<UserCard> RetrieveUserCardsByUserID(int userID, int pageNum = 1);
         bool CreateUserCard(UserCard card);
         bool EditUserCard(UserCard oldCard, UserCard newCard);
+        bool RemoveUserCard(UserCard card);
     }
 }

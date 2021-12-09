@@ -59,6 +59,23 @@ namespace LogicLayer
             return result;
         }
 
+        public bool RemoveUserCard(UserCard card)
+        {
+            bool result = false;
+
+            try
+            {
+                result = (1 == _cardAccessor.DeleteUserCard(card));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public List<Cards> RetrieveCardsByPage(int pageNum = 1)
         {
             List<Cards> cards = new List<Cards>();

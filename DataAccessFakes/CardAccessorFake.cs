@@ -254,5 +254,29 @@ namespace DataAccessFakes
 
             return result;
         }
+
+        public int DeleteUserCard(UserCard card)
+        {
+            int result = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeUserCards.Count; i++)
+                {
+                    if (card.CardID == fakeUserCards[i].CardID)
+                    {
+                        fakeUserCards.RemoveAt(i);
+                        result = 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
     }
 }
