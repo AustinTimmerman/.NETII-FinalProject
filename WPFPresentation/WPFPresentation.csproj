@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Creation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginOrSignup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -73,6 +77,9 @@
     </Compile>
     <Compile Include="CardDetail.xaml.cs">
       <DependentUpon>CardDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Creation.xaml.cs">
+      <DependentUpon>Creation.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginOrSignup.xaml.cs">
       <DependentUpon>LoginOrSignup.xaml</DependentUpon>

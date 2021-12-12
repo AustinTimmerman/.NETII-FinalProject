@@ -108,6 +108,7 @@ namespace DataAccessLayer
                             CardSecondaryRarityID = reader.IsDBNull(15) ? null : reader.GetString(15)
 
                         }) ;
+                        
                     }
                 }
                 else

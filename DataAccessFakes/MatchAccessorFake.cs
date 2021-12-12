@@ -128,7 +128,7 @@ namespace DataAccessFakes
                     {
                         return userMatches;
                     }
-                    if (fakeMatches[index].IsPublic == true)
+                    if(fakeMatches[index].UserID == userID)
                     {
                         userMatches.Add(fakeMatches[index]);
                     }

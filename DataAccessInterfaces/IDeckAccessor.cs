@@ -12,5 +12,8 @@ namespace DataAccessInterfaces
         List<Deck> SelectDecksByPage(int pageNum);
         List<DeckCard> SelectDeckCards(int deckID);
         List<Deck> SelectUserDecksByUserID(int userID, int pageNum);
+        int InsertDeck(string deckName, int userID, bool isPublic);
+        int UpdateDeck(Deck oldDeck, Deck newDeck);
+        int DeleteDeck(Deck deck);
     }
 }

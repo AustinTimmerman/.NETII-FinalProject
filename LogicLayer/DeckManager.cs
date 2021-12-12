@@ -24,6 +24,57 @@ namespace LogicLayer
             _deckAccessor = deckAccessor;
         }
 
+        public bool CreateDeck(string deckName, int userID, bool isPublic)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.InsertDeck(deckName, userID, isPublic));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool EditDeck(Deck oldDeck, Deck newDeck)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.UpdateDeck(oldDeck, newDeck));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool RemoveDeck(Deck deck)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.DeleteDeck(deck));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public List<DeckCard> RetrieveDeckCards(int deckID)
         {
             List<DeckCard> deckCards = new List<DeckCard>();

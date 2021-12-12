@@ -36,5 +36,6 @@ namespace DataObjects
         public int UserID { get; set; }
         public bool OwnedCard { get; set; }
         public bool Wishlisted { get; set; }
+        public int CardCount { get; set; }
     }
 }

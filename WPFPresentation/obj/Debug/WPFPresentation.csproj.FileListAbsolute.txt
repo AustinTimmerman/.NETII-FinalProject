@@ -54,3 +54,5 @@ C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPrese
 C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPresentation\bin\Debug\DataAccessLayer.pdb
 C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPresentation\obj\Debug\CardDetail.g.cs
 C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPresentation\obj\Debug\CardDetail.baml
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPresentation\obj\Debug\Creation.g.cs
+C:\Users\austi\Documents\.NET II Final Project\MagicTheGatheringProject\WPFPresentation\obj\Debug\Creation.baml

@@ -240,5 +240,79 @@ namespace DataAccessFakes
 
             return decks;
         }
+
+        public int InsertDeck(string deckName, int userID, bool isPublic)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                Deck newDeck = new Deck()
+                {
+                    DeckID = fakeDecks[fakeDecks.Count - 1].DeckID - 1,
+                    DeckName = deckName,
+                    UserID = userID,
+                    IsPublic = isPublic
+                };
+
+                fakeDecks.Add(newDeck);
+                rowsAffected++;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+            return rowsAffected;
+        }
+
+        public int UpdateDeck(Deck oldDeck, Deck newDeck)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for(int i = 0; i < fakeDecks.Count; i++)
+                {
+                    if(fakeDecks[i].DeckID == oldDeck.DeckID)
+                    {
+                        fakeDecks[i] = newDeck;
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
+        public int DeleteDeck(Deck deck)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for(int i = 0; i < fakeDecks.Count; i++)
+                {
+                    if(fakeDecks[i].DeckID == deck.DeckID)
+                    {
+                        fakeDecks.RemoveAt(i);
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
     }
 }

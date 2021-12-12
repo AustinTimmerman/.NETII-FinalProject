@@ -181,7 +181,7 @@ namespace DataAccessFakes
                     {
                         if (index > fakeUserCards.Count() - 1)
                         {
-                            return fakeUserCards;
+                            return userCards;
                         }
                         if (fakeUserCards[index].UserID == userID)
                         {
@@ -289,13 +289,10 @@ namespace DataAccessFakes
 
             try
             {
-                //if (fakeImages.ContainsKey(imageID))
-                //{
-                //    imageName = fakeImages.; 
-                //}
-
-
-
+                if (fakeImages.ContainsKey(imageID))
+                {
+                    imageName = fakeImages[imageID];
+                }
             }
             catch (Exception)
             {

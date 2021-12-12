@@ -12,6 +12,61 @@ namespace DataAccessLayer
 {
     public class DeckAccessor : IDeckAccessor
     {
+        public int DeleteDeck(Deck deck)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_delete_deck";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters["@DeckID"].Value = deck.DeckID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
+        public int InsertDeck(string deckName, int userID, bool isPublic)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_insert_deck";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@IsPublic", SqlDbType.Bit);
+            
+            cmd.Parameters["@DeckName"].Value = deckName;
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@IsPublic"].Value = isPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public List<DeckCard> SelectDeckCards(int deckID)
         {
             List<DeckCard> deckCards = new List<DeckCard>();
@@ -51,10 +106,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no cards in this deck!");
-                }
+                //else
+                //{
+                    //throw new ApplicationException("There are no cards in this deck!");
+                //}
             }
             catch (Exception)
             {
@@ -142,6 +197,40 @@ namespace DataAccessLayer
             }
 
             return decks;
+        }
+
+        public int UpdateDeck(Deck oldDeck, Deck newDeck)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_update_deck";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters["@DeckID"].Value = oldDeck.DeckID;
+            cmd.Parameters.Add("@OldDeckName", SqlDbType.NVarChar, 50);
+            cmd.Parameters["@OldDeckName"].Value = oldDeck.DeckName;
+            cmd.Parameters.Add("@OldIsPublic", SqlDbType.Bit);
+            cmd.Parameters["@OldIsPublic"].Value = oldDeck.IsPublic;
+            cmd.Parameters.Add("@NewDeckName", SqlDbType.NVarChar, 50);
+            cmd.Parameters["@NewDeckName"].Value = newDeck.DeckName;
+            cmd.Parameters.Add("@NewIsPublic", SqlDbType.Bit);
+            cmd.Parameters["@NewIsPublic"].Value = newDeck.IsPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return rowsAffected;
         }
     }
 }

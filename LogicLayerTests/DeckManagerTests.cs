@@ -54,5 +54,106 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestInsertDeckReturnsTrue()
+        {
+            const string deckName = "New Deck";
+            const int userID = 999999;
+            const bool isPublic = true;
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.CreateDeck(deckName, userID, isPublic);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestUpdateDeckReturnsTrue()
+        {
+            Deck oldDeck = new Deck()
+            {
+                DeckID = 999999,
+                DeckName = "Deck Time",
+                UserID = 999999,
+                IsPublic = false
+            };
+            Deck newDeck = new Deck()
+            {
+                DeckID = 999999,
+                DeckName = "Not Deck Time",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.EditDeck(oldDeck, newDeck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
+        [TestMethod]
+        public void TestUpdateDeckReturnsFalse()
+        {
+            Deck oldDeck = new Deck()
+            {
+                DeckID = 9999999,
+                DeckName = "Deck Time",
+                UserID = 999999,
+                IsPublic = false
+            };
+            Deck newDeck = new Deck()
+            {
+                DeckID = 999999,
+                DeckName = "Not Deck Time",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = deckManager.EditDeck(oldDeck, newDeck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestDeleteDeckReturnsTrue()
+        {
+            Deck deck = new Deck()
+            {
+                DeckID = 999999,
+                DeckName = "Green Deck",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.RemoveDeck(deck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestDeleteDeckReturnsFalse()
+        {
+            Deck deck = new Deck()
+            {
+                DeckID = 9999999,
+                DeckName = "Green Deck",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = deckManager.RemoveDeck(deck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

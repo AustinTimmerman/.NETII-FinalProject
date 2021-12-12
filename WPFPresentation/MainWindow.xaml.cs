@@ -25,6 +25,8 @@ namespace WPFPresentation
     public partial class MainWindow : Window
     {
         User _user = null;
+        Deck _deck = null;
+        Match _match = null;
 
         UserManager _userManager = null;
         CardManager _cardManager = null;
@@ -89,23 +91,32 @@ namespace WPFPresentation
             showAllButtons();
         }
 
-        private void hideAllStackPanels()
+        private void hideAllDetails()
         {
-            panHome.Visibility = Visibility.Collapsed;
-            panCards.Visibility = Visibility.Collapsed;
+            grdHome.Visibility = Visibility.Collapsed;
+            grdCards.Visibility = Visibility.Collapsed;
             grdNextPrev.Visibility = Visibility.Collapsed;
-            panDecks.Visibility = Visibility.Collapsed;
-            panDeckCards.Visibility = Visibility.Collapsed;
-            panMatches.Visibility = Visibility.Collapsed;
-            panMatchDecks.Visibility = Visibility.Collapsed;
-            panMatchDeckCards.Visibility = Visibility.Collapsed;
-            grdMyStuff.Visibility = Visibility.Collapsed;
+            grdDecks.Visibility = Visibility.Collapsed;
+            grdDeckCards.Visibility = Visibility.Collapsed;
+            grdMatches.Visibility = Visibility.Collapsed;
+            grdMatchDecks.Visibility = Visibility.Collapsed;
+            grdMatchDeckCards.Visibility = Visibility.Collapsed;
+            grdMyCards.Visibility = Visibility.Collapsed;
+            grdMyDecks.Visibility = Visibility.Collapsed;
+            grdMyMatches.Visibility = Visibility.Collapsed;
+            grdButtons.Visibility = Visibility.Collapsed;
+            grdLabels.Visibility = Visibility.Collapsed;
+            //grdMyStuff.Visibility = Visibility.Collapsed;
             datMyCards.Visibility = Visibility.Collapsed;
             datMyDecks.Visibility = Visibility.Collapsed;
             datMyDeckCards.Visibility = Visibility.Collapsed;
             datMyMatches.Visibility = Visibility.Collapsed;
             datMyMatchDecks.Visibility = Visibility.Collapsed;
             datMyMatchDeckCards.Visibility = Visibility.Collapsed;
+            btnCreateDeck.Visibility = Visibility.Collapsed;
+            btnUpdateDeck.Visibility = Visibility.Collapsed;
+            btnDeleteDeck.Visibility = Visibility.Collapsed;
+            lblMyDeckName.Visibility = Visibility.Collapsed;
         }
 
         private void pageChecker()
@@ -118,7 +129,7 @@ namespace WPFPresentation
             {
                 btnPrevPage.IsEnabled = true;
             }
-            if (panCards.Visibility == Visibility.Visible)
+            if (grdCards.Visibility == Visibility.Visible)
             {                                                           // the amount of cards / rows being retrieved 
                 if (_cardManager.RetrieveCardsByPage(pageNumber).Count < rowCounter)
                 {
@@ -129,7 +140,7 @@ namespace WPFPresentation
                     btnNextPage.IsEnabled = true;
                 }
             }
-            else if (panDecks.Visibility == Visibility.Visible)
+            else if (grdDecks.Visibility == Visibility.Visible)
             {
                 if (_deckManager.RetrieveDecksByPage(pageNumber).Count < rowCounter)
                 {
@@ -140,7 +151,7 @@ namespace WPFPresentation
                     btnNextPage.IsEnabled = true;
                 }
             }
-            else if (panMatches.Visibility == Visibility.Visible)
+            else if (grdMatches.Visibility == Visibility.Visible)
             {
                 if (_matchManager.RetrieveMatchesByPage(pageNumber).Count < rowCounter)
                 {
@@ -189,16 +200,16 @@ namespace WPFPresentation
         private void PrevNextPageClick_Helper()
         {
             pageChecker();
-            if (panCards.Visibility == Visibility.Visible)
+            if (grdCards.Visibility == Visibility.Visible)
             {
                 //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
                 datCards.ItemsSource = createCardList();
             }
-            else if (panDecks.Visibility == Visibility.Visible)
+            else if (grdDecks.Visibility == Visibility.Visible)
             {
                 datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
             }
-            else if (panMatches.Visibility == Visibility.Visible)
+            else if (grdMatches.Visibility == Visibility.Visible)
             {
                 datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
             }
@@ -377,6 +388,37 @@ namespace WPFPresentation
             return displayCards;
         }
 
+        private List<Deck> UserDeckRetrieveHelper()
+        {
+            List<Deck> decks = new List<Deck>();
+            decks = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
+            return decks;
+        }
+
+        private void myDecksHelper()
+        {
+            try
+            {
+                pageNumber = 1;
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyDecks.Visibility = Visibility.Visible;
+                datMyDecks.Visibility = Visibility.Visible;
+                grdNextPrev.Visibility = Visibility.Visible;
+                pageChecker();
+                btnUpdateDeck.Visibility = Visibility.Collapsed;
+                btnDeleteDeck.Visibility = Visibility.Collapsed;
+                btnCreateDeck.Visibility = Visibility.Visible;
+                datMyDecks.ItemsSource = UserDeckRetrieveHelper();
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (btnLogin.Content.ToString() == "Login")
@@ -410,8 +452,8 @@ namespace WPFPresentation
         {
             try
             {
-                hideAllStackPanels();
-                panHome.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdHome.Visibility = Visibility.Visible;
                 clearDataGrids();
             }
             catch (Exception ex)
@@ -426,13 +468,14 @@ namespace WPFPresentation
             try
             {
                 pageNumber = 1;
-                hideAllStackPanels();
-                panCards.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdCards.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
                 datCards.ItemsSource = createCardList();
-                clearDataGrids();
+                //clearDataGrids();
+                
             }
             catch (Exception ex)
             {
@@ -472,12 +515,12 @@ namespace WPFPresentation
             try
             {
                 pageNumber = 1;
-                hideAllStackPanels();
-                panDecks.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdDecks.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
-                clearDataGrids();
+                //clearDataGrids();
             }
             catch (Exception ex)
             {
@@ -492,8 +535,8 @@ namespace WPFPresentation
             {
                 var deck = (Deck)datDecks.SelectedItem;
 
-                hideAllStackPanels();
-                panDeckCards.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdDeckCards.Visibility = Visibility.Visible;
 
                 //datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
                 datDeckCards.ItemsSource = createCardList(deck);
@@ -511,8 +554,8 @@ namespace WPFPresentation
             try
             {
                 pageNumber = 1;
-                hideAllStackPanels();
-                panMatches.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdMatches.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
@@ -531,8 +574,8 @@ namespace WPFPresentation
             {
                 var match = (Match)datMatches.SelectedItem;
 
-                hideAllStackPanels();
-                panMatchDecks.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdMatchDecks.Visibility = Visibility.Visible;
 
                 datMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
             }
@@ -549,8 +592,8 @@ namespace WPFPresentation
             {
                 var deck = (MatchDeck)datMatchDecks.SelectedItem;
 
-                hideAllStackPanels();
-                panMatchDeckCards.Visibility = Visibility.Visible;
+                hideAllDetails();
+                grdMatchDeckCards.Visibility = Visibility.Visible;
 
                 //datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
                 datMatchDeckCards.ItemsSource = createCardList(deck);
@@ -572,8 +615,9 @@ namespace WPFPresentation
             try
             {
                 pageNumber = 1;
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyCards.Visibility = Visibility.Visible;
                 datMyCards.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
@@ -588,22 +632,7 @@ namespace WPFPresentation
 
         private void mnuMyDecks_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                pageNumber = 1;
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
-                datMyDecks.Visibility = Visibility.Visible;
-                grdNextPrev.Visibility = Visibility.Visible;
-                pageChecker();
-                datMyDecks.ItemsSource = _deckManager.RetrieveUserDecksByUserID(_user.UserID, pageNumber);
-
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("" + ex);
-            }
+            myDecksHelper();
         }
 
         private void datMyDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -612,12 +641,19 @@ namespace WPFPresentation
             {
                 var deck = (Deck)datMyDecks.SelectedItem;
 
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
+                _deck = deck;
+
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyDecks.Visibility = Visibility.Visible;
                 datMyDeckCards.Visibility = Visibility.Visible;
 
                 //datMyDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                btnUpdateDeck.Visibility = Visibility.Visible;
+                btnDeleteDeck.Visibility = Visibility.Visible;
+                btnCreateDeck.Visibility = Visibility.Collapsed;
                 datMyDeckCards.ItemsSource = createCardList(deck);
+                lblMyDeckName.Content = _deck.DeckName;
             }
             catch (Exception ex)
             {
@@ -631,8 +667,9 @@ namespace WPFPresentation
             try
             {
                 pageNumber = 1;
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyMatches.Visibility = Visibility.Visible;
                 datMyMatches.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
@@ -652,8 +689,9 @@ namespace WPFPresentation
             {
                 var match = (Match)datMyMatches.SelectedItem;
 
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyMatches.Visibility = Visibility.Visible;
                 datMyMatchDecks.Visibility = Visibility.Visible;
 
                 datMyMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
@@ -671,8 +709,9 @@ namespace WPFPresentation
             {
                 var deck = (MatchDeck)datMyMatchDecks.SelectedItem;
 
-                hideAllStackPanels();
-                grdMyStuff.Visibility = Visibility.Visible;
+                hideAllDetails();
+                //grdMyStuff.Visibility = Visibility.Visible;
+                grdMyMatches.Visibility = Visibility.Visible;
                 datMyMatchDeckCards.Visibility = Visibility.Visible;
 
                 //datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
@@ -766,6 +805,262 @@ namespace WPFPresentation
         {
             var userCard = (UserCard)datMyMatchDeckCards.SelectedItem;
             loadDetailWindow(userCard);
+        }
+
+        private void btnCreateDeck_Click(object sender, RoutedEventArgs e)
+        {
+            var deckCreationWindow = new Creation(_user, _cardManager, _deckManager, _matchManager);
+            var result = deckCreationWindow.ShowDialog();
+            if(result == true)
+            {
+                MessageBox.Show("Deck has been created.");
+                datMyDecks.ItemsSource = UserDeckRetrieveHelper();
+            }
+        }
+
+        private void btnUpdateDeck_Click(object sender, RoutedEventArgs e)
+        {
+            var deckCreationWindow = new Creation(_user, _deck, _cardManager, _deckManager, _matchManager);
+            var result = deckCreationWindow.ShowDialog();
+            if (result == true)
+            {
+                MessageBox.Show("Deck has been updated.");
+                datMyDecks.ItemsSource = UserDeckRetrieveHelper();
+            }
+        }
+
+        private void btnDeleteDeck_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("You are about to delete " + _deck.DeckName + " from your decks. Are you sure?", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if(result == MessageBoxResult.OK)
+            {
+                try
+                {
+                    _deckManager.RemoveDeck(_deck);
+                    MessageBox.Show("Deck has been removed.");
+                    myDecksHelper();   
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+
+
+
+
+
+        private void datCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datCards.Columns[0].Visibility = Visibility.Collapsed;
+            datCards.Columns[3].Visibility = Visibility.Collapsed;
+            datCards.Columns[4].Visibility = Visibility.Collapsed;
+            datCards.Columns[6].Visibility = Visibility.Collapsed;
+            datCards.Columns[7].Visibility = Visibility.Collapsed;
+            datCards.Columns[12].Visibility = Visibility.Collapsed;
+            datCards.Columns[14].Visibility = Visibility.Collapsed;
+            datCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datCards.Columns[1].Header = "Owned";
+            datCards.Columns[2].Header = "Wishlisted";
+            datCards.Columns[5].Header = "Card Name";
+            datCards.Columns[8].Header = "Color";
+            datCards.Columns[9].Header = "Mana Cost";
+            datCards.Columns[10].Header = "Type";
+            datCards.Columns[11].Header = "Rarity";
+
+            datCards.Columns[13].Header = "Secondary Card Name";
+            datCards.Columns[16].Header = "Secondary Color";
+            datCards.Columns[17].Header = "Secondary Mana Cost";
+            datCards.Columns[18].Header = "Secondary Type";
+            datCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void datDecks_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datDecks.Columns[0].Visibility = Visibility.Collapsed;
+            datDecks.Columns[3].Visibility = Visibility.Collapsed;
+
+            datDecks.Columns[1].Header = "Deck Name";
+            datDecks.Columns[2].Header = "Deck Creator";
+        }
+
+        private void datDeckCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datDeckCards.Columns[0].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[4].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[6].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[7].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[12].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[14].Visibility = Visibility.Collapsed;
+            datDeckCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datDeckCards.Columns[1].Header = "Owned";
+            datDeckCards.Columns[2].Header = "Wishlisted";
+            datDeckCards.Columns[3].Header = "Amount of Cards";
+            datDeckCards.Columns[5].Header = "Card Name";
+            datDeckCards.Columns[8].Header = "Color";
+            datDeckCards.Columns[9].Header = "Mana Cost";
+            datDeckCards.Columns[10].Header = "Type";
+            datDeckCards.Columns[11].Header = "Rarity";
+            
+            datDeckCards.Columns[13].Header = "Secondary Card Name";
+            datDeckCards.Columns[16].Header = "Secondary Color";
+            datDeckCards.Columns[17].Header = "Secondary Mana Cost";
+            datDeckCards.Columns[18].Header = "Secondary Type";
+            datDeckCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void datMatches_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMatches.Columns[0].Visibility = Visibility.Collapsed;
+            datMatches.Columns[3].Visibility = Visibility.Collapsed;
+
+            datMatches.Columns[1].Header = "Match Name";
+            datMatches.Columns[2].Header = "Deck Creator";
+        }
+
+        private void datMatchDecks_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMatchDecks.Columns[0].Visibility = Visibility.Collapsed;
+            datMatchDecks.Columns[1].Visibility = Visibility.Collapsed;
+
+            datMatchDecks.Columns[2].Header = "Deck Name";
+            datMatchDecks.Columns[3].Header = "Public";
+        }
+
+        private void datMatchDeckCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMatchDeckCards.Columns[0].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[4].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[6].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[7].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[12].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[14].Visibility = Visibility.Collapsed;
+            datMatchDeckCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datMatchDeckCards.Columns[1].Header = "Owned";
+            datMatchDeckCards.Columns[2].Header = "Wishlisted";
+            datMatchDeckCards.Columns[3].Header = "Amount of Cards";
+            datMatchDeckCards.Columns[5].Header = "Card Name";
+            datMatchDeckCards.Columns[8].Header = "Color";
+            datMatchDeckCards.Columns[9].Header = "Mana Cost";
+            datMatchDeckCards.Columns[10].Header = "Type";
+            datMatchDeckCards.Columns[11].Header = "Rarity";
+            
+            datMatchDeckCards.Columns[13].Header = "Secondary Card Name";
+            datMatchDeckCards.Columns[16].Header = "Secondary Color";
+            datMatchDeckCards.Columns[17].Header = "Secondary Mana Cost";
+            datMatchDeckCards.Columns[18].Header = "Secondary Type";
+            datMatchDeckCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void datMyCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyCards.Columns[0].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[3].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[4].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[6].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[7].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[12].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[14].Visibility = Visibility.Collapsed;
+            datMyCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datMyCards.Columns[1].Header = "Owned";
+            datMyCards.Columns[2].Header = "Wishlisted";
+            datMyCards.Columns[5].Header = "Card Name";
+            datMyCards.Columns[8].Header = "Color";
+            datMyCards.Columns[9].Header = "Mana Cost";
+            datMyCards.Columns[10].Header = "Type";
+            datMyCards.Columns[11].Header = "Rarity";
+
+            datMyCards.Columns[13].Header = "Secondary Card Name";
+            datMyCards.Columns[16].Header = "Secondary Color";
+            datMyCards.Columns[17].Header = "Secondary Mana Cost";
+            datMyCards.Columns[18].Header = "Secondary Type";
+            datMyCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void datMyDecks_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyDecks.Columns[0].Visibility = Visibility.Collapsed;
+            datMyDecks.Columns[2].Visibility = Visibility.Collapsed;
+
+            datMyDecks.Columns[1].Header = "Deck Name";
+            datMyDecks.Columns[3].Header = "Public";
+        }
+
+        private void datMyDeckCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyDeckCards.Columns[0].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[4].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[6].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[7].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[12].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[14].Visibility = Visibility.Collapsed;
+            datMyDeckCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datMyDeckCards.Columns[1].Header = "Owned";
+            datMyDeckCards.Columns[2].Header = "Wishlisted";
+            datMyDeckCards.Columns[3].Header = "Amount of Cards";
+            datMyDeckCards.Columns[5].Header = "Card Name";
+            datMyDeckCards.Columns[8].Header = "Color";
+            datMyDeckCards.Columns[9].Header = "Mana Cost";
+            datMyDeckCards.Columns[10].Header = "Type";
+            datMyDeckCards.Columns[11].Header = "Rarity";
+
+            datMyDeckCards.Columns[13].Header = "Secondary Card Name";
+            datMyDeckCards.Columns[16].Header = "Secondary Color";
+            datMyDeckCards.Columns[17].Header = "Secondary Mana Cost";
+            datMyDeckCards.Columns[18].Header = "Secondary Type";
+            datMyDeckCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void datMyMatches_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyMatches.Columns[0].Visibility = Visibility.Collapsed;
+            datMyMatches.Columns[2].Visibility = Visibility.Collapsed;
+
+            datMyMatches.Columns[1].Header = "Match Name";
+            datMyMatches.Columns[3].Header = "Public";
+        }
+
+        private void datMyMatchDecks_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyMatchDecks.Columns[0].Visibility = Visibility.Collapsed;
+            datMyMatchDecks.Columns[1].Visibility = Visibility.Collapsed;
+
+            datMyMatchDecks.Columns[2].Header = "Deck Name";
+            datMyMatchDecks.Columns[3].Header = "Public";
+        }
+
+        private void datMyMatchDeckCards_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            datMyMatchDeckCards.Columns[0].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[4].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[6].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[7].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[12].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[14].Visibility = Visibility.Collapsed;
+            datMyMatchDeckCards.Columns[15].Visibility = Visibility.Collapsed;
+
+            datMyMatchDeckCards.Columns[1].Header = "Owned";
+            datMyMatchDeckCards.Columns[2].Header = "Wishlisted";
+            datMyMatchDeckCards.Columns[3].Header = "Amount of Cards";
+            datMyMatchDeckCards.Columns[5].Header = "Card Name";
+            datMyMatchDeckCards.Columns[8].Header = "Color";
+            datMyMatchDeckCards.Columns[9].Header = "Mana Cost";
+            datMyMatchDeckCards.Columns[10].Header = "Type";
+            datMyMatchDeckCards.Columns[11].Header = "Rarity";
+
+            datMyMatchDeckCards.Columns[13].Header = "Secondary Card Name";
+            datMyMatchDeckCards.Columns[16].Header = "Secondary Color";
+            datMyMatchDeckCards.Columns[17].Header = "Secondary Mana Cost";
+            datMyMatchDeckCards.Columns[18].Header = "Secondary Type";
+            datMyMatchDeckCards.Columns[19].Header = "Secondary Card Rarity";
         }
     }
 }

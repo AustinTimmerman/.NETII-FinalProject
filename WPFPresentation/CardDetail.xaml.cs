@@ -100,7 +100,22 @@ namespace WPFPresentation
             try
             {
                 lblPrimaryCardName.Content = _card.CardName;
-                //imgPrimaryCardImage.Source
+
+                try
+                {
+                    string imageName = _cardManager.RetrieveImageByImageID(_card.ImageID);
+                    Uri src = new Uri(AppData.DataPath + @"\" + imageName, UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgPrimaryCardImage.Source = img;
+                }
+                catch (Exception)
+                {
+
+                    Uri src = new Uri(AppData.DataPath + @"\" + "nope-not-here.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgPrimaryCardImage.Source = img;
+                }
+
                 txtPrimaryCardDescription.Text = _card.CardDescription;
                 lblPrimaryCardRarity.Content = _card.CardRarityID;
                 lblPrimaryCardManaCost.Content = _card.CardConvertedManaCost;
@@ -108,7 +123,22 @@ namespace WPFPresentation
                 lblPrimaryCardType.Content = _card.CardTypeID;
 
                 lblSecondaryCardName.Content = _card.CardSecondaryName;
-                //imgSecondaryCardImage.Source
+
+                try
+                {
+                    string imageName = _cardManager.RetrieveImageByImageID(_card.SecondaryImageID);
+                    Uri src = new Uri(AppData.DataPath + @"\" + imageName, UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgSecondaryCardImage.Source = img;
+                }
+                catch (Exception)
+                {
+
+                    Uri src = new Uri(AppData.DataPath + @"\" + "nope-not-here.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgSecondaryCardImage.Source = img;
+                }
+
                 txtSecondaryCardDescription.Text = _card.CardSecondaryDescription;
                 lblSecondaryCardRarity.Content = _card.CardSecondaryRarityID;
                 lblSecondaryCardManaCost.Content = _card.CardSecondaryConvertedManaCost;
@@ -213,7 +243,7 @@ namespace WPFPresentation
                     }
                     else
                     { 
-                        populateOneCardGrid();
+                        populateTwoCardGrid();
                         buttonHelper();
                         return;
                     }
@@ -250,6 +280,90 @@ namespace WPFPresentation
                 {
                     
                     populateOneCardGrid();
+                    buttonHelper();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void btnTwoCardSave_Click(object sender, RoutedEventArgs e)
+        {
+            UserCard userCard = new UserCard()
+            {
+                UserID = _card.UserID,
+                CardID = _card.CardID,
+                CardName = _card.CardName,
+                ImageID = _card.ImageID,
+                CardDescription = _card.CardDescription,
+                CardColorID = _card.CardColorID,
+                CardConvertedManaCost = _card.CardConvertedManaCost,
+                CardRarityID = _card.CardRarityID,
+                CardTypeID = _card.CardTypeID,
+                HasSecondaryCard = _card.HasSecondaryCard,
+                CardSecondaryName = _card.CardSecondaryName,
+                SecondaryImageID = _card.SecondaryImageID,
+                CardSecondaryDescription = _card.CardSecondaryDescription,
+                CardSecondaryColorID = _card.CardSecondaryColorID,
+                CardSecondaryConvertedManaCost = _card.CardSecondaryConvertedManaCost,
+                CardSecondaryRarityID = _card.CardSecondaryRarityID,
+                CardSecondaryTypeID = _card.CardSecondaryTypeID,
+                OwnedCard = _card.OwnedCard,
+                Wishlisted = _card.Wishlisted
+            };
+
+            userCard.OwnedCard = (bool)chkTwoCardOwned.IsChecked;
+            userCard.Wishlisted = (bool)chkTwoCardWishlisted.IsChecked;
+
+            try
+            {
+                if (chkTwoCardOwned.IsChecked == false && chkTwoCardWishlisted.IsChecked == false)
+                {
+                    var answer = MessageBox.Show("This will remove " + userCard.CardName + " from your user cards.", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    if (answer == MessageBoxResult.OK)
+                    {
+                        _cardManager.RemoveUserCard(userCard);
+                    }
+                    else
+                    {
+                        populateOneCardGrid();
+                        buttonHelper();
+                        return;
+                    }
+                }
+                else
+                {
+                    bool result = _cardManager.EditUserCard(_card, userCard);
+                    if (!result)
+                    {
+                        _cardManager.CreateUserCard(userCard);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            _card = userCard;
+            buttonHelper();
+        }
+
+        private void btnTwoCardCloseCancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (btnTwoCardCloseCancel.Content.ToString() == "Close")
+                {
+                    this.Close();
+                }
+                else
+                {
+                    populateTwoCardGrid();
                     buttonHelper();
                 }
             }

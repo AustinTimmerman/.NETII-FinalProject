@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
         x:Name="frmMainWindow"
-        Title="MTG Helper" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="frmMainWindow_Loaded">
+        Title="MTG Helper" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="frmMainWindow_Loaded" Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -26,12 +26,12 @@
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row="1">
-            
+        <Grid Grid.Row="1" Background="#FF5691BB">
+
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -40,106 +40,108 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            <Button Margin="0px 0px 0px 0px" Width="100px" Height="25px" Grid.Column="5" Grid.Row="0" Content="Login" x:Name="btnLogin"  IsDefault="True" 
-                    VerticalAlignment="Center" Click="btnLogin_Click" />
-            
-            <Button Margin="30px 20px 30px 20px" Grid.Column="0" Grid.Row="1" Content="Home" x:Name="btnHome" GotFocus="btnHome_GotFocus"/>
-            <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnCards" GotFocus="btnCards_GotFocus"/>
-            <Button Margin="30px 20px 30px 20px" Grid.Column="2" Grid.Row="1" Content="Decks" x:Name="btnDecks" GotFocus="btnDecks_GotFocus"/>
-            <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMatches" GotFocus="btnMatches_GotFocus" />
 
-            <Menu Margin="30px 20px 30px 20px" Grid.Column="4" x:Name="mnuStuff">
-                <MenuItem Grid.Column="4" Grid.Row="1" Header="My Stuff" x:Name="mnuMyStuff" Height="60" Width="140">
+            <Button Margin="30px 20px 30px 20px" Grid.Column="5" Grid.Row="0" Content="Login" x:Name="btnLogin"  
+                     Click="btnLogin_Click" Background="#FF5691BB" BorderBrush="{x:Null}" Foreground="White" FontSize="14" FontStyle="Italic" />
+
+            <Button Margin="30px 20px 30px 20px" Grid.Column="0" Grid.Row="1" Content="Home" x:Name="btnHome" GotFocus="btnHome_GotFocus" BorderBrush="{x:Null}" Background="#FF5691BB" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="1" Grid.Row="1" Content="Cards" x:Name="btnCards" GotFocus="btnCards_GotFocus" BorderBrush="{x:Null}" Background="#FF5691BB" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="2" Grid.Row="1" Content="Decks" x:Name="btnDecks" GotFocus="btnDecks_GotFocus" BorderBrush="{x:Null}" Background="#FF5691BB" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="3" Grid.Row="1" Content="Matches" x:Name="btnMatches" GotFocus="btnMatches_GotFocus" BorderBrush="{x:Null}" Background="#FF5691BB" Foreground="White" FontSize="16" FontWeight="Bold" />
+
+            <Menu Margin="30px 20px 30px 20px" Grid.Column="4" x:Name="mnuStuff" Background="#FF5691BB">
+                <MenuItem Grid.Column="4" Grid.Row="1" Header="My Stuff" x:Name="mnuMyStuff" Height="60" Width="140" BorderBrush="{x:Null}">
                     <MenuItem Header="My Cards" x:Name="mnuMyCards" Click="mnuMyCards_Click"/>
                     <MenuItem Header="My Decks" x:Name="mnuMyDecks" Click="mnuMyDecks_Click"/>
                     <MenuItem Header="My Matches" x:Name="mnuMyMatches" Click="mnuMyMatches_Click"/>
                 </MenuItem>
             </Menu>
 
-            <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="My Stuff" x:Name="btnMyStuff" Click="btnMyStuff_Click"/>
+            <Button Margin="30px 20px 30px 20px" Grid.Column="4" Grid.Row="1" Content="My Stuff" x:Name="btnMyStuff" Click="btnMyStuff_Click" Background="#FF5691BB" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold"/>
 
         </Grid>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
                 <RowDefinition/>
                 <RowDefinition Height="80px"/>
             </Grid.RowDefinitions>
-            
-            <StackPanel x:Name="panHome" Visibility="Visible" Grid.Row="0">
-                <Label Content="Recent News For Magic the Gathering" FontSize="24" HorizontalAlignment="Center"/>
-                <TextBlock Text="Innistrad: Crimson Vow Released" FontSize="24" Padding="25 50 0 0"/>
-                <TextBlock Text="Innistrad: Midnight hunt Released" FontSize="24" Padding="25 50 0 0"/>
-            </StackPanel>
-            <StackPanel x:Name="panCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datCards" IsReadOnly="True" MouseDoubleClick="datCards_MouseDoubleClick"/>
-            </StackPanel>
-            <StackPanel x:Name="panDecks" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datDecks" IsReadOnly="True" MouseDoubleClick="datDecks_MouseDoubleClick"/>
-            </StackPanel>
-            <StackPanel x:Name="panDeckCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datDeckCards" IsReadOnly="True" MouseDoubleClick="datDeckCards_MouseDoubleClick"/>
-            </StackPanel>
-            <StackPanel x:Name="panMatches" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datMatches" IsReadOnly="True" MouseDoubleClick="datMatches_MouseDoubleClick"/>
-            </StackPanel>
-            <StackPanel x:Name="panMatchDecks" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datMatchDecks" IsReadOnly="True" MouseDoubleClick="datMatchDecks_MouseDoubleClick"/>
-            </StackPanel>
-            <StackPanel x:Name="panMatchDeckCards" Visibility="Collapsed" Grid.Row="0">
-                <DataGrid x:Name="datMatchDeckCards" IsReadOnly="True" MouseDoubleClick="datMatchDeckCards_MouseDoubleClick"/>
-            </StackPanel>
-            
-            <Grid x:Name="grdMyStuff" Visibility="Collapsed" Grid.Row="0">
+
+
+            <Grid x:Name="grdHome" Visibility="Visible" Grid.Row="0" Grid.RowSpan="2">
+                <Label Content="Recent News For Magic the Gathering" FontSize="24" HorizontalAlignment="Center" Foreground="#FF5691BB"/>
+                <StackPanel>
+                    <TextBlock Text="Innistrad: Crimson Vow Released" FontSize="24" Padding="25 50 0 0" Foreground="#FF5691BB"/>
+                    <TextBlock Text="Innistrad: Midnight hunt Released" FontSize="24" Padding="25 50 0 0" Foreground="#FF5691BB"/>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="grdCards" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datCards_AutoGeneratedColumns" RowBackground="White" Foreground="Black" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid x:Name="grdDecks" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datDecks" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datDecks_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datDecks_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid x:Name="grdDeckCards" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datDeckCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datDeckCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datDeckCards_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid x:Name="grdMatches" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMatches" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datMatches_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMatches_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid x:Name="grdMatchDecks" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMatchDecks" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datMatchDecks_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMatchDecks_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid x:Name="grdMatchDeckCards" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMatchDeckCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True" MouseDoubleClick="datMatchDeckCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMatchDeckCards_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+
+
+            <!--<Grid x:Name="grdMyStuff" Visibility="Collapsed" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                </Grid.RowDefinitions>
-                
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="75"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyCards_MouseDoubleClick"/>
-                </Grid>
+                </Grid.RowDefinitions>-->
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="75"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDecks_MouseDoubleClick"/>
-                    <DataGrid x:Name="datMyDeckCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDeckCards_MouseDoubleClick"/>
-                </Grid>
-
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="75"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <DataGrid x:Name="datMyMatches" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatches_MouseDoubleClick"/>
-                    <DataGrid x:Name="datMyMatchDecks" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDecks_MouseDoubleClick"/>
-                    <DataGrid x:Name="datMyMatchDeckCards" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDeckCards_MouseDoubleClick"/>
-                </Grid>
+            <Grid x:Name="grdMyCards" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMyCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyCards_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="grdNextPrev" Visibility="Collapsed">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="btnPrevPage" Grid.Column="1" Margin="160 20 40 20" Content="Previous Page" Click="btnPrevPage_Click" />
-                <Button x:Name="btnNextPage" Grid.Column="2" Margin="40 20 160 20" Content="Next Page" Click="btnNextPage_Click"/>
+            <Grid x:Name="grdMyDecks" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMyDecks" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDecks_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyDecks_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+                <DataGrid x:Name="datMyDeckCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyDeckCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyDeckCards_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
             </Grid>
-            
+
+            <Grid x:Name="grdButtons" Visibility="Collapsed" Grid.Row="0">
+                <Button x:Name="btnCreateDeck" Content="Create Deck" Width="100"  Margin="10 20" HorizontalAlignment="Right" Visibility="Collapsed" Click="btnCreateDeck_Click" Background="{x:Null}"/>
+                <Button x:Name="btnUpdateDeck" Content="Update Deck" Width="100"  Margin="10 20" HorizontalAlignment="Right" Visibility="Collapsed" Click="btnUpdateDeck_Click" Background="{x:Null}"/>
+                <Button x:Name="btnDeleteDeck" Content="Delete Deck" Width="100"  Margin="130 20" HorizontalAlignment="Right" Visibility="Collapsed" Click="btnDeleteDeck_Click" Background="{x:Null}"/>
+            </Grid>
+
+            <Grid x:Name="grdLabels" Visibility="Collapsed" Grid.Row="0">
+                <Label x:Name="lblMyDeckName" FontSize="24" HorizontalAlignment="Center" Foreground="#FF5691BB"/>
+            </Grid>
+
+            <Grid x:Name="grdMyMatches" Visibility="Collapsed" Grid.Row="1">
+                <DataGrid x:Name="datMyMatches" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatches_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyMatches_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+                <DataGrid x:Name="datMyMatchDecks" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDecks_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyMatchDecks_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+                <DataGrid x:Name="datMyMatchDeckCards" HorizontalAlignment="Center" RowHeight="30" MinColumnWidth="100" CanUserResizeColumns="False" CanUserResizeRows="False" Grid.Row="1" IsReadOnly="True" MouseDoubleClick="datMyMatchDeckCards_MouseDoubleClick" SelectionMode="Single" AutoGeneratedColumns="datMyMatchDeckCards_AutoGeneratedColumns" Background="White" BorderBrush="{x:Null}"/>
+            </Grid>
+        <!--</Grid>-->
+
+        <Grid Grid.Row="2" x:Name="grdNextPrev" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnPrevPage" Grid.Column="1" Margin="160 20 40 20" Content="Previous Page" Click="btnPrevPage_Click" Background="{x:Null}" />
+            <Button x:Name="btnNextPage" Grid.Column="2" Margin="40 20 160 20" Content="Next Page" Click="btnNextPage_Click" Background="{x:Null}"/>
         </Grid>
 
-        <StatusBar Grid.Row="5">
-            <StatusBarItem x:Name="staMessage" Content="Welcome. Please log in to continue." Padding="20px, 0px"/>
+    </Grid>
+
+    <StatusBar Grid.Row="5">
+            <StatusBarItem x:Name="staMessage" Content="Welcome. Please log in to continue." Padding="20px, 0px" Background="#FF5691BB" Foreground="White"/>
         </StatusBar>
     </Grid>
 </Window>
