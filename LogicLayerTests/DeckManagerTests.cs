@@ -204,5 +204,137 @@ namespace LogicLayerTests
 
             actualResult = deckManager.CreateDeckCard(card);
         }
+
+        [TestMethod]
+        public void TestEditDeckCardReturnsTrue()
+        {
+            DeckCard oldCard = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+            DeckCard newCard = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 4
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.EditDeckCard(oldCard, newCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestEditDeckCardReturnsFalse()
+        {
+            DeckCard oldCard = new DeckCard()
+            {
+                DeckID = 9999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+            DeckCard newCard = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 4
+            };
+
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = deckManager.EditDeckCard(oldCard, newCard);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestRemoveDeckCardReturnsTrue()
+        {
+            DeckCard card = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.RemoveDeckCard(card);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestRemoveDeckCardReturnsFalse()
+        {
+            DeckCard card = new DeckCard()
+            {
+                DeckID = 9999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = deckManager.RemoveDeckCard(card);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

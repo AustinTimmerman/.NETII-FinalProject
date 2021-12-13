@@ -75,6 +75,23 @@ namespace LogicLayer
             return result;
         }
 
+        public bool EditDeckCard(DeckCard oldCard, DeckCard newCard)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.UpdateDeckCard(oldCard, newCard));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public bool RemoveDeck(Deck deck)
         {
             bool result;
@@ -82,6 +99,23 @@ namespace LogicLayer
             try
             {
                 result = (1 == _deckAccessor.DeleteDeck(deck));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool RemoveDeckCard(DeckCard card)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.DeleteDeckCard(card));
             }
             catch (Exception)
             {

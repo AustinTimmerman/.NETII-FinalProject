@@ -12,5 +12,8 @@ namespace DataAccessInterfaces
         List<Match> SelectMatchesByPage(int pageNum);
         List<MatchDeck> SelectMatchDecksByMatchID(int matchID);
         List<Match> SelectUserMatchesByUserID(int userID, int pageNum);
+        int InsertMatch(string matchName, int userID, bool isPublic);
+        int UpdateMatch(Match oldMatch, Match newMatch);
+        int DeleteMatch(Match match);
     }
 }

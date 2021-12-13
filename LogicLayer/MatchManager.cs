@@ -25,6 +25,57 @@ namespace LogicLayer
             _matchAccessor = matchAccessor;
         }
 
+        public bool CreateMatch(string matchName, int userID, bool isPublic)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _matchAccessor.InsertMatch(matchName, userID, isPublic));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool EditMatch(Match oldMatch, Match newMatch)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _matchAccessor.UpdateMatch(oldMatch, newMatch));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool RemoveMatch(Match match)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _matchAccessor.DeleteMatch(match));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public List<MatchDeck> RetrieveMatchDecksByMatchID(int matchID)
         {
             List<MatchDeck> matchDecks = new List<MatchDeck>();

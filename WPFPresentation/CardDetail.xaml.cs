@@ -376,7 +376,7 @@ namespace WPFPresentation
 
         private void addCardToDeckHelper()
         {
-            var deckCardCreationWindow = new Creation(_card, _cardManager, _deckManager, _matchManager);
+            var deckCardCreationWindow = new Creation(_card, _deckManager);
             var result = deckCardCreationWindow.ShowDialog();
             if (result == true)
             {

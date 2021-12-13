@@ -12,6 +12,61 @@ namespace DataAccessLayer
 {
     public class MatchAccessor : IMatchAccessor
     {
+        public int DeleteMatch(Match match)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_delete_match";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@MatchID", SqlDbType.Int);
+            cmd.Parameters["@MatchID"].Value = match.MatchID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
+        public int InsertMatch(string matchName, int userID, bool isPublic)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_insert_match";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@MatchName", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters.Add("@IsPublic", SqlDbType.Bit);
+
+            cmd.Parameters["@MatchName"].Value = matchName;
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@IsPublic"].Value = isPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public List<MatchDeck> SelectMatchDecksByMatchID(int matchID)
         {
             List<MatchDeck> matchDecks = new List<MatchDeck>();
@@ -129,6 +184,43 @@ namespace DataAccessLayer
             }
 
             return userMatches;
+        }
+
+        public int UpdateMatch(Match oldMatch, Match newMatch)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_update_match";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@MatchID", SqlDbType.Int);
+            cmd.Parameters["@MatchID"].Value = oldMatch.MatchID;
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = oldMatch.UserID;
+
+            cmd.Parameters.Add("@OldMatchName", SqlDbType.NVarChar, 50);
+            cmd.Parameters["@OldMatchName"].Value = oldMatch.MatchName;
+            cmd.Parameters.Add("@OldIsPublic", SqlDbType.Bit);
+            cmd.Parameters["@OldIsPublic"].Value = oldMatch.IsPublic;
+            cmd.Parameters.Add("@NewMatchName", SqlDbType.NVarChar, 50);
+            cmd.Parameters["@NewMatchName"].Value = newMatch.MatchName;
+            cmd.Parameters.Add("@NewIsPublic", SqlDbType.Bit);
+            cmd.Parameters["@NewIsPublic"].Value = newMatch.IsPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return rowsAffected;
         }
     }
 }

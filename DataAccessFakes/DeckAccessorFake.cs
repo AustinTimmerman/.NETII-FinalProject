@@ -332,5 +332,53 @@ namespace DataAccessFakes
 
             return rowsAffected;
         }
+
+        public int UpdateDeckCard(DeckCard oldCard, DeckCard newCard)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeDeckCards.Count; i++)
+                {
+                    if(fakeDeckCards[i].CardID == oldCard.CardID && fakeDeckCards[i].DeckID == oldCard.DeckID)
+                    {
+                        fakeDeckCards[i].CardCount = newCard.CardCount;
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
+        public int DeleteDeckCard(DeckCard card)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeDeckCards.Count; i++)
+                {
+                    if (fakeDeckCards[i].CardID == card.CardID && fakeDeckCards[i].DeckID == card.DeckID)
+                    {
+                        fakeDeckCards.RemoveAt(i);
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
     }
 }

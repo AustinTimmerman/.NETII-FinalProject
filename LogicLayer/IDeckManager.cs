@@ -16,5 +16,7 @@ namespace LogicLayer
         bool EditDeck(Deck oldDeck, Deck newDeck);
         bool RemoveDeck(Deck deck);
         bool CreateDeckCard(DeckCard card);
+        bool EditDeckCard(DeckCard oldCard, DeckCard newCard);
+        bool RemoveDeckCard(DeckCard card);
     }
 }

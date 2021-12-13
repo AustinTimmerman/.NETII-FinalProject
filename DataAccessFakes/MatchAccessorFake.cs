@@ -61,6 +61,58 @@ namespace DataAccessFakes
             });
         }
 
+        public int DeleteMatch(Match match)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeMatches.Count; i++)
+                {
+                    if (fakeMatches[i].MatchID == match.MatchID)
+                    {
+                        fakeMatches.RemoveAt(i);
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
+        public int InsertMatch(string matchName, int userID, bool isPublic)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+
+                Match newMatch = new Match()
+                {
+                    MatchID = fakeMatches[fakeMatches.Count - 1].MatchID - 1,
+                    MatchName = matchName,
+                    UserID = userID,
+                    IsPublic = isPublic
+                };
+
+                fakeMatches.Add(newMatch);
+                rowsAffected++;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
         public List<MatchDeck> SelectMatchDecksByMatchID(int matchID)
         {
             List<MatchDeck> matchDecks = new List<MatchDeck>();
@@ -128,7 +180,7 @@ namespace DataAccessFakes
                     {
                         return userMatches;
                     }
-                    if(fakeMatches[index].UserID == userID)
+                    if (fakeMatches[index].UserID == userID)
                     {
                         userMatches.Add(fakeMatches[index]);
                     }
@@ -142,6 +194,30 @@ namespace DataAccessFakes
             }
 
             return userMatches;
+        }
+
+        public int UpdateMatch(Match oldMatch, Match newMatch)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeMatches.Count; i++)
+                {
+                    if (fakeMatches[i].MatchID == oldMatch.MatchID)
+                    {
+                        fakeMatches[i] = newMatch;
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
         }
     }
 }

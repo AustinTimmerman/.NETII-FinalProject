@@ -55,5 +55,106 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestCreateMatchReturnsTrue()
+        {
+            const string matchName = "Match new";
+            const int userID = 999999;
+            const bool isPublic = true;
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = matchManager.CreateMatch(matchName, userID, isPublic);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestUpdateMatchReturnsTrue()
+        {
+            Match oldMatch = new Match()
+            {
+                MatchID = 999999,
+                MatchName = "Match Time",
+                UserID = 999999,
+                IsPublic = false
+            };
+            Match newMatch = new Match()
+            {
+                MatchID = 999999,
+                MatchName = "Not Match Time",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = matchManager.EditMatch(oldMatch, newMatch);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
+        [TestMethod]
+        public void TestUpdateMatchReturnsFalse()
+        {
+            Match oldMatch = new Match()
+            {
+                MatchID = 9999999,
+                MatchName = "Match Time",
+                UserID = 999999,
+                IsPublic = false
+            };
+            Match newMatch = new Match()
+            {
+                MatchID = 999999,
+                MatchName = "Not Match Time",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = matchManager.EditMatch(oldMatch, newMatch);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestDeleteMatchReturnsTrue()
+        {
+            Match match = new Match()
+            {
+                MatchID = 999999,
+                MatchName = "Losing Match",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = matchManager.RemoveMatch(match);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestDeleteMatchReturnsFalse()
+        {
+            Match match = new Match()
+            {
+                MatchID = 9999999,
+                MatchName = "Losing Match",
+                UserID = 999999,
+                IsPublic = true
+            };
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = matchManager.RemoveMatch(match);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

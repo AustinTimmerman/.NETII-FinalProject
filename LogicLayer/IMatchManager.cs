@@ -12,5 +12,8 @@ namespace LogicLayer
         List<MatchDeck> RetrieveMatchDecksByMatchID(int matchID);
         List<Match> RetrieveMatchesByPage(int pageNum = 1);
         List<Match> RetrieveUserMatchesByUserID(int userID, int pageNum = 1);
+        bool CreateMatch(string matchName, int userID, bool isPublic);
+        bool EditMatch(Match oldMatch, Match newMatch);
+        bool RemoveMatch(Match match);
     }
 }

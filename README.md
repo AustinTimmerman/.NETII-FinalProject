@@ -47,3 +47,9 @@ Completed deck insert, update, and delete. Completed a design overhaul compelete
 
 **12/12/21**
 Completed deck card insert. Various bug fixed and changes done. The user is now able to add a card to a deck they own with the amount specified. The next update will include updating and deleting card from decks. 
+
+**12/13/21**
+Completed remaining deck card crud functions. Made changes to support the data grid refreshing whenever the user does any sort of CRUD function to display the changes made. Moved some of the buttons and other small details around to better suit the overall design. The user is able to fully add cards with their amounts to their decks, update the card amount in a deck, and delete a card from a deck. Also, fixed the issue whenever the user deleted a deck with cards in it that it wouldn't let them. The next update will be the final leg of completing all the remaining CRUD functions (match insert, match update, match delete, match deck insert, match deck update, match deck delete). 
+
+**12/13/21**
+Completed all match CRUD functions. The user is now able to create, update, and delete any of their decks. The next update will include the final match deck CRUD functions with any other small tweaks needed. 

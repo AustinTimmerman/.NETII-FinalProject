@@ -16,5 +16,7 @@ namespace DataAccessInterfaces
         int UpdateDeck(Deck oldDeck, Deck newDeck);
         int DeleteDeck(Deck deck);
         int InsertDeckCard(DeckCard card);
+        int UpdateDeckCard(DeckCard oldCard, DeckCard newCard);
+        int DeleteDeckCard(DeckCard card);
     }
 }

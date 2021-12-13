@@ -37,6 +37,33 @@ namespace DataAccessLayer
             return rowsAffected;
         }
 
+        public int DeleteDeckCard(DeckCard card)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_delete_deck_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters["@DeckID"].Value = card.DeckID;
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters["@CardID"].Value = card.CardID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public int InsertDeck(string deckName, int userID, bool isPublic)
         {
             int rowsAffected = 0;
@@ -248,6 +275,38 @@ namespace DataAccessLayer
             cmd.Parameters["@NewDeckName"].Value = newDeck.DeckName;
             cmd.Parameters.Add("@NewIsPublic", SqlDbType.Bit);
             cmd.Parameters["@NewIsPublic"].Value = newDeck.IsPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return rowsAffected;
+        }
+
+        public int UpdateDeckCard(DeckCard oldCard, DeckCard newCard)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_update_deck_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters["@DeckID"].Value = oldCard.DeckID;
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters["@CardID"].Value = oldCard.CardID;
+            cmd.Parameters.Add("@OldCardCount", SqlDbType.Int);
+            cmd.Parameters["@OldCardCount"].Value = oldCard.CardCount;
+            cmd.Parameters.Add("@NewCardCount", SqlDbType.Int);
+            cmd.Parameters["@NewCardCount"].Value = newCard.CardCount;
 
             try
             {

@@ -24,39 +24,59 @@ namespace WPFPresentation
     public partial class Creation : Window
     {
         UserCard _card;
+        DeckCard _deckCard;
         User _user;
         Deck _deck;
         List<Deck> _userDecks;
+        Match _match;
         ICardManager _cardManager;
         IDeckManager _deckManager;
         IMatchManager _matchManager;
 
-        public Creation(User user, ICardManager cardManager, IDeckManager deckManager, IMatchManager matchManager)
+        public Creation(User user, IDeckManager deckManager)
         {
             _user = user;
-            _cardManager = cardManager;
             _deckManager = deckManager;
-            _matchManager = matchManager;
             InitializeComponent();
             populateControls();
         }
 
-        public Creation(User user, Deck deck, ICardManager cardManager, IDeckManager deckManager, IMatchManager matchManager)
+        public Creation(User user, Deck deck, IDeckManager deckManager)
         {
             _user = user;
             _deck = deck;
-            _cardManager = cardManager;
             _deckManager = deckManager;
+            InitializeComponent();
+            populateControls();
+        }
+
+        public Creation(UserCard card, IDeckManager deckManager)
+        {
+            _card = card;
+            _deckManager = deckManager;
+            InitializeComponent();
+            populateControls();
+        }
+
+        public Creation(DeckCard card, IDeckManager deckManager)
+        {
+            _deckCard = card;
+            _deckManager = deckManager;
+            InitializeComponent();
+            populateControls();
+        }
+
+        public Creation(User user, IMatchManager matchManager)
+        {
+            _user = user;
             _matchManager = matchManager;
             InitializeComponent();
             populateControls();
         }
 
-        public Creation(UserCard card, ICardManager cardManager, IDeckManager deckManager, IMatchManager matchManager)
+        public Creation(Match match, IMatchManager matchManager)
         {
-            _card = card;
-            _cardManager = cardManager;
-            _deckManager = deckManager;
+            _match = match;
             _matchManager = matchManager;
             InitializeComponent();
             populateControls();
@@ -64,27 +84,14 @@ namespace WPFPresentation
 
         private void populateControls()
         {
-            if (_deck == null && _card == null) 
-            {
-                grdDeckCreation.Visibility = Visibility.Visible;
-                grdDeckUpdate.Visibility = Visibility.Collapsed;
-                grdDeckCardCreation.Visibility = Visibility.Collapsed;
-                txtDeckName.Focus();
-            }
-            else if (_deck != null)
-            {
-                grdDeckUpdate.Visibility = Visibility.Visible;
-                grdDeckCreation.Visibility = Visibility.Collapsed;
-                grdDeckCardCreation.Visibility = Visibility.Collapsed;
-                txtNewDeckName.Text = _deck.DeckName;
-                chkNewDeckPublic.IsChecked = _deck.IsPublic;
-                txtNewDeckName.Focus();
-            }
-            else if(_user == null)
+            if (_user == null && _deckCard == null && _matchManager == null)
             {
                 grdDeckCardCreation.Visibility = Visibility.Visible;
                 grdDeckCreation.Visibility = Visibility.Collapsed;
                 grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
                 try
                 {
                     _userDecks = _deckManager.RetrieveUserDecksByUserID(_card.UserID);
@@ -97,6 +104,60 @@ namespace WPFPresentation
 
                     MessageBox.Show("User decks not retrieved.");
                 }
+            }
+            else if (_user == null && _matchManager == null)
+            {
+                grdDeckCardUpdate.Visibility = Visibility.Visible;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCreation.Visibility = Visibility.Collapsed;
+                grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
+                txtNewCardAmount.Focus();
+            }
+            else if (_deck == null && _card == null && _matchManager == null) 
+            {
+                grdDeckCreation.Visibility = Visibility.Visible;
+                grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
+                txtDeckName.Focus();
+            }
+            else if (_deck != null && _matchManager == null)
+            {
+                grdDeckUpdate.Visibility = Visibility.Visible;
+                grdDeckCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
+                txtNewDeckName.Text = _deck.DeckName;
+                chkNewDeckPublic.IsChecked = _deck.IsPublic;
+                txtNewDeckName.Focus();
+            }
+            else if(_deck == null && _match == null)
+            {
+                grdMatchCreation.Visibility = Visibility.Visible;
+                grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdDeckCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
+                txtMatchName.Focus();
+            }
+            else if(_deck == null)
+            {
+                grdMatchUpdate.Visibility = Visibility.Visible;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdDeckCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                txtNewMatchName.Text = _match.MatchName;
+                chkNewMatchPublic.IsChecked = _match.IsPublic;
+                txtNewMatchName.Focus();
             }
         }
 
@@ -191,6 +252,12 @@ namespace WPFPresentation
                 cboDeckNames.Focus();
                 return;
             }
+            if (txtCardAmount.Text == "")
+            {
+                MessageBox.Show("You must enter a card amount.");
+                txtCardAmount.Focus();
+                return;
+            }
             try
             {
                 amount = Int32.Parse(txtCardAmount.Text.Trim());
@@ -237,6 +304,143 @@ namespace WPFPresentation
         }
 
         private void btnNewDeckCardCancel_Click(object sender, RoutedEventArgs e)
+        {
+            cancelHelper();
+        }
+
+        private void btnUpdateDeckCardSave_Click(object sender, RoutedEventArgs e)
+        {
+            int amount = 0;
+            if (txtNewCardAmount.Text == "")
+            {
+                MessageBox.Show("You must enter a card amount.");
+                txtNewCardAmount.Focus();
+                return;
+            }
+            try
+            {
+                amount = Int32.Parse(txtNewCardAmount.Text.Trim());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Card Amount must be a number.");
+                txtNewCardAmount.Focus();
+                return;
+            }
+
+            DeckCard newDeckCard = new DeckCard()
+            {
+                DeckID = _deckCard.DeckID,
+                CardID = _deckCard.CardID,
+                CardCount = amount,
+                CardName = _deckCard.CardName,
+                ImageID = _deckCard.ImageID,
+                CardDescription = _deckCard.CardDescription,
+                CardColorID = _deckCard.CardColorID,
+                CardConvertedManaCost = _deckCard.CardConvertedManaCost,
+                CardTypeID = _deckCard.CardTypeID,
+                CardRarityID = _deckCard.CardRarityID,
+                HasSecondaryCard = _deckCard.HasSecondaryCard,
+                CardSecondaryName = _deckCard.CardSecondaryName,
+                SecondaryImageID = _deckCard.SecondaryImageID,
+                CardSecondaryDescription = _deckCard.CardSecondaryDescription,
+                CardSecondaryColorID = _deckCard.CardSecondaryColorID,
+                CardSecondaryConvertedManaCost = _deckCard.CardSecondaryConvertedManaCost,
+                CardSecondaryTypeID = _deckCard.CardSecondaryTypeID,
+                CardSecondaryRarityID = _deckCard.CardSecondaryRarityID
+            };
+
+            try
+            {
+                _deckManager.EditDeckCard(_deckCard, newDeckCard);
+                DialogResult = true;
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Error.");
+            }
+        }
+
+        private void btnUpdateDeckCardCancel_Click(object sender, RoutedEventArgs e)
+        {
+            cancelHelper();
+        }
+
+        private void btnMatchSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtMatchName.Text == "")
+            {
+                MessageBox.Show("Please fill out the match name.");
+                txtMatchName.Focus();
+                return;
+            }
+            if (txtMatchName.Text.Length > 100)
+            {
+                MessageBox.Show("Match name cannot be greater than 100 characters");
+                txtMatchName.Focus();
+                return;
+            }
+
+            string matchName = txtMatchName.Text.ToString();
+            bool isPublic = (bool)chkMatchPublic.IsChecked;
+            try
+            {
+                _matchManager.CreateMatch(matchName, _user.UserID, isPublic);
+                DialogResult = true;
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void btnMatchCancel_Click(object sender, RoutedEventArgs e)
+        {
+            cancelHelper();
+        }
+
+        private void btnNewMatchUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Match newMatch = new Match()
+            {
+                MatchID = _match.MatchID,
+                MatchName = txtNewMatchName.Text.ToString(),
+                UserID = _match.UserID,
+                IsPublic = (bool)chkNewMatchPublic.IsChecked
+            };
+            if (txtNewMatchName.Text == "")
+            {
+                MessageBox.Show("Please fill out the match name.");
+                txtNewMatchName.Focus();
+                return;
+            }
+            if (txtNewMatchName.Text.Length > 100)
+            {
+                MessageBox.Show("Match name cannot be greater than 100 characters");
+                txtNewMatchName.Focus();
+                return;
+            }
+
+            string matchName = txtNewMatchName.Text.ToString();
+            bool isPublic = (bool)chkNewMatchPublic.IsChecked;
+            try
+            {
+                _matchManager.EditMatch(_match, newMatch);
+                DialogResult = true;
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void btnNewMatchCancel_Click(object sender, RoutedEventArgs e)
         {
             cancelHelper();
         }
