@@ -41,6 +41,23 @@ namespace LogicLayer
             return result;
         }
 
+        public bool CreateDeckCard(DeckCard card)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _deckAccessor.InsertDeckCard(card));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public bool EditDeck(Deck oldDeck, Deck newDeck)
         {
             bool result;

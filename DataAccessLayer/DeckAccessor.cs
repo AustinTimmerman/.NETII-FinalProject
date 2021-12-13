@@ -67,6 +67,36 @@ namespace DataAccessLayer
             return rowsAffected;
         }
 
+        public int InsertDeckCard(DeckCard card)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_insert_deck_card";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters.Add("@CardID", SqlDbType.Int);
+            cmd.Parameters.Add("@CardCount", SqlDbType.Int);
+
+            cmd.Parameters["@DeckID"].Value = card.DeckID;
+            cmd.Parameters["@CardID"].Value = card.CardID;
+            cmd.Parameters["@CardCount"].Value = card.CardCount;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public List<DeckCard> SelectDeckCards(int deckID)
         {
             List<DeckCard> deckCards = new List<DeckCard>();
@@ -88,21 +118,22 @@ namespace DataAccessLayer
                         {
                             DeckID = deckID,
                             CardID = reader.GetInt32(0),
-                            CardName = reader.GetString(1),
-                            ImageID = reader.GetInt32(2),
-                            CardDescription = reader.GetString(3),
-                            CardColorID = reader.GetString(4),
-                            CardConvertedManaCost = reader.GetInt32(5),
-                            CardTypeID = reader.GetString(6),
-                            CardRarityID = reader.GetString(7),
-                            HasSecondaryCard = reader.GetBoolean(8),
-                            CardSecondaryName = reader.IsDBNull(9) ? null : reader.GetString(9),
-                            SecondaryImageID = reader.IsDBNull(10) ? -1 : reader.GetInt32(10),
-                            CardSecondaryDescription = reader.IsDBNull(11) ? null : reader.GetString(11),
-                            CardSecondaryColorID = reader.IsDBNull(12) ? null : reader.GetString(12),
-                            CardSecondaryConvertedManaCost = reader.IsDBNull(13) ? -1 : reader.GetInt32(13),
-                            CardSecondaryTypeID = reader.IsDBNull(14) ? null : reader.GetString(14),
-                            CardSecondaryRarityID = reader.IsDBNull(15) ? null : reader.GetString(15)
+                            CardCount = reader.GetInt32(1),
+                            CardName = reader.GetString(2),
+                            ImageID = reader.GetInt32(3),
+                            CardDescription = reader.GetString(4),
+                            CardColorID = reader.GetString(5),
+                            CardConvertedManaCost = reader.GetInt32(6),
+                            CardTypeID = reader.GetString(7),
+                            CardRarityID = reader.GetString(8),
+                            HasSecondaryCard = reader.GetBoolean(9),
+                            CardSecondaryName = reader.IsDBNull(10) ? null : reader.GetString(10),
+                            SecondaryImageID = reader.IsDBNull(11) ? -1 : reader.GetInt32(11),
+                            CardSecondaryDescription = reader.IsDBNull(12) ? null : reader.GetString(12),
+                            CardSecondaryColorID = reader.IsDBNull(13) ? null : reader.GetString(13),
+                            CardSecondaryConvertedManaCost = reader.IsDBNull(14) ? -1 : reader.GetInt32(14),
+                            CardSecondaryTypeID = reader.IsDBNull(15) ? null : reader.GetString(15),
+                            CardSecondaryRarityID = reader.IsDBNull(16) ? null : reader.GetString(16)
                         });
                     }
                 }
@@ -145,10 +176,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no decks!");
-                }
+                //else
+                //{
+                //    throw new ApplicationException("There are no decks!");
+                //}
             }
             catch (Exception)
             {
@@ -186,10 +217,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no user decks!");
-                }
+                //else
+                //{
+                //    throw new ApplicationException("There are no user decks!");
+                //}
             }
             catch (Exception)
             {

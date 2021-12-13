@@ -29,6 +29,7 @@ namespace DataObjects
     public class DeckCard : Cards
     {
         public int DeckID { get; set; }
+        public int CardCount { get; set; }
     }
 
     public class UserCard : Cards

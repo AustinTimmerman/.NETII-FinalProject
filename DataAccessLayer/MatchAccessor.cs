@@ -38,10 +38,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no decks!");
-                }
+                //else
+                //{
+                //    throw new ApplicationException("There are no decks!");
+                //}
             }
             catch (Exception)
             {
@@ -77,10 +77,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no matches!");
-                }
+                //else
+                //{
+                //    throw new ApplicationException("There are no matches!");
+                //}
             }
             catch (Exception)
             {
@@ -118,10 +118,10 @@ namespace DataAccessLayer
                         });
                     }
                 }
-                else
-                {
-                    throw new ApplicationException("There are no user matches!");
-                }
+                //else
+                //{
+                //    throw new ApplicationException("There are no user matches!");
+                //}
             }
             catch (Exception)
             {

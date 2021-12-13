@@ -373,5 +373,24 @@ namespace WPFPresentation
                 throw;
             }
         }
+
+        private void addCardToDeckHelper()
+        {
+            var deckCardCreationWindow = new Creation(_card, _cardManager, _deckManager, _matchManager);
+            var result = deckCardCreationWindow.ShowDialog();
+            if (result == true)
+            {
+                MessageBox.Show("Card has been added.");
+            }
+        }
+        private void btnOneCardAddToDeck_Click(object sender, RoutedEventArgs e)
+        {
+            addCardToDeckHelper();
+        }
+
+        private void btnTwoCardAddToDeck_Click(object sender, RoutedEventArgs e)
+        {
+            addCardToDeckHelper();
+        }
     }
 }

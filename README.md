@@ -44,3 +44,6 @@ Completed image retrieval. The user is now able to view the image associated wit
 
 **12/11/21**
 Completed deck insert, update, and delete. Completed a design overhaul compeletely changing the design to be better looking. Major changes and tweaks all around the application were done and added CardCount to deck cards to count the amount of a singular card appears in a deck (still need to work out). The user is now able to view their decks and add a new deck, update the deck name and if its public, and delete a deck. The next update will include the remaining deck card CRUD functions with some hopeful match CRUD functions as well. 
+
+**12/12/21**
+Completed deck card insert. Various bug fixed and changes done. The user is now able to add a card to a deck they own with the amount specified. The next update will include updating and deleting card from decks. 

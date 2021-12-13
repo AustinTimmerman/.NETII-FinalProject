@@ -39,18 +39,18 @@ namespace WPFPresentation
 
         public MainWindow()
         {
-            _userManager = new UserManager();
-            //_userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
+            //_userManager = new UserManager();
+            _userManager = new UserManager(new DataAccessFakes.UserAccessorFake());
             //newWindow = frmMainWindow;
 
-            _cardManager = new CardManager();
-            //_cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
+            //_cardManager = new CardManager();
+            _cardManager = new CardManager(new DataAccessFakes.CardAccessorFake());
 
-            _deckManager = new DeckManager();
-            //_deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
+            //_deckManager = new DeckManager();
+            _deckManager = new DeckManager(new DataAccessFakes.DeckAccessorFake());
 
-            _matchManager = new MatchManager();
-            //_matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
+            //_matchManager = new MatchManager();
+            _matchManager = new MatchManager(new DataAccessFakes.MatchAccessorFake());
 
             InitializeComponent();
             AppData.DataPath = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + "Images";
@@ -306,6 +306,7 @@ namespace WPFPresentation
                         {
                             UserID = _user.UserID,
                             CardID = card.CardID,
+                            CardCount = card.CardCount,
                             CardName = card.CardName,
                             ImageID = card.ImageID,
                             CardDescription = card.CardDescription,
@@ -329,6 +330,7 @@ namespace WPFPresentation
                     if (userCards[i].CardID == card.CardID)
                     {
                         displayCards.Add(userCards[i]);
+                        displayCards[displayCards.Count - 1].CardCount = card.CardCount;
                         break;
                     }
                 }
@@ -356,6 +358,7 @@ namespace WPFPresentation
                         {
                             UserID = _user.UserID,
                             CardID = card.CardID,
+                            CardCount = card.CardCount,
                             CardName = card.CardName,
                             ImageID = card.ImageID,
                             CardDescription = card.CardDescription,
@@ -373,12 +376,13 @@ namespace WPFPresentation
                             CardSecondaryTypeID = card.CardSecondaryTypeID,
                             OwnedCard = false,
                             Wishlisted = false
-                        });
+                        }) ;
                         break;
                     }
                     if (userCards[i].CardID == card.CardID)
                     {
                         displayCards.Add(userCards[i]);
+                        displayCards[displayCards.Count - 1].CardCount = card.CardCount;
                         break;
                     }
                 }
@@ -408,6 +412,7 @@ namespace WPFPresentation
                 pageChecker();
                 btnUpdateDeck.Visibility = Visibility.Collapsed;
                 btnDeleteDeck.Visibility = Visibility.Collapsed;
+                grdButtons.Visibility = Visibility.Visible;
                 btnCreateDeck.Visibility = Visibility.Visible;
                 datMyDecks.ItemsSource = UserDeckRetrieveHelper();
 
@@ -647,6 +652,8 @@ namespace WPFPresentation
                 //grdMyStuff.Visibility = Visibility.Visible;
                 grdMyDecks.Visibility = Visibility.Visible;
                 datMyDeckCards.Visibility = Visibility.Visible;
+                grdButtons.Visibility = Visibility.Visible;
+                
 
                 //datMyDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
                 btnUpdateDeck.Visibility = Visibility.Visible;
@@ -820,8 +827,8 @@ namespace WPFPresentation
 
         private void btnUpdateDeck_Click(object sender, RoutedEventArgs e)
         {
-            var deckCreationWindow = new Creation(_user, _deck, _cardManager, _deckManager, _matchManager);
-            var result = deckCreationWindow.ShowDialog();
+            var deckUpdateWindow = new Creation(_user, _deck, _cardManager, _deckManager, _matchManager);
+            var result = deckUpdateWindow.ShowDialog();
             if (result == true)
             {
                 MessageBox.Show("Deck has been updated.");

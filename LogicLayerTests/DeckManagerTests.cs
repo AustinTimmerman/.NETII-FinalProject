@@ -34,7 +34,7 @@ namespace LogicLayerTests
         public void TestRetrieveDeckCardsByDeckIDReturnsDeckCards()
         {
             const int deckID = 999999;
-            const int expectedCount = 6;
+            const int expectedCount = 2;
             int actualCount;
 
             actualCount = deckManager.RetrieveDeckCards(deckID).Count;
@@ -56,7 +56,7 @@ namespace LogicLayerTests
         }
 
         [TestMethod]
-        public void TestInsertDeckReturnsTrue()
+        public void TestCreateDeckReturnsTrue()
         {
             const string deckName = "New Deck";
             const int userID = 999999;
@@ -154,6 +154,55 @@ namespace LogicLayerTests
             actualResult = deckManager.RemoveDeck(deck);
 
             Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestCreateDeckCardReturnsTrue()
+        {
+            DeckCard card = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100010,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = deckManager.CreateDeckCard(card);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCreateDeckCardThrowsException()
+        {
+            DeckCard card = new DeckCard()
+            {
+                DeckID = 999999,
+                CardID = 100000,
+                CardName = "Toxrill, the Corrosive",
+                ImageID = 100000,
+                CardDescription = "At the beginning of each end step, put a slime counter on each creature you don't control.",
+                CardColorID = "Multi-Colored",
+                CardConvertedManaCost = 7,
+                CardRarityID = "Mythic Rare",
+                CardTypeID = "Legendary Creature",
+                HasSecondaryCard = false,
+                CardCount = 1
+            };
+            bool actualResult;
+
+            actualResult = deckManager.CreateDeckCard(card);
         }
     }
 }

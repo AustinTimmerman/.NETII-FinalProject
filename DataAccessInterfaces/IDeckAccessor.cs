@@ -15,5 +15,6 @@ namespace DataAccessInterfaces
         int InsertDeck(string deckName, int userID, bool isPublic);
         int UpdateDeck(Deck oldDeck, Deck newDeck);
         int DeleteDeck(Deck deck);
+        int InsertDeckCard(DeckCard card);
     }
 }

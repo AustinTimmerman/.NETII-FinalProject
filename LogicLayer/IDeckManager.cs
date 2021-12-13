@@ -15,5 +15,6 @@ namespace LogicLayer
         bool CreateDeck(string deckName, int userID, bool isPublic);
         bool EditDeck(Deck oldDeck, Deck newDeck);
         bool RemoveDeck(Deck deck);
+        bool CreateDeckCard(DeckCard card);
     }
 }

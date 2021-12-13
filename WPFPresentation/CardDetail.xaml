@@ -50,6 +50,7 @@
 
             <Button x:Name="btnOneCardSave" Content="Save" Grid.Column="0" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="0 0 100 0" IsEnabled="False" Click="btnOneCardSave_Click"/>
             <Button x:Name="btnOneCardCloseCancel" Content="Close" Grid.Column="1" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Center" Margin="100 0 0 0" Click="btnOneCardCloseCancel_Click"/>
+            <Button x:Name="btnOneCardAddToDeck" Content="Add to Deck" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" Width="100" Height="50" Margin="5" Click="btnOneCardAddToDeck_Click"/>
         </Grid>
         <Grid x:Name="grdTwoCardDetail" Visibility="Visible">
             <Grid.RowDefinitions>
@@ -125,6 +126,7 @@
 
             <Button x:Name="btnTwoCardSave" Content="Save" Grid.Column="0" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Right" Margin="0 0 10 0" IsEnabled="False" Click="btnTwoCardSave_Click"/>
             <Button x:Name="btnTwoCardCloseCancel" Content="Close" Grid.Column="1" Grid.Row="6" Height="40" Width="80" HorizontalAlignment="Left" Margin="10 0 0 0" Click="btnTwoCardCloseCancel_Click"/>
+            <Button x:Name="btnTwoCardAddToDeck" Content="Add to Deck" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" Width="100" Height="50" Margin="5" Click="btnTwoCardAddToDeck_Click"/>
         </Grid>
     </Grid>
 </Window>
