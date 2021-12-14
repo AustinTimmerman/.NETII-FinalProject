@@ -42,6 +42,40 @@ namespace LogicLayer
             return result;
         }
 
+        public bool CreateMatchDeck(MatchDeck matchDeck)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _matchAccessor.InsertMatchDeck(matchDeck));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public bool RemoveMatchDeck(MatchDeck matchDeck)
+        {
+            bool result;
+
+            try
+            {
+                result = (1 == _matchAccessor.DeleteMatchDeck(matchDeck));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
         public bool EditMatch(Match oldMatch, Match newMatch)
         {
             bool result;

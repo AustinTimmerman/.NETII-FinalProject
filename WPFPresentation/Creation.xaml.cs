@@ -28,8 +28,9 @@ namespace WPFPresentation
         User _user;
         Deck _deck;
         List<Deck> _userDecks;
+        //MatchDeck _matchDeck;
         Match _match;
-        ICardManager _cardManager;
+        List<Match> _userMatches;
         IDeckManager _deckManager;
         IMatchManager _matchManager;
 
@@ -82,6 +83,15 @@ namespace WPFPresentation
             populateControls();
         }
 
+        public Creation(User user, Deck deck, IMatchManager matchManager)
+        {
+            _user = user;
+            _deck = deck;
+            _matchManager = matchManager;
+            InitializeComponent();
+            populateControls();
+        }
+
         private void populateControls()
         {
             if (_user == null && _deckCard == null && _matchManager == null)
@@ -92,6 +102,7 @@ namespace WPFPresentation
                 grdDeckCardUpdate.Visibility = Visibility.Collapsed;
                 grdMatchCreation.Visibility = Visibility.Collapsed;
                 grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 try
                 {
                     _userDecks = _deckManager.RetrieveUserDecksByUserID(_card.UserID);
@@ -104,6 +115,7 @@ namespace WPFPresentation
 
                     MessageBox.Show("User decks not retrieved.");
                 }
+                cboDeckNames.Focus();
             }
             else if (_user == null && _matchManager == null)
             {
@@ -113,6 +125,7 @@ namespace WPFPresentation
                 grdDeckUpdate.Visibility = Visibility.Collapsed;
                 grdMatchCreation.Visibility = Visibility.Collapsed;
                 grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 txtNewCardAmount.Focus();
             }
             else if (_deck == null && _card == null && _matchManager == null) 
@@ -123,6 +136,7 @@ namespace WPFPresentation
                 grdDeckCardUpdate.Visibility = Visibility.Collapsed;
                 grdMatchCreation.Visibility = Visibility.Collapsed;
                 grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 txtDeckName.Focus();
             }
             else if (_deck != null && _matchManager == null)
@@ -133,6 +147,7 @@ namespace WPFPresentation
                 grdDeckCardUpdate.Visibility = Visibility.Collapsed;
                 grdMatchCreation.Visibility = Visibility.Collapsed;
                 grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 txtNewDeckName.Text = _deck.DeckName;
                 chkNewDeckPublic.IsChecked = _deck.IsPublic;
                 txtNewDeckName.Focus();
@@ -145,6 +160,7 @@ namespace WPFPresentation
                 grdDeckCardCreation.Visibility = Visibility.Collapsed;
                 grdDeckCardUpdate.Visibility = Visibility.Collapsed;
                 grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 txtMatchName.Focus();
             }
             else if(_deck == null)
@@ -155,9 +171,35 @@ namespace WPFPresentation
                 grdDeckCreation.Visibility = Visibility.Collapsed;
                 grdDeckCardCreation.Visibility = Visibility.Collapsed;
                 grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+                grdMatchDeckCreation.Visibility = Visibility.Collapsed;
                 txtNewMatchName.Text = _match.MatchName;
                 chkNewMatchPublic.IsChecked = _match.IsPublic;
                 txtNewMatchName.Focus();
+            }
+            else if(_deckManager == null)
+            {
+                grdMatchDeckCreation.Visibility = Visibility.Visible;
+                grdMatchUpdate.Visibility = Visibility.Collapsed;
+                grdMatchCreation.Visibility = Visibility.Collapsed;
+                grdDeckUpdate.Visibility = Visibility.Collapsed;
+                grdDeckCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardCreation.Visibility = Visibility.Collapsed;
+                grdDeckCardUpdate.Visibility = Visibility.Collapsed;
+
+                try
+                {
+                    _userMatches = _matchManager.RetrieveUserMatchesByUserID(_user.UserID);
+                    cboMatchNames.ItemsSource = from m in _userMatches
+                                               orderby m.MatchName
+                                               select m.MatchName;
+                }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("User decks not retrieved.");
+                }
+
+                cboMatchNames.Focus();
             }
         }
 
@@ -441,6 +483,41 @@ namespace WPFPresentation
         }
 
         private void btnNewMatchCancel_Click(object sender, RoutedEventArgs e)
+        {
+            cancelHelper();
+        }
+
+        private void btnMatchDeckSave_Click(object sender, RoutedEventArgs e)
+        {
+            bool winner = (bool)chkMatchDeckWinner.IsChecked;
+            if (cboMatchNames.SelectedItem == null)
+            {
+                MessageBox.Show("You must select a match name.");
+                cboMatchNames.Focus();
+                return;
+            }
+            int matchID = _userMatches.First(m => m.MatchName == cboMatchNames.Text.ToString()).MatchID;
+            MatchDeck matchDeck = new MatchDeck()
+            {
+                MatchID = matchID,
+                DeckID = _deck.DeckID,
+                DeckName = _deck.DeckName,
+                Winner = winner
+            };
+            try
+            {
+                _matchManager.CreateMatchDeck(matchDeck);
+                DialogResult = true;
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Deck is already in this match");
+            }
+        }
+
+        private void btnMatchDeckCancel_Click(object sender, RoutedEventArgs e)
         {
             cancelHelper();
         }

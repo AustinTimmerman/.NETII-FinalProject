@@ -53,3 +53,6 @@ Completed remaining deck card crud functions. Made changes to support the data g
 
 **12/13/21**
 Completed all match CRUD functions. The user is now able to create, update, and delete any of their decks. The next update will include the final match deck CRUD functions with any other small tweaks needed. 
+
+**12/14/21**
+Completed the last remaining match deck CRUD functions needed. Completed other minor fixes and tweaks all around like labeling and proper match deck retrievals. The user is now able to insert decks into matches and remove decks from matches (no update since the only thing being changed would be winner). The application is now complete and is fully operational. Any other updates will be small tweaks or bug fixes.

@@ -156,5 +156,79 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        [TestMethod]
+        public void TestCreateMatchDeckReturnsTrue()
+        {
+            MatchDeck matchDeck = new MatchDeck()
+            {
+                MatchID = 999999,
+                DeckID = 999990,
+                DeckName = "Purple",
+                Winner = true
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = matchManager.CreateMatchDeck(matchDeck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCreateDeckCardThrowsException()
+        {
+            MatchDeck matchDeck = new MatchDeck()
+            {
+                MatchID = 999999,
+                DeckID = 999999,
+                DeckName = "Purple",
+                Winner = false
+            };
+
+            bool actualResult;
+
+            actualResult = matchManager.CreateMatchDeck(matchDeck);
+        }
+
+        [TestMethod]
+        public void TestRemoveDeckCardReturnsTrue()
+        {
+            MatchDeck matchDeck = new MatchDeck()
+            {
+                MatchID = 999999,
+                DeckID = 999999,
+                DeckName = "Purple",
+                Winner = true
+            };
+
+            const bool expectedResult = true;
+            bool actualResult;
+
+            actualResult = matchManager.RemoveMatchDeck(matchDeck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestRemoveDeckCardReturnsFalse()
+        {
+            MatchDeck matchDeck = new MatchDeck()
+            {
+                MatchID = 9999999,
+                DeckID = 999999,
+                DeckName = "Purple",
+                Winner = true
+            };
+
+            const bool expectedResult = false;
+            bool actualResult;
+
+            actualResult = matchManager.RemoveMatchDeck(matchDeck);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

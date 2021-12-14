@@ -85,6 +85,30 @@ namespace DataAccessFakes
             return rowsAffected;
         }
 
+        public int DeleteMatchDeck(MatchDeck matchDeck)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeMatchDecks.Count; i++)
+                {
+                    if (fakeMatchDecks[i].DeckID == matchDeck.DeckID && fakeMatchDecks[i].MatchID == matchDeck.MatchID)
+                    {
+                        fakeMatchDecks.RemoveAt(i);
+                        rowsAffected++;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
         public int InsertMatch(string matchName, int userID, bool isPublic)
         {
             int rowsAffected = 0;
@@ -107,6 +131,30 @@ namespace DataAccessFakes
             catch (Exception)
             {
 
+                throw;
+            }
+
+            return rowsAffected;
+        }
+
+        public int InsertMatchDeck(MatchDeck matchDeck)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                for (int i = 0; i < fakeMatchDecks.Count; i++)
+                {
+                    if (fakeMatchDecks[i].DeckID == matchDeck.DeckID && fakeMatchDecks[i].MatchID == matchDeck.MatchID)
+                    {
+                        throw new ApplicationException();
+                    }
+                }
+                fakeMatchDecks.Add(matchDeck);
+                rowsAffected++;
+            }
+            catch (Exception)
+            {
                 throw;
             }
 

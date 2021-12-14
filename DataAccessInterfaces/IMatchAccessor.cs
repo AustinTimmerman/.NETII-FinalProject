@@ -15,5 +15,7 @@ namespace DataAccessInterfaces
         int InsertMatch(string matchName, int userID, bool isPublic);
         int UpdateMatch(Match oldMatch, Match newMatch);
         int DeleteMatch(Match match);
+        int InsertMatchDeck(MatchDeck matchDeck);
+        int DeleteMatchDeck(MatchDeck matchDeck);
     }
 }

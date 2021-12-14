@@ -15,5 +15,7 @@ namespace LogicLayer
         bool CreateMatch(string matchName, int userID, bool isPublic);
         bool EditMatch(Match oldMatch, Match newMatch);
         bool RemoveMatch(Match match);
+        bool CreateMatchDeck(MatchDeck matchDeck);
+        bool RemoveMatchDeck(MatchDeck matchDeck);
     }
 }

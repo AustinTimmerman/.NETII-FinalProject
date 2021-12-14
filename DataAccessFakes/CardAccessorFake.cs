@@ -127,7 +127,7 @@ namespace DataAccessFakes
             });
 
             fakeImages.Add(100000, "Nadier-Agent-of-the-Duskenel.jfif");
-            fakeImages.Add(100001, "Okaun-Eye-of-Chaos-foil-SLD-672.jpg");
+            fakeImages.Add(100001, "Prava-of-the-steel-legion.jpg");
         }
 
         public List<Cards> SelectCardsByPage(int pageNum)

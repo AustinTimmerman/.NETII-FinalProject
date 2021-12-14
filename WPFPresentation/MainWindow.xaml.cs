@@ -56,6 +56,7 @@ namespace WPFPresentation
 
             InitializeComponent();
             AppData.DataPath = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + "Images";
+            btnHome.Focus();
         }
 
         private void hideAllButtons()
@@ -82,7 +83,10 @@ namespace WPFPresentation
             btnLogin.Content = "Login";
             hideAllButtons();
             btnHome.Focus();
+            mnuLogout.Visibility = Visibility.Collapsed;
             datMyCards.ItemsSource = null;
+            datMyDecks.ItemsSource = null;
+            datMyMatches.ItemsSource = null;
             staMessage.Content = "Welcome. Please log in to continue.";
         }
 
@@ -90,6 +94,7 @@ namespace WPFPresentation
         {
             staMessage.Content = "Welcome, " + _user.Username;
             btnLogin.Content = "Log out";
+            mnuLogout.Visibility = Visibility.Visible;
             showAllButtons();
         }
 
@@ -123,8 +128,12 @@ namespace WPFPresentation
             btnCreateMatch.Visibility = Visibility.Collapsed;
             btnUpdateMatch.Visibility = Visibility.Collapsed;
             btnDeleteMatch.Visibility = Visibility.Collapsed;
+            btnAddMatchDeck.Visibility = Visibility.Collapsed;
+            btnDeleteMatchDeck.Visibility = Visibility.Collapsed;
             grdLabels.Visibility = Visibility.Collapsed;
             lblMyDeckName.Visibility = Visibility.Collapsed;
+            lblMyMatchName.Visibility = Visibility.Collapsed;
+            lblTabDetail.Visibility = Visibility.Collapsed;
 
         }
 
@@ -428,6 +437,9 @@ namespace WPFPresentation
                 datMyDecks.ItemsSource = UserDeckRetrieveHelper();
                 btnUpdateDeck.IsEnabled = false;
                 btnDeleteDeck.IsEnabled = false;
+                grdLabels.Visibility = Visibility.Visible;
+                lblTabDetail.Visibility = Visibility.Visible;
+                lblTabDetail.Content = "My Decks";
             }
             catch (Exception ex)
             {
@@ -459,6 +471,7 @@ namespace WPFPresentation
                 lblMyDeckName.Content = _deck.DeckName;
                 btnUpdateDeckCard.IsEnabled = false;
                 btnDeleteDeckCard.IsEnabled = false;
+                btnAddMatchDeck.Visibility = Visibility.Visible;
             }
             catch (Exception)
             {
@@ -484,11 +497,150 @@ namespace WPFPresentation
                 datMyMatches.ItemsSource = _matchManager.RetrieveUserMatchesByUserID(_user.UserID, pageNumber);
                 btnUpdateMatch.IsEnabled = false;
                 btnDeleteMatch.IsEnabled = false;
+                grdLabels.Visibility = Visibility.Visible;
+                lblTabDetail.Visibility = Visibility.Visible;
+                lblTabDetail.Content = "My Matches";
             }
             catch (Exception)
             {
 
                 throw;
+            }
+        }
+
+        private void myMatchDecksHelper()
+        {
+            hideAllDetails();
+            //grdMyStuff.Visibility = Visibility.Visible;
+            grdMyMatches.Visibility = Visibility.Visible;
+            datMyMatchDecks.Visibility = Visibility.Visible;
+
+            grdButtons.Visibility = Visibility.Visible;
+            btnDeleteMatchDeck.Visibility = Visibility.Visible;
+            btnDeleteMatchDeck.IsEnabled = false;
+
+            grdLabels.Visibility = Visibility.Visible;
+            lblMyMatchName.Visibility = Visibility.Visible;
+            lblMyMatchName.Content = _match.MatchName;
+
+            datMyMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(_match.MatchID);
+        }
+
+        private void cardsHelper()
+        {
+
+            if (grdCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    hideAllDetails();
+                    grdCards.Visibility = Visibility.Visible;
+                    grdNextPrev.Visibility = Visibility.Visible;
+                    pageChecker();
+                    //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
+                    grdLabels.Visibility = Visibility.Visible;
+                    lblTabDetail.Visibility = Visibility.Visible;
+                    lblTabDetail.Content = "Cards";
+                    datCards.ItemsSource = createCardList();
+                    //clearDataGrids();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (grdDeckCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    hideAllDetails();
+                    grdDeckCards.Visibility = Visibility.Visible;
+                    grdLabels.Visibility = Visibility.Visible;
+                    lblMyDeckName.Visibility = Visibility.Visible;
+                    lblMyDeckName.Content = _deck.DeckName;
+
+                    //datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                    datDeckCards.ItemsSource = createCardList(_deck);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (grdMatchDeckCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    hideAllDetails();
+                    grdMatchDeckCards.Visibility = Visibility.Visible;
+
+                    //datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                    datMatchDeckCards.ItemsSource = createCardList(_matchDeck);
+                    grdLabels.Visibility = Visibility.Visible;
+                    lblMyDeckName.Visibility = Visibility.Visible;
+                    lblMyDeckName.Content = _matchDeck.DeckName;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (datMyCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    hideAllDetails();
+                    //grdMyStuff.Visibility = Visibility.Visible;
+                    grdMyCards.Visibility = Visibility.Visible;
+                    datMyCards.Visibility = Visibility.Visible;
+                    grdNextPrev.Visibility = Visibility.Visible;
+                    pageChecker();
+                    grdLabels.Visibility = Visibility.Visible;
+                    lblTabDetail.Visibility = Visibility.Visible;
+                    lblTabDetail.Content = "My Cards";
+                    datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (datMyDeckCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    myDeckCardsHelper();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (datMyMatchDeckCards.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    hideAllDetails();
+                    //grdMyStuff.Visibility = Visibility.Visible;
+                    grdMyMatches.Visibility = Visibility.Visible;
+                    datMyMatchDeckCards.Visibility = Visibility.Visible;
+
+                    //datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
+                    datMyMatchDeckCards.ItemsSource = createCardList(_matchDeck);
+                    grdLabels.Visibility = Visibility.Visible;
+                    lblMyDeckName.Visibility = Visibility.Visible;
+                    lblMyDeckName.Content = _matchDeck.DeckName;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
@@ -527,7 +679,31 @@ namespace WPFPresentation
             {
                 hideAllDetails();
                 grdHome.Visibility = Visibility.Visible;
-                clearDataGrids();
+                try
+                {
+                    Uri src = new Uri(AppData.DataPath + @"\" + "Crimson_Vow_logo.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgInnistrad.Source = img;
+                }
+                catch (Exception)
+                {
+                    Uri src = new Uri(AppData.DataPath + @"\" + "nope-not-here.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgInnistrad.Source = img;
+                }
+                try
+                {
+                    Uri src = new Uri(AppData.DataPath + @"\" + "Midnight_Hunt_logo.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgMidnight.Source = img;
+                }
+                catch (Exception)
+                {
+                    Uri src = new Uri(AppData.DataPath + @"\" + "nope-not-here.png", UriKind.Absolute);
+                    BitmapImage img = new BitmapImage(src);
+                    imgMidnight.Source = img;
+                }
+                //clearDataGrids();
             }
             catch (Exception ex)
             {
@@ -552,109 +728,6 @@ namespace WPFPresentation
             {
 
                 MessageBox.Show("" + ex);
-            }
-        }
-
-        private void cardsHelper()
-        {
-
-            if (grdCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    hideAllDetails();
-                    grdCards.Visibility = Visibility.Visible;
-                    grdNextPrev.Visibility = Visibility.Visible;
-                    pageChecker();
-                    //datCards.ItemsSource = _cardManager.RetrieveCardsByPage(pageNumber);
-                    datCards.ItemsSource = createCardList();
-                    //clearDataGrids();
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-            else if (grdDeckCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    hideAllDetails();
-                    grdDeckCards.Visibility = Visibility.Visible;
-
-                    //datDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
-                    datDeckCards.ItemsSource = createCardList(_deck);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-            else if (grdMatchDeckCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    hideAllDetails();
-                    grdMatchDeckCards.Visibility = Visibility.Visible;
-
-                    //datMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
-                    datMatchDeckCards.ItemsSource = createCardList(_matchDeck);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-            else if (datMyCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    hideAllDetails();
-                    //grdMyStuff.Visibility = Visibility.Visible;
-                    grdMyCards.Visibility = Visibility.Visible;
-                    datMyCards.Visibility = Visibility.Visible;
-                    grdNextPrev.Visibility = Visibility.Visible;
-                    pageChecker();
-                    datMyCards.ItemsSource = _cardManager.RetrieveUserCardsByUserID(_user.UserID, pageNumber);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-            else if (datMyDeckCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    myDeckCardsHelper();
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-            else if (datMyMatchDeckCards.Visibility == Visibility.Visible)
-            {
-                try
-                {
-                    hideAllDetails();
-                    //grdMyStuff.Visibility = Visibility.Visible;
-                    grdMyMatches.Visibility = Visibility.Visible;
-                    datMyMatchDeckCards.Visibility = Visibility.Visible;
-
-                    //datMyMatchDeckCards.ItemsSource = _deckManager.RetrieveDeckCards(deck.DeckID);
-                    datMyMatchDeckCards.ItemsSource = createCardList(_matchDeck);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
             }
         }
 
@@ -693,6 +766,9 @@ namespace WPFPresentation
                 grdDecks.Visibility = Visibility.Visible;
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
+                grdLabels.Visibility = Visibility.Visible;
+                lblTabDetail.Visibility = Visibility.Visible;
+                lblTabDetail.Content = "Decks";
                 datDecks.ItemsSource = _deckManager.RetrieveDecksByPage(pageNumber);
                 //clearDataGrids();
             }
@@ -705,6 +781,10 @@ namespace WPFPresentation
 
         private void datDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datDecks.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var deck = (Deck)datDecks.SelectedItem;
@@ -733,7 +813,10 @@ namespace WPFPresentation
                 grdNextPrev.Visibility = Visibility.Visible;
                 pageChecker();
                 datMatches.ItemsSource = _matchManager.RetrieveMatchesByPage(pageNumber);
-                clearDataGrids();
+                grdLabels.Visibility = Visibility.Visible;
+                lblTabDetail.Visibility = Visibility.Visible;
+                lblTabDetail.Content = "Matches";
+                //clearDataGrids();
             }
             catch (Exception ex)
             {
@@ -744,6 +827,10 @@ namespace WPFPresentation
 
         private void datMatches_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMatches.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var match = (Match)datMatches.SelectedItem;
@@ -752,6 +839,9 @@ namespace WPFPresentation
                 grdMatchDecks.Visibility = Visibility.Visible;
 
                 datMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
+                grdLabels.Visibility = Visibility.Visible;
+                lblMyMatchName.Visibility = Visibility.Visible;
+                lblMyMatchName.Content = match.MatchName;
             }
             catch (Exception ex)
             {
@@ -762,14 +852,22 @@ namespace WPFPresentation
 
         private void datMatchDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMatchDecks.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var deck = (MatchDeck)datMatchDecks.SelectedItem;
                 _matchDeck = deck;
                 hideAllDetails();
                 grdMatchDeckCards.Visibility = Visibility.Visible;
+                datMatchDeckCards.Visibility = Visibility.Visible;
 
                 cardsHelper();
+                grdLabels.Visibility = Visibility.Visible;
+                lblMyDeckName.Visibility = Visibility.Visible;
+                lblMyDeckName.Content = deck.DeckName;
             }
             catch (Exception ex)
             {
@@ -810,6 +908,10 @@ namespace WPFPresentation
 
         private void datMyDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyDecks.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var deck = (Deck)datMyDecks.SelectedItem;
@@ -846,16 +948,20 @@ namespace WPFPresentation
 
         private void datMyMatches_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyMatches.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var match = (Match)datMyMatches.SelectedItem;
-
+                _match = match;
                 hideAllDetails();
                 //grdMyStuff.Visibility = Visibility.Visible;
                 grdMyMatches.Visibility = Visibility.Visible;
                 datMyMatchDecks.Visibility = Visibility.Visible;
 
-                datMyMatchDecks.ItemsSource = _matchManager.RetrieveMatchDecksByMatchID(match.MatchID);
+                myMatchDecksHelper();
             }
             catch (Exception ex)
             {
@@ -866,12 +972,20 @@ namespace WPFPresentation
 
         private void datMyMatchDecks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyMatchDecks.SelectedItem == null)
+            {
+                return;
+            }
             try
             {
                 var deck = (MatchDeck)datMyMatchDecks.SelectedItem;
                 _matchDeck = deck;
+                datMyMatchDeckCards.Visibility = Visibility.Visible;
 
                 cardsHelper();
+                grdLabels.Visibility = Visibility.Visible;
+                lblMyDeckName.Visibility = Visibility.Visible;
+                lblMyDeckName.Content = deck.DeckName;
             }
             catch (Exception ex)
             {
@@ -880,60 +994,24 @@ namespace WPFPresentation
             }
         }
 
-        //private void datCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    var card = (Cards)datCards.SelectedItem;
-        //    UserCard userCard = new UserCard();
-
-        //    List<UserCard> userCards = _cardManager.RetrieveUserCardsByUserID(_user.UserID, 0);
-
-        //    foreach (UserCard item in userCards)
-        //    {
-        //        if (item.CardID == card.CardID)
-        //        {
-        //            userCard = item;
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            userCard = new UserCard()
-        //            {
-        //                UserID = _user.UserID,
-        //                CardID = card.CardID,
-        //                CardName = card.CardName,
-        //                ImageID = card.ImageID,
-        //                CardDescription = card.CardDescription,
-        //                CardColorID = card.CardColorID,
-        //                CardConvertedManaCost = card.CardConvertedManaCost,
-        //                CardRarityID = card.CardRarityID,
-        //                CardTypeID = card.CardTypeID,
-        //                HasSecondaryCard = card.HasSecondaryCard,
-        //                CardSecondaryName = card.CardSecondaryName,
-        //                SecondaryImageID = card.SecondaryImageID,
-        //                CardSecondaryDescription = card.CardSecondaryDescription,
-        //                CardSecondaryColorID = card.CardSecondaryColorID,
-        //                CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
-        //                CardSecondaryRarityID = card.CardSecondaryRarityID,
-        //                CardSecondaryTypeID = card.CardSecondaryTypeID,
-        //                OwnedCard = false,
-        //                Wishlisted = false
-        //            };
-        //        }
-        //    }
-
-        //    var cardDetailWindow = new CardDetail(userCard);
-        //    cardDetailWindow.ShowDialog();
-        //}
 
         private void datCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datCards.SelectedItem;
             loadDetailWindow(userCard);
-            btnCards.Focus();
+            //btnCards.Focus();
         }
 
         private void datDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datDeckCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datDeckCards.SelectedItem;
             loadDetailWindow(userCard);
 
@@ -941,24 +1019,40 @@ namespace WPFPresentation
 
         private void datMatchDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMatchDeckCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datMatchDeckCards.SelectedItem;
             loadDetailWindow(userCard);
         }
 
         private void datMyCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datMyCards.SelectedItem;
             loadDetailWindow(userCard);
         }
 
         private void datMyDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyDeckCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datMyDeckCards.SelectedItem;
             loadDetailWindow(userCard);
         }
 
         private void datMyMatchDeckCards_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(datMyMatchDeckCards.SelectedItem == null)
+            {
+                return;
+            }
             var userCard = (UserCard)datMyMatchDeckCards.SelectedItem;
             loadDetailWindow(userCard);
         }
@@ -976,13 +1070,21 @@ namespace WPFPresentation
 
         private void btnUpdateDeck_Click(object sender, RoutedEventArgs e)
         {
-            Deck deck = (Deck)datMyDecks.SelectedItem;
-            var deckUpdateWindow = new Creation(_user, deck, _deckManager);
-            var result = deckUpdateWindow.ShowDialog();
-            if (result == true)
+            try
             {
-                MessageBox.Show("Deck has been updated.");
-                myDecksHelper();
+                Deck deck = (Deck)datMyDecks.SelectedItem;
+                var deckUpdateWindow = new Creation(_user, deck, _deckManager);
+                var result = deckUpdateWindow.ShowDialog();
+                if (result == true)
+                {
+                    MessageBox.Show("Deck has been updated.");
+                    myDecksHelper();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
             }
         }
 
@@ -998,48 +1100,57 @@ namespace WPFPresentation
                     MessageBox.Show("Deck has been removed.");
                     myDecksHelper();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    MessageBox.Show("" + ex);
                 }
             }
         }
 
         private void btnUpdateDeckCard_Click(object sender, RoutedEventArgs e)
         {
-            UserCard card = (UserCard)datMyDeckCards.SelectedItem;
-
-            DeckCard deckCard = new DeckCard()
+            try
             {
-                DeckID = _deck.DeckID,
-                CardID = card.CardID,
-                CardCount = card.CardCount,
-                CardName = card.CardName,
-                ImageID = card.ImageID,
-                CardDescription = card.CardDescription,
-                CardColorID = card.CardColorID,
-                CardConvertedManaCost = card.CardConvertedManaCost,
-                CardTypeID = card.CardTypeID,
-                CardRarityID = card.CardRarityID,
-                HasSecondaryCard = card.HasSecondaryCard,
-                CardSecondaryName = card.CardSecondaryName,
-                SecondaryImageID = card.SecondaryImageID,
-                CardSecondaryDescription = card.CardSecondaryDescription,
-                CardSecondaryColorID = card.CardSecondaryColorID,
-                CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
-                CardSecondaryTypeID = card.CardSecondaryTypeID,
-                CardSecondaryRarityID = card.CardSecondaryRarityID
-            };
+                UserCard card = (UserCard)datMyDeckCards.SelectedItem;
+
+                DeckCard deckCard = new DeckCard()
+                {
+                    DeckID = _deck.DeckID,
+                    CardID = card.CardID,
+                    CardCount = card.CardCount,
+                    CardName = card.CardName,
+                    ImageID = card.ImageID,
+                    CardDescription = card.CardDescription,
+                    CardColorID = card.CardColorID,
+                    CardConvertedManaCost = card.CardConvertedManaCost,
+                    CardTypeID = card.CardTypeID,
+                    CardRarityID = card.CardRarityID,
+                    HasSecondaryCard = card.HasSecondaryCard,
+                    CardSecondaryName = card.CardSecondaryName,
+                    SecondaryImageID = card.SecondaryImageID,
+                    CardSecondaryDescription = card.CardSecondaryDescription,
+                    CardSecondaryColorID = card.CardSecondaryColorID,
+                    CardSecondaryConvertedManaCost = card.CardSecondaryConvertedManaCost,
+                    CardSecondaryTypeID = card.CardSecondaryTypeID,
+                    CardSecondaryRarityID = card.CardSecondaryRarityID
+                };
 
 
-            var deckCardUpdateWindow = new Creation(deckCard, _deckManager);
-            var result = deckCardUpdateWindow.ShowDialog();
-            if (result == true)
-            {
-                MessageBox.Show("Card has been updated.");
-                myDeckCardsHelper();
+                var deckCardUpdateWindow = new Creation(deckCard, _deckManager);
+                var result = deckCardUpdateWindow.ShowDialog();
+                if (result == true)
+                {
+                    MessageBox.Show("Card has been updated.");
+                    myDeckCardsHelper();
+                }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+            
         }
 
         private void datMyDeckCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1089,10 +1200,10 @@ namespace WPFPresentation
                     MessageBox.Show("Card has been removed");
                     myDeckCardsHelper();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    MessageBox.Show(ex + "");
                 }
             }
 
@@ -1131,15 +1242,24 @@ namespace WPFPresentation
 
         private void btnUpdateMatch_Click(object sender, RoutedEventArgs e)
         {
-            Match match = (Match)datMyMatches.SelectedItem;
-
-            var matchUpdateWindow = new Creation(match, _matchManager);
-            var result = matchUpdateWindow.ShowDialog();
-            if (result == true)
+            try
             {
-                MessageBox.Show("Match has been updated.");
-                myMatchesHelper();
+                Match match = (Match)datMyMatches.SelectedItem;
+
+                var matchUpdateWindow = new Creation(match, _matchManager);
+                var result = matchUpdateWindow.ShowDialog();
+                if (result == true)
+                {
+                    MessageBox.Show("Match has been updated.");
+                    myMatchesHelper();
+                }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+            
         }
 
         private void btnDeleteMatch_Click(object sender, RoutedEventArgs e)
@@ -1154,13 +1274,64 @@ namespace WPFPresentation
                     MessageBox.Show("Match has been removed.");
                     myMatchesHelper();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    MessageBox.Show("" + ex);
                 }
             }
         }
+
+        private void datMyMatchDecks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (datMyMatchDecks.SelectedItem != null)
+            {
+                _matchDeck = (MatchDeck)datMyMatchDecks.SelectedItem;
+                btnDeleteMatchDeck.IsEnabled = true;
+            }
+        }
+
+        private void btnAddMatchDeck_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Deck deck = (Deck)datMyDecks.SelectedItem;
+
+                var matchDeckUpdateWindow = new Creation(_user, deck, _matchManager);
+                var result = matchDeckUpdateWindow.ShowDialog();
+                if (result == true)
+                {
+                    MessageBox.Show("Deck has been added.");
+                    myDeckCardsHelper();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("" + ex);
+            }
+        }
+
+        private void btnDeleteMatchDeck_Click(object sender, RoutedEventArgs e)
+        {
+            MatchDeck matchDeck = (MatchDeck)datMyMatchDecks.SelectedItem;
+            var result = MessageBox.Show("You are about to delete " + matchDeck.DeckName + " from this match. Are you sure?", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK)
+            {
+                try
+                {
+                    _matchManager.RemoveMatchDeck(matchDeck);
+                    MessageBox.Show("Deck has been removed.");
+                    myMatchDecksHelper();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("" + ex);
+                }
+            }
+        }
+
+
 
 
         private void datCards_AutoGeneratedColumns(object sender, EventArgs e)
@@ -1371,6 +1542,21 @@ namespace WPFPresentation
             datMyMatchDeckCards.Columns[17].Header = "Secondary Mana Cost";
             datMyMatchDeckCards.Columns[18].Header = "Secondary Type";
             datMyMatchDeckCards.Columns[19].Header = "Secondary Card Rarity";
+        }
+
+        private void mnuExit_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you would like to exit the program?", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if(result == MessageBoxResult.OK)
+            {
+                this.Close();
+            }
+        }
+
+        private void mnuLogout_Click(object sender, RoutedEventArgs e)
+        {
+            _user = null;
+            updateUIForLogOut();
         }
     }
 }

@@ -37,6 +37,35 @@ namespace DataAccessLayer
             return rowsAffected;
         }
 
+        public int DeleteMatchDeck(MatchDeck matchDeck)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_delete_match_deck";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@MatchID", SqlDbType.Int);
+            cmd.Parameters["@MatchID"].Value = matchDeck.MatchID;
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters["@DeckID"].Value = matchDeck.DeckID;
+            cmd.Parameters.Add("@Winner", SqlDbType.Bit);
+            cmd.Parameters["@Winner"].Value = matchDeck.Winner;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
         public int InsertMatch(string matchName, int userID, bool isPublic)
         {
             int rowsAffected = 0;
@@ -52,6 +81,36 @@ namespace DataAccessLayer
             cmd.Parameters["@MatchName"].Value = matchName;
             cmd.Parameters["@UserID"].Value = userID;
             cmd.Parameters["@IsPublic"].Value = isPublic;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return rowsAffected;
+        }
+
+        public int InsertMatchDeck(MatchDeck matchDeck)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnection.GetConnection();
+            string commandText = @"sp_insert_match_deck";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@MatchID", SqlDbType.Int);
+            cmd.Parameters.Add("@DeckID", SqlDbType.Int);
+            cmd.Parameters.Add("@Winner", SqlDbType.Bit);
+
+            cmd.Parameters["@MatchID"].Value = matchDeck.MatchID;
+            cmd.Parameters["@DeckID"].Value = matchDeck.DeckID;
+            cmd.Parameters["@Winner"].Value = matchDeck.Winner;
 
             try
             {
